@@ -26,6 +26,39 @@ async function sleep(ms: number): Promise<void> {
 }
 
 /**
+ * Compress a raw base64 image (no data URI prefix) to JPEG at reduced size.
+ * Returns { base64, mimeType } where base64 has no prefix.
+ * This prevents 413 errors on Vercel's serverless payload limit (~4.5MB).
+ */
+async function compressBase64Image(
+  rawBase64: string,
+  maxDimension = 1024,
+  quality = 0.75,
+): Promise<{ base64: string; mimeType: string }> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const { width, height } = img;
+      const ratio = Math.min(maxDimension / width, maxDimension / height, 1);
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(width * ratio);
+      canvas.height = Math.round(height * ratio);
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('Failed to get canvas context'));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+      const base64 = dataUrl.split(',')[1];
+      resolve({ base64, mimeType: 'image/jpeg' });
+    };
+    img.onerror = () => reject(new Error('Failed to load image for compression'));
+    img.src = `data:image/png;base64,${rawBase64}`;
+  });
+}
+
+/**
  * Generic OpenAI Chat Completions API call with retry logic.
  * Returns the raw text content from the first choice's message.
  */
@@ -193,12 +226,16 @@ The confidence_score reflects consistency across assets: very coherent = 0.85+, 
 Respond ONLY with valid JSON matching this schema — no explanatory text:
 ${BRAND_DNA_JSON_SCHEMA}`;
 
-  // Build image content parts (OpenAI format)
-  const imageParts = assets.map((base64) => ({
+  // Compress images before sending to avoid Vercel 413 payload limit
+  const compressed = await Promise.all(
+    assets.map((b64) => compressBase64Image(b64, 1024, 0.75)),
+  );
+
+  const imageParts = compressed.map(({ base64, mimeType }) => ({
     type: 'image_url',
     image_url: {
-      url: `data:image/png;base64,${base64}`,
-      detail: 'high',
+      url: `data:${mimeType};base64,${base64}`,
+      detail: 'auto' as const,
     },
   }));
 
@@ -278,12 +315,15 @@ Rules:
     .filter(Boolean)
     .join('\n');
 
+  // Compress image before sending to avoid Vercel 413 payload limit
+  const { base64: compressedBase64, mimeType } = await compressBase64Image(imageBase64, 1024, 0.75);
+
   const userContent = [
     {
       type: 'image_url',
       image_url: {
-        url: `data:image/png;base64,${imageBase64}`,
-        detail: 'high',
+        url: `data:${mimeType};base64,${compressedBase64}`,
+        detail: 'auto' as const,
       },
     },
     {
