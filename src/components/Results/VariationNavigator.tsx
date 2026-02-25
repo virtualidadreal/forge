@@ -56,7 +56,7 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
             key={v}
             type="button"
             onClick={() => onChange(v)}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-150 ${
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
               v === current
                 ? 'bg-foreground scale-125'
                 : 'bg-border hover:bg-muted-foreground'

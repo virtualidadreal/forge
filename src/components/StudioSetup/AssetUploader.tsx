@@ -100,7 +100,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
         className={`
           relative flex flex-col items-center justify-center gap-3
           rounded-2xl border-2 border-dashed p-8
-          cursor-pointer transition-all duration-150
+          cursor-pointer transition-all duration-300
           ${
             isDragOver
               ? 'border-primary bg-secondary/50 scale-[1.01]'
@@ -153,7 +153,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
             <div
               key={i}
               className={`
-                h-1.5 w-6 rounded-full transition-colors duration-150
+                h-1.5 w-6 rounded-full transition-colors duration-300
                 ${
                   i < assetCount
                     ? meetsRecommended
@@ -210,7 +210,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
                   flex h-6 w-6 items-center justify-center
                   rounded-full bg-black/60 text-white
                   opacity-0 group-hover:opacity-100
-                  transition-opacity duration-150
+                  transition-opacity duration-300
                   hover:bg-black/80
                 "
                 aria-label={`Eliminar asset ${index + 1}`}

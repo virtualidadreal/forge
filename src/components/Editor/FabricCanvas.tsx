@@ -49,7 +49,7 @@ export function FabricCanvas() {
     <div className="flex-1 flex flex-col items-center justify-center gap-4 bg-background p-6 overflow-auto">
       {/* Canvas container */}
       <div
-        className="relative bg-card rounded-lg shadow-[var(--shadow-elevated)] overflow-hidden"
+        className="relative bg-card rounded-lg shadow-elevated overflow-hidden"
         style={{
           width: `${displayW}px`,
           height: `${displayH}px`,
