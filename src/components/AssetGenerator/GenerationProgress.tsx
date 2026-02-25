@@ -37,11 +37,11 @@ export function GenerationProgress({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm" style={{ zIndex: 'var(--z-modal)' }}>
       <div
-        className="w-full max-w-[480px] mx-4 bg-card rounded-2xl border border-border p-10"
+        className="w-full max-w-[520px] mx-4 bg-card rounded-2xl border border-border p-12"
         style={{ boxShadow: 'var(--shadow-xl)' }}
       >
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <h2 className="font-serif text-xl font-semibold text-card-foreground mb-1">
             Generando piezas
           </h2>
@@ -51,7 +51,7 @@ export function GenerationProgress({
         </div>
 
         {/* Progress bar */}
-        <div className="relative h-2 rounded-full bg-secondary overflow-hidden mb-8">
+        <div className="relative h-2 rounded-full bg-secondary overflow-hidden mb-10">
           <div
             className="absolute inset-y-0 left-0 rounded-full bg-foreground transition-all duration-300 ease-out"
             style={{ width: `${Math.max(progress, 2)}%` }}
@@ -64,19 +64,19 @@ export function GenerationProgress({
         </div>
 
         {/* Percentage */}
-        <p className="text-center font-mono text-xs text-muted-foreground mb-8">
+        <p className="text-center font-mono text-xs text-muted-foreground mb-10">
           {Math.round(progress)}%
         </p>
 
         {/* Format list */}
-        <div className="max-h-[200px] overflow-y-auto space-y-1.5 mb-6">
+        <div className="max-h-[220px] overflow-y-auto space-y-1.5 mb-8">
           {formats.map((name) => {
             const isDone = completedFormats.includes(name);
 
             return (
               <div
                 key={name}
-                className="flex items-center gap-3 px-4 py-2 rounded-lg"
+                className="flex items-center gap-3 px-5 py-2.5 rounded-lg"
               >
                 {/* Status icon */}
                 {isDone ? (

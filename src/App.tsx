@@ -6,6 +6,24 @@ import { GeneratorPage } from './pages/GeneratorPage';
 import { ResultsPage } from './pages/ResultsPage';
 import { EditorPage } from './pages/EditorPage';
 import { HistoryPage } from './pages/HistoryPage';
+import { OnboardingPage } from './pages/OnboardingPage';
+import { useBrandDNAStore } from './store/brandDNA.store';
+
+// ---------------------------------------------------------------------------
+// Root redirect: show onboarding when no brands exist, generator otherwise
+// ---------------------------------------------------------------------------
+
+function RootRedirect() {
+  const brands = useBrandDNAStore((s) => s.brands);
+  if (brands.length === 0) {
+    return <OnboardingPage />;
+  }
+  return <Navigate to="/generator" replace />;
+}
+
+// ---------------------------------------------------------------------------
+// App
+// ---------------------------------------------------------------------------
 
 function App() {
   return (
@@ -13,7 +31,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
-            <Route path="/" element={<Navigate to="/generator" replace />} />
+            <Route path="/" element={<RootRedirect />} />
             <Route path="/studio" element={<StudioPage />} />
             <Route path="/generator" element={<GeneratorPage />} />
             <Route path="/results" element={<ResultsPage />} />

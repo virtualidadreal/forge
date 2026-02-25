@@ -148,7 +148,7 @@ export function BrandDNAWizard({
   // -- Render ---------------------------------------------------------------
 
   return (
-    <div className="flex flex-col gap-8 max-w-lg mx-auto py-6">
+    <div className="flex flex-col gap-10 max-w-lg mx-auto py-6">
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2">
         {stepLabels.map((label, i) => {
@@ -210,19 +210,19 @@ export function BrandDNAWizard({
 
       {/* Step 1: Upload references */}
       {step === 1 && (
-        <div className="flex flex-col gap-8 piece-card">
+        <div className="flex flex-col gap-10 piece-card">
           <div className="text-center">
             <h2 className="font-serif text-3xl font-semibold text-foreground">
               Sube tus assets de marca
             </h2>
-            <p className="font-sans text-sm text-muted-foreground mt-2 max-w-sm mx-auto">
+            <p className="font-sans text-sm text-muted-foreground mt-3 max-w-sm mx-auto">
               Posts de Instagram, stories, banners, packaging... cualquier pieza
               que represente tu identidad visual.
             </p>
           </div>
 
           {/* Brand name / tagline inputs */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5">
             <div>
               <SectionLabel>Nombre de la marca</SectionLabel>
               <input
@@ -231,7 +231,7 @@ export function BrandDNAWizard({
                 onChange={(e) => setBrandName(e.target.value)}
                 placeholder="Mi Marca"
                 className="
-                  w-full rounded-lg border border-input bg-background px-4 py-3
+                  w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
@@ -246,7 +246,7 @@ export function BrandDNAWizard({
                 onChange={(e) => setTagline(e.target.value)}
                 placeholder="Tu propuesta de valor en una frase"
                 className="
-                  w-full rounded-lg border border-input bg-background px-4 py-3
+                  w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
@@ -258,7 +258,7 @@ export function BrandDNAWizard({
           {/* Logo upload (optional) */}
           <div>
             <SectionLabel>Logo (opcional)</SectionLabel>
-            <div className="flex items-center gap-3 mt-1">
+            <div className="flex items-center gap-3 mt-2">
               {logo ? (
                 <div className="relative h-12 w-12 rounded-lg overflow-hidden border border-border">
                   <img
@@ -320,7 +320,7 @@ export function BrandDNAWizard({
           <AssetUploader assets={assets} onAssetsChange={setAssets} />
 
           {/* Actions */}
-          <div className="flex justify-between pt-4">
+          <div className="flex justify-between pt-6">
             <Button variant="ghost" size="md" onClick={onCancel}>
               Cancelar
             </Button>
@@ -368,7 +368,7 @@ export function BrandDNAWizard({
 
       {/* Step 3: Confirm & Save */}
       {step === 3 && extractedDNA && (
-        <div className="flex flex-col gap-8 piece-card">
+        <div className="flex flex-col gap-10 piece-card">
           <div className="text-center">
             <h2 className="font-serif text-2xl font-semibold text-foreground">
               Tu Brand DNA
@@ -379,7 +379,7 @@ export function BrandDNAWizard({
           </div>
 
           {/* Editable name/tagline */}
-          <div className="flex flex-col gap-4 rounded-xl bg-secondary/30 p-5 border border-border">
+          <div className="flex flex-col gap-4 rounded-xl bg-secondary/30 p-6 border border-border">
             <div>
               <SectionLabel>Nombre</SectionLabel>
               <input
@@ -387,7 +387,7 @@ export function BrandDNAWizard({
                 value={brandName}
                 onChange={(e) => setBrandName(e.target.value)}
                 className="
-                  w-full rounded-lg border border-input bg-background px-4 py-3
+                  w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
@@ -402,7 +402,7 @@ export function BrandDNAWizard({
                 onChange={(e) => setTagline(e.target.value)}
                 placeholder="Tagline de la marca"
                 className="
-                  w-full rounded-lg border border-input bg-background px-4 py-3
+                  w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
@@ -413,14 +413,14 @@ export function BrandDNAWizard({
 
           {/* DNA Preview */}
           <div
-            className="rounded-xl bg-card border border-border p-5"
+            className="rounded-xl bg-card border border-border p-6"
             style={{ boxShadow: 'var(--shadow-subtle)' }}
           >
             <BrandDNAPreview brandDNA={extractedDNA} />
           </div>
 
           {/* Actions */}
-          <div className="flex justify-between pt-4">
+          <div className="flex justify-between pt-6">
             <Button
               variant="ghost"
               size="md"

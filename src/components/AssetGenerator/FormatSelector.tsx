@@ -88,7 +88,7 @@ export function FormatSelector() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-5">
         <SectionLabel>Formatos</SectionLabel>
         <div className="flex items-center gap-2">
           <span className="font-sans text-xs text-muted-foreground">
@@ -103,7 +103,7 @@ export function FormatSelector() {
       </div>
 
       {/* Pack shortcuts */}
-      <div className="flex flex-wrap gap-2 mb-5">
+      <div className="flex flex-wrap gap-2.5 mb-6">
         {FORMAT_PACKS.filter((p) => p.id !== 'todo').map((pack) => {
           const allSelected = pack.format_ids.every((id) => selectedFormats.includes(id));
           return (
@@ -111,7 +111,7 @@ export function FormatSelector() {
               key={pack.id}
               onClick={() => handlePackClick(pack.id)}
               className={`
-                px-4 py-2 rounded-full font-sans text-xs font-medium
+                px-4 py-2.5 rounded-full font-sans text-xs font-medium
                 border transition-all duration-150
                 ${
                   allSelected
@@ -136,14 +136,14 @@ export function FormatSelector() {
       </div>
 
       {/* Platform groups */}
-      <div className="space-y-6">
+      <div className="space-y-8">
         {platforms.map((platformId) => {
           const formats = grouped.get(platformId)!;
           const platformLabel = formats[0].platform_label;
 
           return (
             <div key={platformId}>
-              <p className="font-sans text-xs font-semibold text-muted-foreground tracking-wide uppercase mb-3">
+              <p className="font-sans text-xs font-semibold text-muted-foreground tracking-wide uppercase mb-4">
                 {platformLabel}
               </p>
 
@@ -156,7 +156,7 @@ export function FormatSelector() {
                       key={fmt.id}
                       onClick={() => toggleFormat(fmt.id)}
                       className={`
-                        flex items-center gap-3 p-3.5 rounded-xl border text-left
+                        flex items-center gap-3.5 p-4 rounded-xl border text-left
                         transition-all duration-150 cursor-pointer
                         ${
                           isSelected

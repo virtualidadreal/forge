@@ -102,7 +102,7 @@ export function ResultsGrid({
 
   if (pieces.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] gap-4 text-center">
+      <div className="flex flex-col items-center justify-center min-h-[400px] gap-6 text-center">
         <svg
           width="48"
           height="48"
@@ -129,9 +129,9 @@ export function ResultsGrid({
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-10">
       {/* Header */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <h2 className="font-serif text-3xl italic text-foreground leading-tight">
@@ -278,7 +278,7 @@ export function ResultsGrid({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
         {formatIds.map((formatId, index) => {
           const piece = getDisplayedPiece(formatId);
           const allVariations = groupedByFormat.get(formatId) || [];

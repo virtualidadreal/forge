@@ -43,25 +43,25 @@ export function AppLayout() {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground">
       {/* Sidebar */}
-      <aside className="flex w-[240px] shrink-0 flex-col border-r border-border bg-card">
+      <aside className="flex w-[260px] shrink-0 flex-col border-r border-border bg-card">
         {/* Logo */}
-        <div className="px-6 pt-7 pb-6">
-          <h1 className="font-serif text-3xl font-semibold tracking-tight">
+        <div className="px-7 pt-8 pb-7">
+          <h1 className="font-serif text-2xl font-semibold tracking-tight">
             FORGE
           </h1>
         </div>
 
         {/* Separator */}
-        <div className="section-divider mx-5 mb-4" />
+        <div className="section-divider mx-6 mb-6" />
 
         {/* Navigation */}
-        <nav className="flex flex-1 flex-col gap-1.5 px-4">
+        <nav className="flex flex-1 flex-col gap-1 px-5">
           {navItems.map(({ to, label, iconPath }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+                `flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-secondary text-foreground'
                     : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
@@ -87,11 +87,11 @@ export function AppLayout() {
         </nav>
 
         {/* Bottom section */}
-        <div className="mt-auto border-t border-border px-5 py-5">
+        <div className="mt-auto border-t border-border px-6 py-6">
           {/* Dark mode toggle */}
           <button
             onClick={toggleTheme}
-            className="mb-4 flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="mb-5 flex w-full items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
             {isDark ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -103,7 +103,7 @@ export function AppLayout() {
 
           {/* Active brand indicator */}
           {activeBrand ? (
-            <div className="rounded-lg bg-secondary px-4 py-3">
+            <div className="rounded-lg bg-secondary px-4 py-3.5">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Marca activa
               </p>
@@ -112,7 +112,7 @@ export function AppLayout() {
               </p>
             </div>
           ) : (
-            <div className="rounded-lg border border-dashed border-border px-4 py-3">
+            <div className="rounded-lg border border-dashed border-border px-4 py-3.5">
               <p className="text-xs text-muted-foreground">
                 Sin marca activa
               </p>

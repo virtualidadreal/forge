@@ -89,13 +89,13 @@ export function PieceCard({
 
       {/* Edited badge */}
       {piece.edited && (
-        <span className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full bg-accent text-accent-foreground font-sans text-[10px] font-semibold uppercase tracking-wider">
+        <span className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-accent text-accent-foreground font-sans text-[10px] font-semibold uppercase tracking-wider">
           Editado
         </span>
       )}
 
       {/* Preview area */}
-      <div className="relative w-full bg-muted flex items-center justify-center p-5">
+      <div className="relative w-full bg-muted flex items-center justify-center p-6">
         <div
           className="w-full rounded-lg overflow-hidden"
           style={{
@@ -142,7 +142,7 @@ export function PieceCard({
       </div>
 
       {/* Card info */}
-      <div className="flex flex-col gap-4 p-5">
+      <div className="flex flex-col gap-4 p-6">
         {/* Format name + platform badge */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-col gap-1.5">
@@ -171,7 +171,7 @@ export function PieceCard({
         )}
 
         {/* Actions */}
-        <div className="flex items-center gap-3 pt-2">
+        <div className="flex items-center gap-3 pt-3">
           <Button
             variant="secondary"
             size="sm"

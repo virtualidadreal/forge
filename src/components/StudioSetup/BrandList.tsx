@@ -24,9 +24,9 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
   // Empty state
   if (brands.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 gap-6">
+      <div className="flex flex-col items-center justify-center py-24 gap-8">
         {/* Empty illustration */}
-        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-secondary">
+        <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-secondary">
           <svg
             width="32"
             height="32"
@@ -47,7 +47,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
           <p className="font-serif text-xl font-semibold text-foreground">
             No tienes marcas configuradas
           </p>
-          <p className="font-sans text-sm text-muted-foreground mt-2 max-w-sm">
+          <p className="font-sans text-sm text-muted-foreground mt-3 max-w-sm">
             Sube assets de tu marca y extraeremos el ADN visual automaticamente.
           </p>
         </div>
@@ -84,7 +84,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {brands.map((brand) => {
           const isActive = brand.brand_id === activeBrandId;
           const paletteColors = [
@@ -102,7 +102,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
             <div
               key={brand.brand_id}
               className={`
-                group relative flex flex-col gap-4 rounded-2xl border p-5
+                group relative flex flex-col gap-5 rounded-2xl border p-6
                 transition-all duration-150 cursor-pointer
                 ${
                   isActive
@@ -145,7 +145,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
               </div>
 
               {/* Actions row -- visible on hover */}
-              <div className="flex gap-1.5 pt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+              <div className="flex gap-1.5 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();

@@ -77,7 +77,7 @@ export function ImageUploader() {
             alt={imageFileName ?? 'Imagen subida'}
             className="w-full max-h-[320px] object-cover rounded-2xl"
           />
-          <div className="flex items-center justify-between px-5 py-4 border-t border-border bg-card/80 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-card/80 backdrop-blur-sm">
             <div className="flex items-center gap-3 min-w-0">
               <span className="font-sans text-sm text-foreground truncate max-w-[200px]">
                 {imageFileName}
@@ -107,8 +107,8 @@ export function ImageUploader() {
         onDragLeave={handleDragLeave}
         onClick={() => inputRef.current?.click()}
         className={`
-          flex flex-col items-center justify-center gap-5
-          min-h-[260px] rounded-2xl border-2 border-dashed cursor-pointer
+          flex flex-col items-center justify-center gap-6
+          min-h-[280px] rounded-2xl border-2 border-dashed cursor-pointer
           transition-all duration-150
           ${
             dragging
@@ -118,7 +118,7 @@ export function ImageUploader() {
         `}
       >
         {/* Upload icon */}
-        <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-secondary">
+        <div className="flex items-center justify-center w-[72px] h-[72px] rounded-2xl bg-secondary">
           <svg
             width="28"
             height="28"
@@ -136,11 +136,11 @@ export function ImageUploader() {
           </svg>
         </div>
 
-        <div className="text-center px-6">
+        <div className="text-center px-8">
           <p className="font-sans text-sm font-medium text-foreground">
             Arrastra tu imagen aqui
           </p>
-          <p className="font-sans text-xs text-muted-foreground mt-1">
+          <p className="font-sans text-xs text-muted-foreground mt-2">
             JPG, PNG, WebP o HEIC &middot; Max 20 MB
           </p>
         </div>

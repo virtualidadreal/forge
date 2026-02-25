@@ -55,7 +55,7 @@ export function ResultsPage() {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="flex flex-col items-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary mb-6">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary mb-8">
             <svg
               width="28"
               height="28"
@@ -72,7 +72,7 @@ export function ResultsPage() {
               <line x1="9" y1="21" x2="9" y2="9" />
             </svg>
           </div>
-          <p className="font-serif text-3xl text-muted-foreground mb-6">No hay piezas generadas</p>
+          <p className="font-serif text-2xl text-muted-foreground mb-4">No hay piezas generadas</p>
           <p className="text-muted-foreground text-sm max-w-xs">Genera assets desde el panel de creacion para ver tus piezas aqui</p>
         </div>
       </div>

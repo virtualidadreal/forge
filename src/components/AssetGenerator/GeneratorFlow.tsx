@@ -1,4 +1,5 @@
 import { useCallback, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSessionStore } from '../../store/session.store';
 import { useBrandDNAStore } from '../../store/brandDNA.store';
 import { useResultsStore } from '../../store/results.store';
@@ -36,8 +37,11 @@ export function GeneratorFlow() {
 
   const activeBrand = getActiveBrand();
 
+  const navigate = useNavigate();
+
   const [showBrandPicker, setShowBrandPicker] = useState(false);
   const [completedFormatNames, setCompletedFormatNames] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const cancelRef = useRef(false);
 
   // Resolve selected format specs
@@ -47,12 +51,13 @@ export function GeneratorFlow() {
   // Active intention details
   const activeIntention = INTENTIONS.find((i) => i.id === intention);
 
-  // Can generate?
-  const canGenerate = !!imageDataUrl && selectedFormats.length > 0;
+  // Can generate? Requires image + formats + active brand
+  const canGenerate = !!imageDataUrl && selectedFormats.length > 0 && !!activeBrand;
 
   // ---------- Generate with real services ----------
   const handleGenerate = useCallback(async () => {
     if (!canGenerate || !activeBrand) return;
+    setErrorMessage(null);
     cancelRef.current = false;
     setGenerating(true);
     setGenerationProgress(0);
@@ -124,13 +129,14 @@ export function GeneratorFlow() {
       }
     } catch (error) {
       console.error('Generation failed:', error);
-      // TODO: show toast
+      const msg = error instanceof Error ? error.message : 'Error desconocido';
+      setErrorMessage(`Error al generar: ${msg}`);
     } finally {
       setGenerating(false);
       setGenerationProgress(0);
       setCompletedFormatNames([]);
     }
-  }, [canGenerate, activeBrand, imageDataUrl, intention, copy, selectedFormats, setGenerating, setGenerationProgress, setPieces]);
+  }, [canGenerate, activeBrand, imageDataUrl, intention, copy, selectedFormats, setGenerating, setGenerationProgress, setPieces, navigate]);
 
   const handleCancel = useCallback(() => {
     cancelRef.current = true;
@@ -140,51 +146,75 @@ export function GeneratorFlow() {
   }, [setGenerating, setGenerationProgress]);
 
   return (
-    <div className="flex gap-10 max-w-[var(--max-content-width)] mx-auto px-6 py-8 min-h-[calc(100vh-var(--header-height))]">
+    <div className="flex gap-12 max-w-[var(--max-content-width)] mx-auto px-8 py-10 min-h-[calc(100vh-var(--header-height))]">
       {/* ================================================================= */}
       {/* LEFT COLUMN — Steps (60%) */}
       {/* ================================================================= */}
-      <div className="flex-[3] min-w-0 space-y-10">
+      <div className="flex-[3] min-w-0 space-y-12">
         {/* ---- Step 0: Brand DNA indicator ---- */}
         <div className="relative">
-          <div
-            className="flex items-center justify-between p-5 rounded-xl border border-border bg-card cursor-pointer hover:border-muted-foreground transition-all duration-150"
-            onClick={() => setShowBrandPicker((v) => !v)}
-          >
-            <div className="flex items-center gap-3">
-              {/* Brand logo or placeholder */}
-              {activeBrand?.logo_url ? (
-                <img
-                  src={activeBrand.logo_url}
-                  alt={activeBrand.brand_name}
-                  className="w-8 h-8 rounded-lg object-cover"
-                />
-              ) : (
-                <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center">
-                  <span className="font-serif text-sm font-semibold text-foreground">
-                    {activeBrand?.brand_name?.charAt(0) ?? '?'}
-                  </span>
-                </div>
-              )}
-              <div>
-                <p className="font-sans text-sm font-medium text-foreground">
-                  {activeBrand?.brand_name ?? 'Sin marca activa'}
-                </p>
-                {activeBrand?.tagline && (
-                  <p className="font-sans text-xs text-muted-foreground">{activeBrand.tagline}</p>
+          {activeBrand ? (
+            <div
+              className="flex items-center justify-between p-6 rounded-2xl border border-border bg-card cursor-pointer hover:border-muted-foreground transition-all duration-150"
+              onClick={() => setShowBrandPicker((v) => !v)}
+            >
+              <div className="flex items-center gap-3">
+                {activeBrand.logo_url ? (
+                  <img
+                    src={activeBrand.logo_url}
+                    alt={activeBrand.brand_name}
+                    className="w-8 h-8 rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center">
+                    <span className="font-serif text-sm font-semibold text-foreground">
+                      {activeBrand.brand_name.charAt(0)}
+                    </span>
+                  </div>
                 )}
+                <div>
+                  <p className="font-sans text-sm font-medium text-foreground">
+                    {activeBrand.brand_name}
+                  </p>
+                  {activeBrand.tagline && (
+                    <p className="font-sans text-xs text-muted-foreground">{activeBrand.tagline}</p>
+                  )}
+                </div>
               </div>
+              <span className="font-sans text-xs text-muted-foreground">Cambiar</span>
             </div>
-
-            <span className="font-sans text-xs text-muted-foreground">
-              Cambiar
-            </span>
-          </div>
+          ) : (
+            <div
+              className="flex items-center justify-between p-6 rounded-2xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-150"
+              onClick={() => navigate('/studio')}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-destructive/10 flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-destructive">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="12" />
+                    <line x1="12" y1="16" x2="12.01" y2="16" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-sans text-sm font-medium text-foreground">
+                    Sin marca configurada
+                  </p>
+                  <p className="font-sans text-xs text-muted-foreground">
+                    Configura tu Brand DNA para poder generar
+                  </p>
+                </div>
+              </div>
+              <span className="font-sans text-xs font-medium text-destructive">
+                Configurar
+              </span>
+            </div>
+          )}
 
           {/* Brand picker dropdown */}
           {showBrandPicker && brands.length > 1 && (
             <div
-              className="absolute top-full left-0 right-0 mt-1 rounded-xl border border-border bg-card shadow-lg overflow-hidden"
+              className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border bg-card shadow-lg overflow-hidden"
               style={{ zIndex: 'var(--z-dropdown)' }}
             >
               {brands.map((brand) => (
@@ -195,7 +225,7 @@ export function GeneratorFlow() {
                     setShowBrandPicker(false);
                   }}
                   className={`
-                    w-full flex items-center gap-3 px-4 py-3 text-left
+                    w-full flex items-center gap-3 px-5 py-3.5 text-left
                     hover:bg-accent/10 transition-colors
                     ${brand.brand_id === activeBrand?.brand_id ? 'bg-accent/15' : ''}
                   `}
@@ -225,7 +255,7 @@ export function GeneratorFlow() {
         <FormatSelector />
 
         {/* ---- Step 5: Generate button ---- */}
-        <div className="sticky bottom-0 py-5 bg-gradient-to-t from-background via-background to-transparent">
+        <div className="sticky bottom-0 py-6 bg-gradient-to-t from-background via-background to-transparent">
           <Button
             variant="primary"
             size="lg"
@@ -238,11 +268,20 @@ export function GeneratorFlow() {
           </Button>
 
           {!canGenerate && (
-            <p className="font-sans text-xs text-muted-foreground text-center mt-2">
-              {!imageDataUrl
-                ? 'Sube una imagen para continuar'
-                : 'Selecciona al menos un formato'}
+            <p className="font-sans text-xs text-muted-foreground text-center mt-3">
+              {!activeBrand
+                ? 'Configura una marca primero'
+                : !imageDataUrl
+                  ? 'Sube una imagen para continuar'
+                  : 'Selecciona al menos un formato'}
             </p>
+          )}
+
+          {/* Error feedback */}
+          {errorMessage && (
+            <div className="mt-4 p-4 rounded-xl bg-destructive/10 border border-destructive/20">
+              <p className="font-sans text-sm text-destructive text-center">{errorMessage}</p>
+            </div>
           )}
         </div>
       </div>
@@ -251,7 +290,7 @@ export function GeneratorFlow() {
       {/* RIGHT COLUMN — Preview panel (40%) */}
       {/* ================================================================= */}
       <aside className="flex-[2] min-w-0 hidden lg:block">
-        <div className="sticky top-[calc(var(--header-height)+2rem)] space-y-8">
+        <div className="sticky top-[calc(var(--header-height)+2rem)] space-y-10">
           {/* Image preview */}
           <div>
             <SectionLabel>Vista previa</SectionLabel>
@@ -264,7 +303,7 @@ export function GeneratorFlow() {
                 />
               </div>
             ) : (
-              <div className="flex items-center justify-center h-40 rounded-2xl border border-dashed border-border bg-card">
+              <div className="flex items-center justify-center h-44 rounded-2xl border border-dashed border-border bg-card">
                 <p className="font-sans text-sm text-muted-foreground">Sin imagen</p>
               </div>
             )}
@@ -273,7 +312,7 @@ export function GeneratorFlow() {
           {/* Summary */}
           <div>
             <SectionLabel>Resumen</SectionLabel>
-            <div className="rounded-xl border border-border bg-card p-5 space-y-4">
+            <div className="rounded-xl border border-border bg-card p-6 space-y-5">
               {/* Brand */}
               <SummaryRow
                 label="Marca"
