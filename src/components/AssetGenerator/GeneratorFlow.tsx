@@ -185,33 +185,23 @@ export function GeneratorFlow() {
             variationMode,
           });
 
-          try {
-            const base64Image = await generateWithNanoBanana({
-              prompt,
-              referenceImages: refs,
-              modelTier: 'fast',
-            });
+          const base64Image = await generateWithNanoBanana({
+            prompt,
+            referenceImages: refs,
+            modelTier: 'fast',
+            aspectRatio: format.aspect_ratio,
+          });
 
-            const previewDataUrl = `data:image/png;base64,${base64Image}`;
+          const previewDataUrl = `data:image/png;base64,${base64Image}`;
 
-            pieces.push({
-              id: `${format.id}-v${variationSeed}-${Date.now()}`,
-              format_id: format.id,
-              variation: variationSeed,
-              generation_mode: 'generative',
-              preview_data_url: previewDataUrl,
-              edited: false,
-            });
-          } catch (err) {
-            console.error(`Generative failed for ${format.id} v${variationSeed}:`, err);
-            pieces.push({
-              id: `${format.id}-v${variationSeed}-${Date.now()}`,
-              format_id: format.id,
-              variation: variationSeed,
-              generation_mode: 'generative',
-              edited: false,
-            });
-          }
+          pieces.push({
+            id: `${format.id}-v${variationSeed}-${Date.now()}`,
+            format_id: format.id,
+            variation: variationSeed,
+            generation_mode: 'generative',
+            preview_data_url: previewDataUrl,
+            edited: false,
+          });
 
           completed++;
           const pct = 5 + Math.round((completed / totalJobs) * 95);
