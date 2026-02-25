@@ -40,36 +40,32 @@ export function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen bg-background flex flex-col items-center justify-between overflow-hidden animate-in">
-      {/* Hero */}
-      <section className="flex flex-col items-center justify-center pt-16 pb-6 px-6">
-        <h1 className="font-serif text-5xl italic leading-tight md:text-6xl text-foreground text-center">
-          FORGE
-        </h1>
+    <div className="h-screen bg-background flex flex-col items-center justify-center overflow-hidden animate-in">
+      <div className="flex flex-col items-center gap-10 max-w-5xl w-full px-6 md:px-12">
+        {/* Hero */}
+        <div className="flex flex-col items-center text-center">
+          <h1 className="font-serif text-5xl italic leading-tight md:text-6xl text-foreground">
+            FORGE
+          </h1>
+          <p className="mt-4 max-w-lg text-base font-light leading-relaxed text-muted-foreground md:text-lg">
+            Genera piezas graficas para todas tus plataformas, alineadas con la
+            identidad visual de tu marca, en segundos.
+          </p>
+        </div>
 
-        <p className="mt-4 max-w-lg text-base font-light leading-relaxed text-muted-foreground md:text-lg text-center">
-          Genera piezas graficas para todas tus plataformas, alineadas con la
-          identidad visual de tu marca, en segundos.
-        </p>
-      </section>
+        {/* Steps */}
+        <div className="w-full flex flex-col items-center">
+          <p className="text-center text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-6">
+            Como funciona
+          </p>
 
-      {/* Steps */}
-      <section className="w-full max-w-6xl px-6 md:px-12 flex-1 flex flex-col justify-center">
-        <p className="text-center text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-8">
-          Como funciona
-        </p>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step) => (
-            <div
-              key={step.number}
-              className="group flex flex-col bg-card p-6 shadow-subtle rounded-2xl transition-shadow duration-300 hover:shadow-elevated"
-            >
-              <div className="flex items-center gap-3">
-                <span className="font-serif text-3xl text-muted-foreground/20">
-                  {step.number}
-                </span>
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+            {steps.map((step) => (
+              <div
+                key={step.number}
+                className="group flex flex-col items-center text-center bg-card p-5 shadow-subtle rounded-2xl transition-shadow duration-300 hover:shadow-elevated"
+              >
+                <div className="flex items-center justify-center h-10 w-10 rounded-xl bg-secondary mb-3">
                   <svg
                     width="18"
                     height="18"
@@ -84,47 +80,47 @@ export function OnboardingPage() {
                     <path d={step.iconPath} />
                   </svg>
                 </div>
+
+                <h3 className="text-sm font-medium text-foreground">
+                  {step.title}
+                </h3>
+                <p className="mt-1 text-xs font-light leading-relaxed text-muted-foreground">
+                  {step.description}
+                </p>
               </div>
-
-              <h3 className="mt-4 font-sans text-sm font-medium text-foreground">
-                {step.title}
-              </h3>
-              <p className="mt-1.5 text-xs font-light leading-relaxed text-muted-foreground">
-                {step.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="flex flex-col items-center px-6 pb-12 pt-4">
-        <p className="mb-5 text-center text-sm font-light leading-relaxed text-muted-foreground max-w-md">
-          Empieza configurando el ADN visual de tu marca.
-        </p>
+        {/* CTA */}
+        <div className="flex flex-col items-center text-center">
+          <p className="mb-4 text-sm font-light leading-relaxed text-muted-foreground max-w-md">
+            Empieza configurando el ADN visual de tu marca.
+          </p>
 
-        <Button
-          size="md"
-          variant="primary"
-          onClick={() => navigate('/studio')}
-          icon={
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          }
-        >
-          Configurar tu marca
-        </Button>
-      </section>
+          <Button
+            size="md"
+            variant="primary"
+            onClick={() => navigate('/studio')}
+            icon={
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            }
+          >
+            Configurar tu marca
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
