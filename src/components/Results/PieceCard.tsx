@@ -84,14 +84,14 @@ export function PieceCard({
       {/* Preview area */}
       <div className="relative w-full bg-muted flex items-center justify-center p-5">
         <div
-          className="w-full rounded-2xl overflow-hidden"
+          className="w-full rounded-2xl overflow-hidden flex items-center justify-center"
           style={{
             aspectRatio: `${format.width} / ${format.height}`,
-            maxHeight: aspectRatio < 0.6 ? '240px' : '180px',
+            maxHeight: aspectRatio < 0.6 ? '280px' : '200px',
           }}
         >
           {piece.preview_data_url ? (
-            <img src={piece.preview_data_url} alt={format.name} className="w-full h-full object-cover" />
+            <img src={piece.preview_data_url} alt={format.name} className="w-full h-full object-contain" />
           ) : (
             <div
               className="w-full h-full bg-card relative"

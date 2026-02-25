@@ -264,7 +264,7 @@ export function GeneratorFlow() {
                 <img
                   src={imageDataUrl}
                   alt={imageFileName ?? 'Preview'}
-                  className="w-full max-h-[260px] object-cover"
+                  className="w-full max-h-[360px] object-contain"
                 />
               </div>
             ) : (
