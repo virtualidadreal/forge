@@ -1,23 +1,18 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Only allow POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Only POST requests are supported.' });
+  }
+
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'OPENAI_API_KEY not configured on server.' });
   }
 
-  // Build the target URL from the catch-all path segments
-  const pathSegments = req.query.path;
-  const path = Array.isArray(pathSegments) ? pathSegments.join('/') : pathSegments || '';
-  const targetUrl = `https://api.openai.com/${path}`;
-
-  // Only allow POST (all OpenAI chat completions are POST)
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Only POST requests are supported.' });
-  }
-
   try {
-    const response = await fetch(targetUrl, {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

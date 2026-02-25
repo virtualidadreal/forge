@@ -12,7 +12,7 @@ import type { ImageAnalysis, IntentionType, CopyInput } from '../types/compositi
 // Constants
 // ---------------------------------------------------------------------------
 
-const API_URL = '/api/openai/v1/chat/completions';
+const API_URL = '/api/openai';
 const MODEL = import.meta.env.VITE_OPENAI_MODEL || 'gpt-4o';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
