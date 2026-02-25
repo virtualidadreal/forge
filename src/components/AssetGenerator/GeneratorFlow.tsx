@@ -261,11 +261,56 @@ export function GeneratorFlow() {
             <SectionLabel>Vista previa</SectionLabel>
             {imageDataUrl ? (
               <div className="rounded-2xl overflow-hidden bg-card shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
-                <img
-                  src={imageDataUrl}
-                  alt={imageFileName ?? 'Preview'}
-                  className="w-full max-h-[360px] object-contain"
-                />
+                <div className="relative">
+                  <img
+                    src={imageDataUrl}
+                    alt={imageFileName ?? 'Preview'}
+                    className="w-full object-contain"
+                  />
+                  {/* Live copy overlay */}
+                  {(copy.heading || copy.subheading || copy.cta || copy.tagline) && (
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
+                      {copy.tagline && (
+                        <span
+                          className="inline-block self-start px-3 py-1 rounded-full text-[10px] font-medium uppercase tracking-[0.15em] mb-3"
+                          style={{
+                            backgroundColor: activeBrand?.palette.pill_background || 'rgba(255,255,255,0.2)',
+                            color: activeBrand?.palette.pill_text || '#FFFFFF',
+                          }}
+                        >
+                          {copy.tagline}
+                        </span>
+                      )}
+                      {copy.heading && (
+                        <p
+                          className="font-serif text-xl font-bold leading-tight mb-1"
+                          style={{ color: activeBrand?.palette.text_primary || '#FFFFFF' }}
+                        >
+                          {activeBrand?.typography.uses_uppercase_headlines ? copy.heading.toUpperCase() : copy.heading}
+                        </p>
+                      )}
+                      {copy.subheading && (
+                        <p
+                          className="font-sans text-sm font-light leading-relaxed mb-3"
+                          style={{ color: activeBrand?.palette.text_secondary || 'rgba(255,255,255,0.8)' }}
+                        >
+                          {copy.subheading}
+                        </p>
+                      )}
+                      {copy.cta && (
+                        <span
+                          className="inline-block self-start px-4 py-1.5 rounded-full text-[11px] font-medium uppercase tracking-[0.15em]"
+                          style={{
+                            backgroundColor: activeBrand?.palette.accent || '#FFFFFF',
+                            color: activeBrand?.palette.background || '#000000',
+                          }}
+                        >
+                          {copy.cta}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="flex items-center justify-center h-40 rounded-2xl border border-dashed border-border/50 bg-card">

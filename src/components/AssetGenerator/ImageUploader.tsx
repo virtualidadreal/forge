@@ -73,7 +73,7 @@ export function ImageUploader() {
           <img
             src={imageDataUrl}
             alt={imageFileName ?? 'Imagen subida'}
-            className="w-full max-h-[260px] object-cover"
+            className="w-full object-contain"
           />
           <div className="flex items-center justify-between px-5 py-4 border-t border-border/50 bg-card/80 backdrop-blur-sm">
             <div className="flex items-center gap-2 min-w-0">
