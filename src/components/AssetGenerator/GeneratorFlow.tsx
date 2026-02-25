@@ -149,8 +149,8 @@ export function GeneratorFlow() {
     try {
       const imageBase64 = imageDataUrl!.split(',')[1] || imageDataUrl!;
 
-      // Build reference images once for all formats
-      const refs = buildReferenceImages({
+      // Build reference images once for all formats (compresses images)
+      const refs = await buildReferenceImages({
         userPhotoBase64: imageBase64,
         brandStyleReferences: activeBrand.reference_assets || [],
         logoDataUrl: activeBrand.logo_url || undefined,
