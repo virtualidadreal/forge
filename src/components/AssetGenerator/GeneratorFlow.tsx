@@ -15,7 +15,7 @@ import { FormatSelector } from './FormatSelector';
 import { GenerationProgress } from './GenerationProgress';
 import { generateCompositions } from '../../services/composer.service';
 import { renderPiece, renderToDataUrl } from '../../services/renderer.service';
-import { generateWithNanoBanana, resetNanoBananaClient } from '../../services/nanoBanana.service';
+import { generateWithNanoBanana } from '../../services/nanoBanana.service';
 import { buildGenerativePrompt } from '../../services/generativePrompts.service';
 import { buildReferenceImages } from '../../services/referenceBuilder.service';
 
@@ -43,18 +43,12 @@ export function GeneratorFlow() {
   const [showBrandPicker, setShowBrandPicker] = useState(false);
   const [completedFormatNames, setCompletedFormatNames] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [googleApiKey, setGoogleApiKey] = useState(
-    () => localStorage.getItem('forge-google-ai-key') || '',
-  );
   const cancelRef = useRef(false);
-
-  const hasGoogleKey = !!googleApiKey || !!import.meta.env.VITE_GOOGLE_AI_KEY;
 
   const selectedFormatSpecs = V1_FORMATS.filter((f) => selectedFormats.includes(f.id));
   const selectedFormatNames = selectedFormatSpecs.map((f) => f.name);
   const activeIntention = INTENTIONS.find((i) => i.id === intention);
-  const canGenerate = !!imageDataUrl && selectedFormats.length > 0 && !!activeBrand
-    && (generationMode === 'compositor' || hasGoogleKey);
+  const canGenerate = !!imageDataUrl && selectedFormats.length > 0 && !!activeBrand;
 
   const handleGenerate = useCallback(async () => {
     if (!canGenerate || !activeBrand) return;
@@ -143,12 +137,6 @@ export function GeneratorFlow() {
     setGenerationProgress(0);
     setCompletedFormatNames([]);
   }, [setGenerating, setGenerationProgress]);
-
-  const handleSaveGoogleKey = useCallback((key: string) => {
-    localStorage.setItem('forge-google-ai-key', key);
-    setGoogleApiKey(key);
-    resetNanoBananaClient();
-  }, []);
 
   const handleGenerateGenerative = useCallback(async () => {
     if (!canGenerate || !activeBrand) return;
@@ -374,7 +362,7 @@ export function GeneratorFlow() {
                 <span className="font-sans text-sm font-medium text-foreground">Rapido</span>
               </div>
               <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
-                Composicion con overlay de texto sobre tu imagen. Sin API key.
+                Composicion con overlay de texto sobre tu imagen.
               </p>
             </button>
 
@@ -397,53 +385,11 @@ export function GeneratorFlow() {
                 <span className="font-sans text-sm font-medium text-foreground">Agencia</span>
               </div>
               <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
-                IA generativa transforma tu imagen con estilo de marca. Requiere Google AI key.
+                IA generativa transforma tu imagen con estilo de marca.
               </p>
             </button>
           </div>
         </div>
-
-        {/* Google AI API key (only for generative mode) */}
-        {generationMode === 'generative' && (
-          <div>
-            <SectionLabel>Google AI API Key</SectionLabel>
-            {hasGoogleKey ? (
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-card border border-border/50">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  <span className="font-sans text-sm font-light text-foreground">
-                    API Key configurada
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => { handleSaveGoogleKey(''); }}
-                  className="font-sans text-xs font-light text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  Cambiar
-                </button>
-              </div>
-            ) : (
-              <div className="flex gap-2">
-                <input
-                  type="password"
-                  value={googleApiKey}
-                  onChange={(e) => setGoogleApiKey(e.target.value)}
-                  placeholder="AIza..."
-                  className="flex-1 rounded-xl border border-border/50 bg-card px-4 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all duration-300"
-                />
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  disabled={!googleApiKey.trim()}
-                  onClick={() => handleSaveGoogleKey(googleApiKey.trim())}
-                >
-                  Guardar
-                </Button>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Generate button */}
         <div className="sticky bottom-0 py-6 bg-gradient-to-t from-background via-background/95 to-transparent">
@@ -466,9 +412,7 @@ export function GeneratorFlow() {
                 ? 'Configura una marca primero'
                 : !imageDataUrl
                   ? 'Sube una imagen para continuar'
-                  : generationMode === 'generative' && !hasGoogleKey
-                    ? 'Configura tu Google AI API Key'
-                    : 'Selecciona al menos un formato'}
+                  : 'Selecciona al menos un formato'}
             </p>
           )}
 
