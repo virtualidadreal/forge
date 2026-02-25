@@ -63,12 +63,12 @@ export function Modal({
       style={{ zIndex: 'var(--z-modal)' }}
     >
       <div
-        className={`${maxWidths[size]} w-full mx-4 bg-card rounded-2xl border border-border shadow-xl`}
+        className={`${maxWidths[size]} w-full mx-4 bg-card rounded-3xl border border-border`}
         style={{ boxShadow: 'var(--shadow-xl)' }}
       >
         {title && (
-          <div className="flex items-center justify-between border-b border-border px-6 py-4">
-            <h2 className="font-serif text-lg font-semibold text-card-foreground">
+          <div className="flex items-center justify-between border-b border-border px-8 py-6">
+            <h2 className="font-serif text-xl font-medium text-card-foreground">
               {title}
             </h2>
             <button
@@ -92,7 +92,7 @@ export function Modal({
             </button>
           </div>
         )}
-        <div className="px-6 py-5">{children}</div>
+        <div className="px-8 py-8">{children}</div>
       </div>
     </div>,
     document.body,

@@ -21,14 +21,6 @@ const RETRY_DELAY_MS = 1000;
 // Helpers
 // ---------------------------------------------------------------------------
 
-function getApiKey(): string {
-  const key = import.meta.env.VITE_OPENAI_API_KEY;
-  if (!key) {
-    throw new Error('VITE_OPENAI_API_KEY is not set in environment variables.');
-  }
-  return key;
-}
-
 async function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -50,7 +42,6 @@ async function callOpenAI(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getApiKey()}`,
         },
         body: JSON.stringify({
           model: MODEL,

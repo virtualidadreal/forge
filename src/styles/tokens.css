@@ -57,7 +57,7 @@
   --tracking-normal: 0em;
   --tracking-wide: 0.04em;
   --tracking-wider: 0.08em;
-  --tracking-widest: 0.12em;
+  --tracking-widest: 0.2em;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -77,12 +77,13 @@
   --radius-lg: 0.625rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.25rem;
-  --radius-3xl: 1.75rem;
+  --radius-3xl: 1.5rem;
   --radius-4xl: 2rem;
   --radius-full: 9999px;
 
-  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.03);
+  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(0, 0, 0, 0.03);
   --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.05), 0 16px 48px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.03), 0 4px 16px rgba(0, 0, 0, 0.04);
   --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
   --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.1), 0 24px 80px rgba(0, 0, 0, 0.06);
 

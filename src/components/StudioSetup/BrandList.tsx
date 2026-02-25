@@ -44,10 +44,10 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
           </svg>
         </div>
         <div className="text-center">
-          <p className="font-serif text-xl font-semibold text-foreground">
+          <p className="font-serif text-xl font-medium text-foreground">
             No tienes marcas configuradas
           </p>
-          <p className="font-sans text-sm text-muted-foreground mt-3 max-w-sm">
+          <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3 max-w-sm">
             Sube assets de tu marca y extraeremos el ADN visual automaticamente.
           </p>
         </div>
@@ -62,7 +62,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
     <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-xl font-semibold text-foreground">
+        <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
           Tus marcas
         </h2>
         <Button onClick={onCreateNew} size="sm" variant="secondary">
@@ -84,7 +84,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {brands.map((brand) => {
           const isActive = brand.brand_id === activeBrandId;
           const paletteColors = [
@@ -102,33 +102,32 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
             <div
               key={brand.brand_id}
               className={`
-                group relative flex flex-col gap-5 rounded-2xl border p-6
+                group relative flex flex-col gap-5 rounded-3xl border p-8
                 transition-all duration-150 cursor-pointer
                 ${
                   isActive
-                    ? 'border-primary bg-card shadow-sm'
-                    : 'border-border bg-card/50 hover:bg-card hover:border-muted-foreground/30'
+                    ? 'border-primary bg-card shadow-[var(--shadow-subtle)]'
+                    : 'border-border bg-card/50 hover:bg-card hover:shadow-[var(--shadow-elevated)]'
                 }
               `}
-              style={{ boxShadow: isActive ? 'var(--shadow-subtle)' : undefined }}
               onClick={() => setActiveBrand(brand.brand_id)}
             >
               {/* Active indicator */}
               {isActive && (
-                <div className="absolute -top-px -left-px -right-px h-0.5 rounded-t-2xl bg-primary" />
+                <div className="absolute -top-px -left-px -right-px h-0.5 rounded-t-3xl bg-primary" />
               )}
 
               {/* Brand name + confidence */}
               <div className="flex items-start justify-between">
                 <div className="flex flex-col gap-0.5">
-                  <h3 className="font-sans text-sm font-semibold text-card-foreground truncate">
+                  <h3 className="font-sans text-sm font-medium text-card-foreground truncate">
                     {brand.brand_name}
                   </h3>
-                  <span className="font-sans text-[11px] text-muted-foreground">
+                  <span className="text-[11px] font-light text-muted-foreground">
                     {createdDate}
                   </span>
                 </div>
-                <span className="font-mono text-[11px] text-muted-foreground tabular-nums shrink-0 ml-2">
+                <span className="font-mono text-[11px] font-light text-muted-foreground tabular-nums shrink-0 ml-2">
                   {Math.round(brand.confidence_score * 100)}%
                 </span>
               </div>
@@ -151,7 +150,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     onEdit(brand);
                   }}
-                  className="inline-flex items-center gap-1.5 font-sans text-[11px] text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
@@ -164,7 +163,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     duplicateBrand(brand.brand_id);
                   }}
-                  className="inline-flex items-center gap-1.5 font-sans text-[11px] text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -177,7 +176,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     setDeleteTarget(brand.brand_id);
                   }}
-                  className="inline-flex items-center gap-1.5 font-sans text-[11px] text-destructive hover:text-destructive px-2.5 py-1.5 rounded-lg hover:bg-destructive/10 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-destructive hover:text-destructive px-2.5 py-1.5 rounded-lg hover:bg-destructive/10 transition-colors"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="3 6 5 6 21 6" />
@@ -199,7 +198,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
         size="sm"
       >
         <div className="flex flex-col gap-4">
-          <p className="font-sans text-sm text-muted-foreground">
+          <p className="text-sm font-light leading-relaxed text-muted-foreground">
             Esta accion no se puede deshacer. Se eliminara el Brand DNA y todas
             las configuraciones asociadas.
           </p>

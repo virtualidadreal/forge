@@ -41,24 +41,24 @@ const steps = [
 ] as const;
 
 // ---------------------------------------------------------------------------
-// Component
+// Component — Full-page standalone (no sidebar)
 // ---------------------------------------------------------------------------
 
 export function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex h-full flex-col items-center overflow-y-auto">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center overflow-y-auto">
       {/* Hero section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-10 pt-20 pb-16 text-center">
+      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pt-20 pb-16 text-center">
         {/* Decorative line */}
         <div className="mb-10 h-px w-16 bg-border" />
 
-        <h1 className="font-serif text-5xl font-medium tracking-tight leading-tight">
+        <h1 className="font-serif text-5xl md:text-6xl italic leading-tight text-foreground">
           FORGE
         </h1>
 
-        <p className="mt-5 max-w-lg text-lg leading-relaxed text-muted-foreground">
+        <p className="mt-6 max-w-lg text-lg font-light leading-relaxed text-muted-foreground text-center">
           Genera piezas graficas para todas tus plataformas, alineadas con la
           identidad visual de tu marca, en segundos.
         </p>
@@ -68,8 +68,8 @@ export function OnboardingPage() {
       </section>
 
       {/* Steps section */}
-      <section className="w-full max-w-5xl px-10 pb-10">
-        <p className="mb-10 text-center text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <section className="w-full max-w-5xl px-10 lg:px-16 pb-10">
+        <p className="mb-10 text-center text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
           Como funciona
         </p>
 
@@ -77,10 +77,10 @@ export function OnboardingPage() {
           {steps.map((step) => (
             <div
               key={step.number}
-              className="group flex flex-col rounded-2xl border border-border bg-card p-8 transition-shadow hover:shadow-elevated"
+              className="group flex flex-col bg-card rounded-3xl p-8 shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] transition-shadow"
             >
               {/* Step number */}
-              <span className="mb-6 text-xs font-semibold tracking-widest text-muted-foreground">
+              <span className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {step.number}
               </span>
 
@@ -102,10 +102,10 @@ export function OnboardingPage() {
               </div>
 
               {/* Content */}
-              <h3 className="mb-3 font-serif text-xl font-medium tracking-tight">
+              <h3 className="font-serif text-xl font-medium mt-4">
                 {step.title}
               </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3">
                 {step.description}
               </p>
             </div>
@@ -117,8 +117,8 @@ export function OnboardingPage() {
       <div className="my-6 h-12 w-px bg-border" />
 
       {/* CTA section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-10 pb-20">
-        <p className="mb-8 text-center text-base leading-relaxed text-muted-foreground">
+      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pb-20">
+        <p className="mb-8 text-center text-sm font-light leading-relaxed text-muted-foreground max-w-md">
           Empieza configurando el ADN visual de tu marca.
           <br />
           Solo necesitas subir algunos assets y FORGE hara el resto.

@@ -121,7 +121,7 @@ export function ResultsGrid({
         <p className="font-serif text-lg italic text-muted-foreground">
           No hay piezas generadas todavia
         </p>
-        <p className="font-sans text-sm text-muted-foreground max-w-[360px]">
+        <p className="text-sm font-light leading-relaxed text-muted-foreground max-w-[360px]">
           Sube una imagen, escribe tu copy, selecciona formatos y genera tu primera campana.
         </p>
       </div>
@@ -129,7 +129,7 @@ export function ResultsGrid({
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 overflow-hidden">
       {/* Header */}
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between flex-wrap gap-4">
@@ -139,7 +139,7 @@ export function ResultsGrid({
             </h2>
             {intentionConfig && (
               <span
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans text-xs font-semibold uppercase tracking-wider"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium uppercase tracking-[0.2em]"
                 style={{
                   backgroundColor: `color-mix(in srgb, var(${intentionConfig.color_token}) 15%, transparent)`,
                   color: `var(${intentionConfig.color_token})`,
@@ -148,7 +148,7 @@ export function ResultsGrid({
                 {intentionConfig.name}
               </span>
             )}
-            <span className="font-mono text-xs text-muted-foreground">
+            <span className="font-mono text-xs font-light text-muted-foreground">
               {formatCount} formatos &middot; {totalPieces} piezas
             </span>
           </div>
@@ -278,7 +278,7 @@ export function ResultsGrid({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 overflow-hidden">
         {formatIds.map((formatId, index) => {
           const piece = getDisplayedPiece(formatId);
           const allVariations = groupedByFormat.get(formatId) || [];

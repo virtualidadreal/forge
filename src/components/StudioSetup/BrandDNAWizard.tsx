@@ -148,7 +148,7 @@ export function BrandDNAWizard({
   // -- Render ---------------------------------------------------------------
 
   return (
-    <div className="flex flex-col gap-10 max-w-lg mx-auto py-6">
+    <div className="flex flex-col gap-10 max-w-lg mx-auto py-8">
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2">
         {stepLabels.map((label, i) => {
@@ -187,8 +187,8 @@ export function BrandDNAWizard({
                 </div>
                 <span
                   className={`
-                    font-sans text-xs transition-colors duration-200
-                    ${isActive || isComplete ? 'text-foreground font-medium' : 'text-muted-foreground'}
+                    text-xs uppercase tracking-[0.2em] transition-colors duration-200
+                    ${isActive || isComplete ? 'text-foreground font-medium' : 'text-muted-foreground font-medium'}
                   `}
                 >
                   {label}
@@ -210,12 +210,12 @@ export function BrandDNAWizard({
 
       {/* Step 1: Upload references */}
       {step === 1 && (
-        <div className="flex flex-col gap-10 piece-card">
+        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-subtle)]">
           <div className="text-center">
-            <h2 className="font-serif text-3xl font-semibold text-foreground">
+            <h2 className="font-serif text-3xl font-medium text-foreground">
               Sube tus assets de marca
             </h2>
-            <p className="font-sans text-sm text-muted-foreground mt-3 max-w-sm mx-auto">
+            <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3 max-w-sm mx-auto">
               Posts de Instagram, stories, banners, packaging... cualquier pieza
               que represente tu identidad visual.
             </p>
@@ -232,7 +232,7 @@ export function BrandDNAWizard({
                 placeholder="Mi Marca"
                 className="
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
-                  font-sans text-sm text-foreground placeholder:text-muted-foreground
+                  font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
                 "
@@ -247,7 +247,7 @@ export function BrandDNAWizard({
                 placeholder="Tu propuesta de valor en una frase"
                 className="
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
-                  font-sans text-sm text-foreground placeholder:text-muted-foreground
+                  font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
                 "
@@ -310,7 +310,7 @@ export function BrandDNAWizard({
                   />
                 </label>
               )}
-              <span className="font-sans text-xs text-muted-foreground">
+              <span className="font-sans text-xs font-light text-muted-foreground">
                 PNG o SVG transparente recomendado
               </span>
             </div>
@@ -337,7 +337,7 @@ export function BrandDNAWizard({
 
       {/* Step 2: Analysis */}
       {step === 2 && (
-        <div className="piece-card">
+        <div className="rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-subtle)]">
           {analysisError ? (
             <div className="flex flex-col items-center gap-4 py-8">
               <p className="font-sans text-sm text-destructive text-center">{analysisError}</p>
@@ -368,12 +368,12 @@ export function BrandDNAWizard({
 
       {/* Step 3: Confirm & Save */}
       {step === 3 && extractedDNA && (
-        <div className="flex flex-col gap-10 piece-card">
+        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-subtle)]">
           <div className="text-center">
-            <h2 className="font-serif text-2xl font-semibold text-foreground">
+            <h2 className="font-serif text-3xl font-medium text-foreground">
               Tu Brand DNA
             </h2>
-            <p className="font-sans text-sm text-muted-foreground mt-1">
+            <p className="text-sm font-light leading-relaxed text-muted-foreground mt-2">
               Revisa el ADN extraido y ajusta lo que necesites.
             </p>
           </div>
@@ -388,7 +388,7 @@ export function BrandDNAWizard({
                 onChange={(e) => setBrandName(e.target.value)}
                 className="
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
-                  font-sans text-sm text-foreground placeholder:text-muted-foreground
+                  font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
                 "
@@ -403,7 +403,7 @@ export function BrandDNAWizard({
                 placeholder="Tagline de la marca"
                 className="
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
-                  font-sans text-sm text-foreground placeholder:text-muted-foreground
+                  font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-colors duration-150
                 "
@@ -412,10 +412,7 @@ export function BrandDNAWizard({
           </div>
 
           {/* DNA Preview */}
-          <div
-            className="rounded-xl bg-card border border-border p-6"
-            style={{ boxShadow: 'var(--shadow-subtle)' }}
-          >
+          <div className="rounded-xl bg-card border border-border p-6 shadow-[var(--shadow-subtle)]">
             <BrandDNAPreview brandDNA={extractedDNA} />
           </div>
 

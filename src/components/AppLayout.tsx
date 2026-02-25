@@ -43,7 +43,7 @@ export function AppLayout() {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground">
       {/* Sidebar */}
-      <aside className="flex w-[260px] shrink-0 flex-col border-r border-border bg-card">
+      <aside className="flex w-[260px] shrink-0 flex-col border-r border-border/50 bg-sidebar">
         {/* Logo */}
         <div className="px-7 pt-8 pb-7">
           <h1 className="font-serif text-2xl font-semibold tracking-tight">
@@ -61,10 +61,10 @@ export function AppLayout() {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3.5 rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                `flex items-center gap-3.5 rounded-xl px-4 py-3 text-[13px] transition-colors ${
                   isActive
-                    ? 'bg-secondary text-foreground'
-                    : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
+                    ? 'bg-secondary text-foreground font-medium'
+                    : 'text-muted-foreground font-light hover:bg-secondary/50 hover:text-foreground'
                 }`
               }
             >
@@ -103,8 +103,8 @@ export function AppLayout() {
 
           {/* Active brand indicator */}
           {activeBrand ? (
-            <div className="rounded-lg bg-secondary px-4 py-3.5">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <div className="rounded-xl bg-secondary px-4 py-3.5">
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 Marca activa
               </p>
               <p className="mt-1 truncate text-sm font-medium text-foreground">
@@ -112,8 +112,8 @@ export function AppLayout() {
               </p>
             </div>
           ) : (
-            <div className="rounded-lg border border-dashed border-border px-4 py-3.5">
-              <p className="text-xs text-muted-foreground">
+            <div className="rounded-xl border border-dashed border-border px-4 py-3.5">
+              <p className="text-xs font-light text-muted-foreground">
                 Sin marca activa
               </p>
             </div>
@@ -122,7 +122,7 @@ export function AppLayout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden">
         <Outlet />
       </main>
     </div>

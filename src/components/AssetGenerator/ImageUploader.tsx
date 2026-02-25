@@ -71,15 +71,15 @@ export function ImageUploader() {
     return (
       <div>
         <SectionLabel>Imagen</SectionLabel>
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-subtle)]">
           <img
             src={imageDataUrl}
             alt={imageFileName ?? 'Imagen subida'}
-            className="w-full max-h-[320px] object-cover rounded-2xl"
+            className="w-full max-h-[280px] object-cover"
           />
-          <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-card/80 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-8 py-5 border-t border-border bg-card/80 backdrop-blur-sm">
             <div className="flex items-center gap-3 min-w-0">
-              <span className="font-sans text-sm text-foreground truncate max-w-[200px]">
+              <span className="font-sans text-sm font-medium text-foreground truncate max-w-[200px]">
                 {imageFileName}
               </span>
               {dimensions && (
@@ -108,7 +108,7 @@ export function ImageUploader() {
         onClick={() => inputRef.current?.click()}
         className={`
           flex flex-col items-center justify-center gap-6
-          min-h-[280px] rounded-2xl border-2 border-dashed cursor-pointer
+          min-h-[240px] rounded-3xl border-2 border-dashed cursor-pointer
           transition-all duration-150
           ${
             dragging
@@ -140,7 +140,7 @@ export function ImageUploader() {
           <p className="font-sans text-sm font-medium text-foreground">
             Arrastra tu imagen aqui
           </p>
-          <p className="font-sans text-xs text-muted-foreground mt-2">
+          <p className="font-sans text-xs font-light text-muted-foreground mt-2">
             JPG, PNG, WebP o HEIC &middot; Max 20 MB
           </p>
         </div>

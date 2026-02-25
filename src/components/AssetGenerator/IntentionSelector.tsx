@@ -79,7 +79,7 @@ export function IntentionSelector() {
               onClick={() => handleSelect(intent.id)}
               className={`
                 relative flex flex-col items-start gap-3 p-6 rounded-2xl
-                border text-left cursor-pointer
+                border text-left cursor-pointer overflow-hidden
                 transition-all duration-150
                 ${
                   isSelected
@@ -102,7 +102,7 @@ export function IntentionSelector() {
               </div>
 
               {/* Description */}
-              <p className="font-sans text-xs text-muted-foreground leading-relaxed line-clamp-2 mt-1">
+              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed line-clamp-2 mt-1">
                 {intent.description}
               </p>
 

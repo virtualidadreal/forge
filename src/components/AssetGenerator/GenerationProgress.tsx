@@ -37,7 +37,7 @@ export function GenerationProgress({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm" style={{ zIndex: 'var(--z-modal)' }}>
       <div
-        className="w-full max-w-[520px] mx-4 bg-card rounded-2xl border border-border p-12"
+        className="w-full max-w-[520px] mx-4 bg-card rounded-3xl border border-border p-12"
         style={{ boxShadow: 'var(--shadow-xl)' }}
       >
         {/* Header */}
@@ -45,7 +45,7 @@ export function GenerationProgress({
           <h2 className="font-serif text-xl font-semibold text-card-foreground mb-1">
             Generando piezas
           </h2>
-          <p className="font-sans text-sm text-muted-foreground">
+          <p className="font-sans text-sm font-light text-muted-foreground">
             {completedFormats.length} de {formats.length} formatos &middot; {formatTime(elapsed)}
           </p>
         </div>
@@ -76,7 +76,7 @@ export function GenerationProgress({
             return (
               <div
                 key={name}
-                className="flex items-center gap-3 px-5 py-2.5 rounded-lg"
+                className={`flex items-center gap-3 px-5 py-2.5 rounded-lg ${isDone ? 'bg-secondary/50' : ''}`}
               >
                 {/* Status icon */}
                 {isDone ? (

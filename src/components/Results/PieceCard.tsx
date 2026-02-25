@@ -54,7 +54,7 @@ export function PieceCard({
 
   return (
     <div
-      className={`piece-card group relative flex flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-150 hover:shadow-[var(--shadow-elevated)] ${
+      className={`group relative flex flex-col rounded-3xl border bg-card overflow-hidden shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] transition-all duration-150 ${
         selected ? 'border-primary ring-1 ring-primary' : 'border-border'
       }`}
     >
@@ -89,7 +89,7 @@ export function PieceCard({
 
       {/* Edited badge */}
       {piece.edited && (
-        <span className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-accent text-accent-foreground font-sans text-[10px] font-semibold uppercase tracking-wider">
+        <span className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full bg-accent text-accent-foreground font-sans text-[10px] font-medium uppercase tracking-[0.2em]">
           Editado
         </span>
       )}
@@ -132,7 +132,7 @@ export function PieceCard({
                   <circle cx="8.5" cy="8.5" r="1.5" />
                   <polyline points="21 15 16 10 5 21" />
                 </svg>
-                <span className="text-[10px] font-mono opacity-60">
+                <span className="font-mono text-[10px] font-light opacity-60">
                   {format.width} x {format.height}
                 </span>
               </div>
@@ -149,12 +149,12 @@ export function PieceCard({
             <p className="font-sans text-sm font-medium text-card-foreground leading-tight">
               {format.name}
             </p>
-            <span className="font-mono text-[11px] text-muted-foreground mt-0.5">
+            <span className="font-mono text-[11px] font-light text-muted-foreground mt-0.5">
               {format.width} x {format.height} &middot; {format.aspect_ratio}
             </span>
           </div>
           <span
-            className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded-full font-sans text-[10px] font-semibold uppercase tracking-wider ${platformClass}`}
+            className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded-full font-sans text-[10px] font-medium uppercase tracking-[0.2em] overflow-hidden ${platformClass}`}
           >
             {format.platform_label}
           </span>

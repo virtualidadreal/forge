@@ -126,6 +126,7 @@ export function GeneratorFlow() {
 
       if (!cancelRef.current) {
         setPieces(pieces);
+        navigate('/results');
       }
     } catch (error) {
       console.error('Generation failed:', error);
@@ -146,16 +147,16 @@ export function GeneratorFlow() {
   }, [setGenerating, setGenerationProgress]);
 
   return (
-    <div className="flex gap-12 max-w-[var(--max-content-width)] mx-auto px-8 py-10 min-h-[calc(100vh-var(--header-height))]">
+    <div className="flex gap-16 max-w-[var(--max-content-width)] mx-auto px-10 lg:px-16 py-12 min-h-[calc(100vh-var(--header-height))]">
       {/* ================================================================= */}
       {/* LEFT COLUMN — Steps (60%) */}
       {/* ================================================================= */}
-      <div className="flex-[3] min-w-0 space-y-12">
+      <div className="flex-[3] min-w-0 space-y-10">
         {/* ---- Step 0: Brand DNA indicator ---- */}
         <div className="relative">
           {activeBrand ? (
             <div
-              className="flex items-center justify-between p-6 rounded-2xl border border-border bg-card cursor-pointer hover:border-muted-foreground transition-all duration-150"
+              className="flex items-center justify-between p-8 rounded-3xl border border-border bg-card shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] cursor-pointer hover:border-muted-foreground transition-all duration-150 overflow-hidden"
               onClick={() => setShowBrandPicker((v) => !v)}
             >
               <div className="flex items-center gap-3">
@@ -172,20 +173,20 @@ export function GeneratorFlow() {
                     </span>
                   </div>
                 )}
-                <div>
-                  <p className="font-sans text-sm font-medium text-foreground">
+                <div className="min-w-0">
+                  <p className="font-sans text-sm font-medium text-foreground truncate">
                     {activeBrand.brand_name}
                   </p>
                   {activeBrand.tagline && (
-                    <p className="font-sans text-xs text-muted-foreground">{activeBrand.tagline}</p>
+                    <p className="font-sans text-xs font-light text-muted-foreground truncate">{activeBrand.tagline}</p>
                   )}
                 </div>
               </div>
-              <span className="font-sans text-xs text-muted-foreground">Cambiar</span>
+              <span className="font-sans text-xs font-light text-muted-foreground shrink-0">Cambiar</span>
             </div>
           ) : (
             <div
-              className="flex items-center justify-between p-6 rounded-2xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-150"
+              className="flex items-center justify-between p-8 rounded-3xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-150 overflow-hidden"
               onClick={() => navigate('/studio')}
             >
               <div className="flex items-center gap-3">
@@ -196,11 +197,11 @@ export function GeneratorFlow() {
                     <line x1="12" y1="16" x2="12.01" y2="16" />
                   </svg>
                 </div>
-                <div>
-                  <p className="font-sans text-sm font-medium text-foreground">
+                <div className="min-w-0">
+                  <p className="font-sans text-sm font-medium text-foreground truncate">
                     Sin marca configurada
                   </p>
-                  <p className="font-sans text-xs text-muted-foreground">
+                  <p className="font-sans text-xs font-light text-muted-foreground truncate">
                     Configura tu Brand DNA para poder generar
                   </p>
                 </div>
@@ -214,7 +215,7 @@ export function GeneratorFlow() {
           {/* Brand picker dropdown */}
           {showBrandPicker && brands.length > 1 && (
             <div
-              className="absolute top-full left-0 right-0 mt-2 rounded-2xl border border-border bg-card shadow-lg overflow-hidden"
+              className="absolute top-full left-0 right-0 mt-2 rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)] overflow-hidden"
               style={{ zIndex: 'var(--z-dropdown)' }}
             >
               {brands.map((brand) => (
@@ -255,7 +256,7 @@ export function GeneratorFlow() {
         <FormatSelector />
 
         {/* ---- Step 5: Generate button ---- */}
-        <div className="sticky bottom-0 py-6 bg-gradient-to-t from-background via-background to-transparent">
+        <div className="sticky bottom-0 py-6 bg-gradient-to-t from-background via-background/95 to-transparent">
           <Button
             variant="primary"
             size="lg"
@@ -279,8 +280,8 @@ export function GeneratorFlow() {
 
           {/* Error feedback */}
           {errorMessage && (
-            <div className="mt-4 p-4 rounded-xl bg-destructive/10 border border-destructive/20">
-              <p className="font-sans text-sm text-destructive text-center">{errorMessage}</p>
+            <div className="mt-4 p-6 rounded-3xl bg-destructive/5 border border-destructive/20">
+              <p className="font-sans text-sm font-light text-destructive text-center">{errorMessage}</p>
             </div>
           )}
         </div>
@@ -295,7 +296,7 @@ export function GeneratorFlow() {
           <div>
             <SectionLabel>Vista previa</SectionLabel>
             {imageDataUrl ? (
-              <div className="rounded-2xl overflow-hidden border border-border bg-card">
+              <div className="rounded-3xl overflow-hidden border border-border bg-card shadow-[var(--shadow-subtle)]">
                 <img
                   src={imageDataUrl}
                   alt={imageFileName ?? 'Preview'}
@@ -303,8 +304,8 @@ export function GeneratorFlow() {
                 />
               </div>
             ) : (
-              <div className="flex items-center justify-center h-44 rounded-2xl border border-dashed border-border bg-card">
-                <p className="font-sans text-sm text-muted-foreground">Sin imagen</p>
+              <div className="flex items-center justify-center h-44 rounded-3xl border border-dashed border-border bg-card">
+                <p className="font-sans text-sm font-light text-muted-foreground">Sin imagen</p>
               </div>
             )}
           </div>
@@ -312,7 +313,7 @@ export function GeneratorFlow() {
           {/* Summary */}
           <div>
             <SectionLabel>Resumen</SectionLabel>
-            <div className="rounded-xl border border-border bg-card p-6 space-y-5">
+            <div className="rounded-3xl border border-border bg-card p-8 space-y-5 shadow-[var(--shadow-subtle)]">
               {/* Brand */}
               <SummaryRow
                 label="Marca"
@@ -397,7 +398,7 @@ function SummaryRow({
 }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="font-sans text-xs text-muted-foreground">{label}</span>
+      <span className="font-sans text-xs font-light text-muted-foreground">{label}</span>
       <span
         className={`text-xs font-medium text-foreground ${mono ? 'font-mono' : 'font-sans'}`}
       >

@@ -156,7 +156,7 @@ export function FormatSelector() {
                       key={fmt.id}
                       onClick={() => toggleFormat(fmt.id)}
                       className={`
-                        flex items-center gap-3.5 p-4 rounded-xl border text-left
+                        flex items-center gap-3.5 p-4 rounded-xl border text-left overflow-hidden
                         transition-all duration-150 cursor-pointer
                         ${
                           isSelected

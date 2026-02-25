@@ -197,8 +197,8 @@ export function CopyInput() {
       </div>
 
       {noCopy ? (
-        <div className="flex items-center justify-center h-28 rounded-2xl border border-dashed border-border bg-card">
-          <p className="font-sans text-sm text-muted-foreground">
+        <div className="flex items-center justify-center h-28 rounded-3xl border border-dashed border-border bg-card">
+          <p className="font-sans text-sm font-light text-muted-foreground">
             La pieza se generara solo con imagen y marca
           </p>
         </div>
@@ -212,7 +212,7 @@ export function CopyInput() {
             rows={5}
             className="
               w-full resize-none rounded-2xl border border-border bg-card px-6 py-5
-              font-sans text-sm text-foreground placeholder:text-muted-foreground
+              font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
               focus:outline-none focus:ring-2 focus:ring-ring
               transition-all duration-150
             "
@@ -228,7 +228,7 @@ export function CopyInput() {
                     key={i}
                     className={`
                       inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
-                      font-sans text-xs font-medium
+                      font-sans text-xs font-medium overflow-hidden max-w-full
                       ${style.bg} ${style.text}
                     `}
                   >

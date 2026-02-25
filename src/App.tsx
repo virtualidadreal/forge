@@ -10,13 +10,13 @@ import { OnboardingPage } from './pages/OnboardingPage';
 import { useBrandDNAStore } from './store/brandDNA.store';
 
 // ---------------------------------------------------------------------------
-// Root redirect: show onboarding when no brands exist, generator otherwise
+// Root redirect: navigate to onboarding when no brands exist, generator otherwise
 // ---------------------------------------------------------------------------
 
 function RootRedirect() {
   const brands = useBrandDNAStore((s) => s.brands);
   if (brands.length === 0) {
-    return <OnboardingPage />;
+    return <Navigate to="/onboarding" replace />;
   }
   return <Navigate to="/generator" replace />;
 }
@@ -30,6 +30,10 @@ function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
+          {/* Onboarding — full-page, no sidebar */}
+          <Route path="/onboarding" element={<OnboardingPage />} />
+
+          {/* App routes — with sidebar */}
           <Route element={<AppLayout />}>
             <Route path="/" element={<RootRedirect />} />
             <Route path="/studio" element={<StudioPage />} />

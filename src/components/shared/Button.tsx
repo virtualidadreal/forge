@@ -12,22 +12,22 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98]',
+  primary: 'bg-foreground text-background border border-foreground hover:bg-transparent hover:text-foreground',
   secondary:
-    'bg-secondary text-secondary-foreground border border-border hover:bg-muted',
-  ghost: 'text-muted-foreground hover:bg-secondary hover:text-foreground',
+    'bg-transparent text-foreground border border-foreground/30 hover:bg-foreground hover:text-background',
+  ghost: 'text-muted-foreground hover:bg-secondary hover:text-foreground border-transparent',
   destructive:
-    'bg-destructive text-destructive-foreground hover:opacity-90',
+    'bg-destructive text-destructive-foreground border border-destructive hover:opacity-90',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'px-4 py-2 text-xs gap-2',
-  md: 'px-6 py-3 text-sm gap-2.5',
-  lg: 'px-8 py-4 text-base gap-3',
+  sm: 'px-5 py-2.5 text-[11px] gap-2',
+  md: 'px-8 py-3 text-xs gap-2.5',
+  lg: 'px-10 py-4 text-sm gap-3',
 };
 
 const baseClasses =
-  'inline-flex items-center justify-center rounded-2xl font-sans font-medium tracking-wide transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-ring select-none';
+  'inline-flex items-center justify-center rounded-full font-sans font-medium uppercase tracking-[0.2em] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-ring select-none';
 
 function Spinner() {
   return (
