@@ -140,15 +140,15 @@ export function GeneratorFlow() {
   }, [setGenerating, setGenerationProgress]);
 
   return (
-    <div className="flex gap-8 max-w-[var(--max-content-width)] mx-auto px-6 py-8 min-h-[calc(100vh-var(--header-height))]">
+    <div className="flex gap-10 max-w-[var(--max-content-width)] mx-auto px-6 py-8 min-h-[calc(100vh-var(--header-height))]">
       {/* ================================================================= */}
       {/* LEFT COLUMN — Steps (60%) */}
       {/* ================================================================= */}
-      <div className="flex-[3] min-w-0 space-y-8">
+      <div className="flex-[3] min-w-0 space-y-10">
         {/* ---- Step 0: Brand DNA indicator ---- */}
         <div className="relative">
           <div
-            className="flex items-center justify-between p-4 rounded-xl border border-border bg-card cursor-pointer hover:border-muted-foreground transition-all duration-150"
+            className="flex items-center justify-between p-5 rounded-xl border border-border bg-card cursor-pointer hover:border-muted-foreground transition-all duration-150"
             onClick={() => setShowBrandPicker((v) => !v)}
           >
             <div className="flex items-center gap-3">
@@ -225,7 +225,7 @@ export function GeneratorFlow() {
         <FormatSelector />
 
         {/* ---- Step 5: Generate button ---- */}
-        <div className="sticky bottom-0 py-4 bg-gradient-to-t from-background via-background to-transparent">
+        <div className="sticky bottom-0 py-5 bg-gradient-to-t from-background via-background to-transparent">
           <Button
             variant="primary"
             size="lg"
@@ -251,7 +251,7 @@ export function GeneratorFlow() {
       {/* RIGHT COLUMN — Preview panel (40%) */}
       {/* ================================================================= */}
       <aside className="flex-[2] min-w-0 hidden lg:block">
-        <div className="sticky top-[calc(var(--header-height)+2rem)] space-y-6">
+        <div className="sticky top-[calc(var(--header-height)+2rem)] space-y-8">
           {/* Image preview */}
           <div>
             <SectionLabel>Vista previa</SectionLabel>
@@ -273,7 +273,7 @@ export function GeneratorFlow() {
           {/* Summary */}
           <div>
             <SectionLabel>Resumen</SectionLabel>
-            <div className="rounded-xl border border-border bg-card p-4 space-y-3">
+            <div className="rounded-xl border border-border bg-card p-5 space-y-4">
               {/* Brand */}
               <SummaryRow
                 label="Marca"
@@ -285,7 +285,7 @@ export function GeneratorFlow() {
                 label="Intencion"
                 value={
                   activeIntention
-                    ? `${activeIntention.icon} ${activeIntention.name}`
+                    ? activeIntention.name
                     : 'No seleccionada'
                 }
               />

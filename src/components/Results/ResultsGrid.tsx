@@ -129,12 +129,12 @@ export function ResultsGrid({
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       {/* Header */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center gap-3">
-            <h2 className="font-serif text-2xl italic text-foreground leading-tight">
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-4">
+            <h2 className="font-serif text-3xl italic text-foreground leading-tight">
               {brand?.brand_name || 'Campana'}
             </h2>
             {intentionConfig && (
@@ -145,7 +145,6 @@ export function ResultsGrid({
                   color: `var(${intentionConfig.color_token})`,
                 }}
               >
-                <span>{intentionConfig.icon}</span>
                 {intentionConfig.name}
               </span>
             )}
@@ -156,7 +155,7 @@ export function ResultsGrid({
         </div>
 
         {/* Global actions bar */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-3 flex-wrap">
           <Button
             variant="primary"
             size="sm"
@@ -279,7 +278,7 @@ export function ResultsGrid({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
         {formatIds.map((formatId, index) => {
           const piece = getDisplayedPiece(formatId);
           const allVariations = groupedByFormat.get(formatId) || [];

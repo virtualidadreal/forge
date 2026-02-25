@@ -168,7 +168,7 @@ export function CopyInput() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-4">
         <SectionLabel>Copy</SectionLabel>
         <div className="flex items-center gap-3">
           {/* No copy toggle (for branding or by choice) */}
@@ -197,7 +197,7 @@ export function CopyInput() {
       </div>
 
       {noCopy ? (
-        <div className="flex items-center justify-center h-20 rounded-xl border border-dashed border-border bg-card">
+        <div className="flex items-center justify-center h-24 rounded-xl border border-dashed border-border bg-card">
           <p className="font-sans text-sm text-muted-foreground">
             La pieza se generara solo con imagen y marca
           </p>
@@ -211,7 +211,7 @@ export function CopyInput() {
             placeholder="Pega todo tu copy aqui. Cada linea se clasificara automaticamente como titular, subtitulo, CTA..."
             rows={5}
             className="
-              w-full resize-none rounded-xl border border-border bg-card px-4 py-3
+              w-full resize-none rounded-xl border border-border bg-card px-5 py-4
               font-sans text-sm text-foreground placeholder:text-muted-foreground
               focus:outline-none focus:ring-2 focus:ring-ring
               transition-all duration-150
@@ -220,7 +220,7 @@ export function CopyInput() {
 
           {/* Classification preview chips */}
           {classified.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {classified.map((chunk, i) => {
                 const style = ROLE_STYLES[chunk.role];
                 return (
@@ -245,7 +245,7 @@ export function CopyInput() {
         <div className="space-y-3">
           {STRUCTURED_FIELDS.map((field) => (
             <div key={field.key}>
-              <label className="block font-sans text-xs font-medium text-muted-foreground mb-1">
+              <label className="block font-sans text-xs font-medium text-muted-foreground mb-2">
                 {field.label}
               </label>
               <textarea
@@ -254,7 +254,7 @@ export function CopyInput() {
                 placeholder={field.placeholder}
                 rows={field.rows}
                 className="
-                  w-full resize-none rounded-lg border border-border bg-card px-3 py-2
+                  w-full resize-none rounded-lg border border-border bg-card px-4 py-3
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-all duration-150

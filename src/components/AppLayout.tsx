@@ -3,15 +3,15 @@ import { useBrandDNAStore } from '../store/brandDNA.store';
 import { useCallback, useEffect, useState } from 'react';
 
 // ---------------------------------------------------------------------------
-// Navigation items
+// Navigation items with SVG icon paths
 // ---------------------------------------------------------------------------
 
 const navItems = [
-  { to: '/studio', label: 'Studio', icon: '\uD83C\uDFA8' },
-  { to: '/generator', label: 'Generar', icon: '\u2728' },
-  { to: '/results', label: 'Resultados', icon: '\uD83D\uDCCA' },
-  { to: '/editor', label: 'Editor', icon: '\u270F\uFE0F' },
-  { to: '/history', label: 'Historial', icon: '\uD83D\uDD52' },
+  { to: '/studio', label: 'Studio', iconPath: 'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5' },
+  { to: '/generator', label: 'Generar', iconPath: 'M12 5v14M5 12h14' },
+  { to: '/results', label: 'Resultados', iconPath: 'M4 6h16M4 10h16M4 14h10M4 18h6' },
+  { to: '/editor', label: 'Editor', iconPath: 'M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z' },
+  { to: '/history', label: 'Historial', iconPath: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
 ] as const;
 
 // ---------------------------------------------------------------------------
@@ -43,59 +43,76 @@ export function AppLayout() {
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-background text-foreground">
       {/* Sidebar */}
-      <aside className="flex w-[220px] shrink-0 flex-col border-r border-border bg-card">
+      <aside className="flex w-[240px] shrink-0 flex-col border-r border-border bg-card">
         {/* Logo */}
-        <div className="px-5 pt-6 pb-4">
+        <div className="px-6 pt-7 pb-6">
           <h1 className="font-serif text-3xl font-semibold tracking-tight">
             FORGE
           </h1>
         </div>
 
+        {/* Separator */}
+        <div className="section-divider mx-5 mb-4" />
+
         {/* Navigation */}
-        <nav className="flex flex-1 flex-col gap-1 px-3">
-          {navItems.map(({ to, label, icon }) => (
+        <nav className="flex flex-1 flex-col gap-1.5 px-4">
+          {navItems.map(({ to, label, iconPath }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                `flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-secondary text-foreground'
                     : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
                 }`
               }
             >
-              <span className="text-base leading-none">{icon}</span>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="shrink-0 opacity-60"
+              >
+                <path d={iconPath} />
+              </svg>
               {label}
             </NavLink>
           ))}
         </nav>
 
         {/* Bottom section */}
-        <div className="mt-auto border-t border-border px-4 py-4">
+        <div className="mt-auto border-t border-border px-5 py-5">
           {/* Dark mode toggle */}
           <button
             onClick={toggleTheme}
-            className="mb-3 flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="mb-4 flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
           >
-            <span className="text-base leading-none">
-              {isDark ? '\u2600\uFE0F' : '\uD83C\uDF19'}
-            </span>
+            {isDark ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            )}
             {isDark ? 'Modo claro' : 'Modo oscuro'}
           </button>
 
           {/* Active brand indicator */}
           {activeBrand ? (
-            <div className="rounded-lg bg-secondary px-3 py-2">
+            <div className="rounded-lg bg-secondary px-4 py-3">
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Marca activa
               </p>
-              <p className="mt-0.5 truncate text-sm font-medium text-foreground">
+              <p className="mt-1 truncate text-sm font-medium text-foreground">
                 {activeBrand.brand_name}
               </p>
             </div>
           ) : (
-            <div className="rounded-lg border border-dashed border-border px-3 py-2">
+            <div className="rounded-lg border border-dashed border-border px-4 py-3">
               <p className="text-xs text-muted-foreground">
                 Sin marca activa
               </p>

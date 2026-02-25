@@ -24,7 +24,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'convert',
     name: 'Convert',
     description: 'Clicks y ventas directas. CTA prominente, pills de beneficios, jerarquia persuasiva.',
-    icon: '\u{1F3AF}', // target
+    icon: 'convert',
     color_token: '--color-intention-convert',
     composition_rules: {
       text_zone: 'clean_zone',
@@ -43,7 +43,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'awareness',
     name: 'Awareness',
     description: 'Presencia de marca sin presion de compra. Imagen protagonista, logo prominente, sin CTA.',
-    icon: '\u{1F441}\u{FE0F}', // eye
+    icon: 'awareness',
     color_token: '--color-intention-awareness',
     composition_rules: {
       text_zone: 'clean_zone',
@@ -62,7 +62,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'editorial',
     name: 'Editorial',
     description: 'Contenido que parece organico. Mix de pesos tipograficos, texto inline sobre la imagen.',
-    icon: '\u{1F4F0}', // newspaper
+    icon: 'editorial',
     color_token: '--color-intention-editorial',
     composition_rules: {
       text_zone: 'on_subject',
@@ -81,7 +81,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'campaign',
     name: 'Campaign',
     description: 'Pieza de campana completa. Titular hero, logo con tagline, narrativa en tres capas.',
-    icon: '\u{1F680}', // rocket
+    icon: 'campaign',
     color_token: '--color-intention-campaign',
     composition_rules: {
       text_zone: 'edge',
@@ -100,7 +100,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'branding',
     name: 'Branding',
     description: 'Reconocimiento de marca puro. Sin texto o texto minimo. La imagen es el 95-100% de la comunicacion.',
-    icon: '\u{2728}', // sparkles
+    icon: 'branding',
     color_token: '--color-intention-branding',
     composition_rules: {
       text_zone: 'edge',
@@ -119,7 +119,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'urgency',
     name: 'Urgency',
     description: 'Velocidad + calidez. Titular heavy en mayusculas, subtitulo en cursiva personal.',
-    icon: '\u{26A1}', // lightning
+    icon: 'urgency',
     color_token: '--color-intention-urgency',
     composition_rules: {
       text_zone: 'clean_zone',
@@ -138,7 +138,7 @@ export const INTENTIONS: IntentionConfig[] = [
     id: 'social_proof',
     name: 'Social Proof',
     description: 'Credibilidad visual. Rating badge, quote de review, CTA tras la prueba social.',
-    icon: '\u{2B50}', // star
+    icon: 'social_proof',
     color_token: '--color-intention-social-proof',
     composition_rules: {
       text_zone: 'clean_zone',

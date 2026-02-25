@@ -24,12 +24,12 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
   // Empty state
   if (brands.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 gap-5">
+      <div className="flex flex-col items-center justify-center py-20 gap-6">
         {/* Empty illustration */}
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary">
+        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-secondary">
           <svg
-            width="28"
-            height="28"
+            width="32"
+            height="32"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -44,10 +44,10 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
           </svg>
         </div>
         <div className="text-center">
-          <p className="font-serif text-lg font-semibold text-foreground">
+          <p className="font-serif text-xl font-semibold text-foreground">
             No tienes marcas configuradas
           </p>
-          <p className="font-sans text-sm text-muted-foreground mt-1 max-w-xs">
+          <p className="font-sans text-sm text-muted-foreground mt-2 max-w-sm">
             Sube assets de tu marca y extraeremos el ADN visual automaticamente.
           </p>
         </div>
@@ -59,10 +59,10 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-lg font-semibold text-foreground">
+        <h2 className="font-serif text-xl font-semibold text-foreground">
           Tus marcas
         </h2>
         <Button onClick={onCreateNew} size="sm" variant="secondary">
@@ -84,7 +84,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {brands.map((brand) => {
           const isActive = brand.brand_id === activeBrandId;
           const paletteColors = [
@@ -102,7 +102,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
             <div
               key={brand.brand_id}
               className={`
-                group relative flex flex-col gap-3 rounded-xl border p-4
+                group relative flex flex-col gap-4 rounded-2xl border p-5
                 transition-all duration-150 cursor-pointer
                 ${
                   isActive
@@ -115,7 +115,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
             >
               {/* Active indicator */}
               {isActive && (
-                <div className="absolute -top-px -left-px -right-px h-0.5 rounded-t-xl bg-primary" />
+                <div className="absolute -top-px -left-px -right-px h-0.5 rounded-t-2xl bg-primary" />
               )}
 
               {/* Brand name + confidence */}
@@ -144,15 +144,19 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                 ))}
               </div>
 
-              {/* Actions row — visible on hover */}
-              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+              {/* Actions row -- visible on hover */}
+              <div className="flex gap-1.5 pt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit(brand);
                   }}
-                  className="font-sans text-[11px] text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 font-sans text-[11px] text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
                 >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
                   Editar
                 </button>
                 <button
@@ -160,8 +164,12 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     duplicateBrand(brand.brand_id);
                   }}
-                  className="font-sans text-[11px] text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 font-sans text-[11px] text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
                 >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                  </svg>
                   Duplicar
                 </button>
                 <button
@@ -169,8 +177,12 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     setDeleteTarget(brand.brand_id);
                   }}
-                  className="font-sans text-[11px] text-destructive hover:text-destructive px-2 py-1 rounded-md hover:bg-destructive/10 transition-colors"
+                  className="inline-flex items-center gap-1.5 font-sans text-[11px] text-destructive hover:text-destructive px-2.5 py-1.5 rounded-lg hover:bg-destructive/10 transition-colors"
                 >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                  </svg>
                   Eliminar
                 </button>
               </div>

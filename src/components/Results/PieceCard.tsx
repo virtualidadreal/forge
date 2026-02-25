@@ -54,7 +54,7 @@ export function PieceCard({
 
   return (
     <div
-      className={`piece-card group relative flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-150 hover:shadow-[var(--shadow-elevated)] ${
+      className={`piece-card group relative flex flex-col rounded-2xl border bg-card overflow-hidden transition-all duration-150 hover:shadow-[var(--shadow-elevated)] ${
         selected ? 'border-primary ring-1 ring-primary' : 'border-border'
       }`}
     >
@@ -95,7 +95,7 @@ export function PieceCard({
       )}
 
       {/* Preview area */}
-      <div className="relative w-full bg-muted flex items-center justify-center p-4">
+      <div className="relative w-full bg-muted flex items-center justify-center p-5">
         <div
           className="w-full rounded-lg overflow-hidden"
           style={{
@@ -142,14 +142,14 @@ export function PieceCard({
       </div>
 
       {/* Card info */}
-      <div className="flex flex-col gap-3 p-4">
+      <div className="flex flex-col gap-4 p-5">
         {/* Format name + platform badge */}
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex flex-col gap-1">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-col gap-1.5">
             <p className="font-sans text-sm font-medium text-card-foreground leading-tight">
               {format.name}
             </p>
-            <span className="font-mono text-[11px] text-muted-foreground">
+            <span className="font-mono text-[11px] text-muted-foreground mt-0.5">
               {format.width} x {format.height} &middot; {format.aspect_ratio}
             </span>
           </div>
@@ -171,7 +171,7 @@ export function PieceCard({
         )}
 
         {/* Actions */}
-        <div className="flex items-center gap-2 pt-1">
+        <div className="flex items-center gap-3 pt-2">
           <Button
             variant="secondary"
             size="sm"

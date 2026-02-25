@@ -81,13 +81,13 @@ export function AnalysisProgress({
   }, [currentStep]);
 
   return (
-    <div className="flex flex-col items-center gap-8 py-4">
+    <div className="flex flex-col items-center gap-10 py-6">
       {/* Header */}
       <div className="text-center">
-        <h3 className="font-serif text-xl font-semibold text-foreground">
+        <h3 className="font-serif text-2xl font-semibold text-foreground">
           Analizando tu marca
         </h3>
-        <p className="font-sans text-sm text-muted-foreground mt-1">
+        <p className="font-sans text-sm text-muted-foreground mt-2">
           Extrayendo el ADN visual de tus assets
         </p>
       </div>
@@ -106,7 +106,7 @@ export function AnalysisProgress({
             }}
           />
         </div>
-        <div className="flex justify-between mt-2">
+        <div className="flex justify-between mt-3">
           <span className="font-mono text-xs text-muted-foreground tabular-nums">
             {Math.round(progress)}%
           </span>
@@ -117,7 +117,7 @@ export function AnalysisProgress({
       </div>
 
       {/* Step checklist */}
-      <div className="w-full max-w-sm flex flex-col gap-1">
+      <div className="w-full max-w-sm flex flex-col gap-1.5">
         {ANALYSIS_STEPS.map((label, i) => {
           const status = animatedSteps[i];
           return (
