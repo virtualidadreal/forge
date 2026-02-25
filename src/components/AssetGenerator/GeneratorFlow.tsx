@@ -333,51 +333,64 @@ export function GeneratorFlow() {
         <div>
           <SectionLabel>Modo de generacion</SectionLabel>
           <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setGenerationMode('compositor')}
-              className={`
-                flex flex-col gap-2 p-5 rounded-2xl border-2 text-left transition-all duration-300
-                ${generationMode === 'compositor'
-                  ? 'border-foreground bg-accent/10 shadow-subtle'
-                  : 'border-border/50 bg-card hover:border-muted-foreground'}
-              `}
-            >
-              <div className="flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                  <line x1="3" y1="9" x2="21" y2="9" />
-                  <line x1="9" y1="21" x2="9" y2="9" />
-                </svg>
-                <span className="font-sans text-sm font-medium text-foreground">Rapido</span>
-              </div>
-              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
-                Composicion con overlay de texto sobre tu imagen.
-              </p>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setGenerationMode('generative')}
-              className={`
-                flex flex-col gap-2 p-5 rounded-2xl border-2 text-left transition-all duration-300
-                ${generationMode === 'generative'
-                  ? 'border-foreground bg-accent/10 shadow-subtle'
-                  : 'border-border/50 bg-card hover:border-muted-foreground'}
-              `}
-            >
-              <div className="flex items-center gap-2">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-                <span className="font-sans text-sm font-medium text-foreground">Agencia</span>
-              </div>
-              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
-                IA generativa transforma tu imagen con estilo de marca.
-              </p>
-            </button>
+            {([
+              {
+                mode: 'compositor' as const,
+                label: 'Rapido',
+                desc: 'Pone tu copy sobre la foto con el estilo de tu marca. 1 variacion por formato.',
+                icon: (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <line x1="3" y1="9" x2="21" y2="9" />
+                    <line x1="9" y1="21" x2="9" y2="9" />
+                  </svg>
+                ),
+              },
+              {
+                mode: 'generative' as const,
+                label: 'Agencia',
+                desc: 'La IA genera piezas nuevas transformando tu foto con el estilo de marca. 3 variaciones por formato.',
+                icon: (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                ),
+              },
+            ]).map(({ mode, label, desc, icon }) => {
+              const selected = generationMode === mode;
+              return (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setGenerationMode(mode)}
+                  className={`
+                    flex items-start gap-3 p-5 rounded-2xl border-2 text-left transition-all duration-300
+                    ${selected
+                      ? 'border-foreground bg-accent/10 shadow-subtle'
+                      : 'border-border/50 bg-card hover:border-muted-foreground'}
+                  `}
+                >
+                  {/* Radio indicator */}
+                  <div className={`
+                    mt-0.5 shrink-0 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors duration-300
+                    ${selected ? 'border-foreground' : 'border-muted-foreground/50'}
+                  `}>
+                    {selected && <div className="w-2 h-2 rounded-full bg-foreground" />}
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-1.5">
+                      {icon}
+                      <span className="font-sans text-sm font-medium text-foreground">{label}</span>
+                    </div>
+                    <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
+                      {desc}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
