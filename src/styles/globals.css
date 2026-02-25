@@ -29,9 +29,9 @@
   --color-intent-branding: var(--intent-branding);
   --color-intent-urgency: var(--intent-urgency);
   --color-intent-socialproof: var(--intent-socialproof);
-  --font-family-sans: var(--font-sans);
-  --font-family-serif: var(--font-serif);
-  --font-family-mono: var(--font-mono);
+  --font-sans: 'Inter', 'Helvetica Neue', sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
