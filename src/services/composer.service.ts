@@ -621,6 +621,7 @@ export async function generateCompositions(
 
   // Step 1: Analyze image with Claude Vision
   const imageAnalysis = await analyzeImageForComposition(imageBase64, brandDNA, intention, copy);
+  console.log('[FORGE] imageAnalysis result:', JSON.stringify(imageAnalysis, null, 2));
 
   // Step 2: Generate instructions for each format x 3 variations
   const instructions: CompositionInstruction[] = [];
@@ -639,5 +640,6 @@ export async function generateCompositions(
     }
   }
 
+  console.log('[FORGE] Generated instructions:', JSON.stringify(instructions.slice(0, 3), null, 2));
   return instructions;
 }
