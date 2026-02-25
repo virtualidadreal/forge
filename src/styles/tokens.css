@@ -1,0 +1,135 @@
+:root {
+  --background: #F0EEE9;
+  --foreground: #1A1A1A;
+  --card: #F2EFE6;
+  --card-foreground: #1A1A1A;
+  --primary: #1A1A1A;
+  --primary-foreground: #F0EEE9;
+  --secondary: #E6E0D4;
+  --secondary-foreground: #1A1A1A;
+  --muted: #DDD8CE;
+  --muted-foreground: #666666;
+  --accent: #D9CEBC;
+  --accent-foreground: #1A1A1A;
+  --border: #D4CEC3;
+  --input: #D4CEC3;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --sidebar: #F2EFE6;
+  --sidebar-foreground: #1A1A1A;
+  --ring: #1A1A1A;
+  --selection: rgba(212, 206, 195, 0.6);
+
+  --intent-convert: #B91C1C;
+  --intent-awareness: #166534;
+  --intent-editorial: #1E40AF;
+  --intent-campaign: #5B21B6;
+  --intent-branding: #78350F;
+  --intent-urgency: #C2410C;
+  --intent-socialproof: #065F46;
+
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-lg: 17px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 40px;
+  --font-size-5xl: 52px;
+
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --tracking-wider: 0.08em;
+  --tracking-widest: 0.12em;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 96px;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+  --radius-full: 9999px;
+
+  --shadow-subtle: 0 2px 20px -5px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 10px 40px -10px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 60px -15px rgba(0, 0, 0, 0.16);
+
+  --transition-fast: 100ms ease;
+  --transition-normal: 150ms ease;
+  --transition-slow: 250ms ease-out;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --sidebar-width: 220px;
+  --panel-right-width: 280px;
+  --header-height: 52px;
+  --max-content-width: 1440px;
+
+  --z-canvas: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+[data-theme="dark"] {
+  --background: hsl(0, 0%, 8%);
+  --foreground: hsl(43, 33%, 93%);
+  --card: hsl(0, 0%, 10%);
+  --card-foreground: hsl(43, 33%, 93%);
+  --primary: hsl(43, 33%, 93%);
+  --primary-foreground: hsl(0, 0%, 8%);
+  --secondary: hsl(0, 0%, 15%);
+  --secondary-foreground: hsl(43, 33%, 93%);
+  --muted: hsl(0, 0%, 18%);
+  --muted-foreground: hsl(43, 10%, 55%);
+  --accent: hsl(0, 0%, 20%);
+  --accent-foreground: hsl(43, 33%, 93%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 20%);
+  --sidebar: hsl(0, 0%, 10%);
+  --sidebar-foreground: hsl(43, 33%, 93%);
+  --ring: hsl(43, 33%, 93%);
+  --selection: rgba(240, 237, 228, 0.12);
+  --shadow-subtle: 0 2px 20px -5px rgba(0, 0, 0, 0.35);
+  --shadow-elevated: 0 10px 40px -10px rgba(0, 0, 0, 0.55);
+  --intent-convert: #FCA5A5;
+  --intent-awareness: #6EE7A0;
+  --intent-editorial: #93C5FD;
+  --intent-campaign: #C4B5FD;
+  --intent-branding: #FCD5A0;
+  --intent-urgency: #FDBA74;
+  --intent-socialproof: #6EE7B7;
+}
