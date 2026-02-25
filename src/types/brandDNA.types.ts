@@ -63,4 +63,6 @@ export interface BrandDNA {
   copy_tone: BrandCopyTone;
   reference_assets_count: number;
   confidence_score: number;
+  /** Compressed reference asset data URLs for generative mode */
+  reference_assets?: string[];
 }

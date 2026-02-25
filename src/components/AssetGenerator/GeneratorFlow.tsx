@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSessionStore } from '../../store/session.store';
 import { useBrandDNAStore } from '../../store/brandDNA.store';
 import { useResultsStore } from '../../store/results.store';
-import { V1_FORMATS } from '../../constants/formats';
+import { V1_FORMATS, getFormatById } from '../../constants/formats';
 import { INTENTIONS } from '../../constants/intentions';
 import type { GeneratedPiece } from '../../types/composition.types';
+import type { VariationMode } from '../../services/generativePrompts.service';
 import { Button, SectionLabel } from '../shared';
 import { ImageUploader } from './ImageUploader';
 import { CopyInput } from './CopyInput';
@@ -14,6 +15,9 @@ import { FormatSelector } from './FormatSelector';
 import { GenerationProgress } from './GenerationProgress';
 import { generateCompositions } from '../../services/composer.service';
 import { renderPiece, renderToDataUrl } from '../../services/renderer.service';
+import { generateWithNanoBanana, resetNanoBananaClient } from '../../services/nanoBanana.service';
+import { buildGenerativePrompt } from '../../services/generativePrompts.service';
+import { buildReferenceImages } from '../../services/referenceBuilder.service';
 
 export function GeneratorFlow() {
   const {
@@ -26,6 +30,8 @@ export function GeneratorFlow() {
     setGenerating,
     setGenerationProgress,
     generationProgress,
+    generationMode,
+    setGenerationMode,
   } = useSessionStore();
 
   const { getActiveBrand, brands, setActiveBrand } = useBrandDNAStore();
@@ -37,12 +43,18 @@ export function GeneratorFlow() {
   const [showBrandPicker, setShowBrandPicker] = useState(false);
   const [completedFormatNames, setCompletedFormatNames] = useState<string[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [googleApiKey, setGoogleApiKey] = useState(
+    () => localStorage.getItem('forge-google-ai-key') || '',
+  );
   const cancelRef = useRef(false);
+
+  const hasGoogleKey = !!googleApiKey || !!import.meta.env.VITE_GOOGLE_AI_KEY;
 
   const selectedFormatSpecs = V1_FORMATS.filter((f) => selectedFormats.includes(f.id));
   const selectedFormatNames = selectedFormatSpecs.map((f) => f.name);
   const activeIntention = INTENTIONS.find((i) => i.id === intention);
-  const canGenerate = !!imageDataUrl && selectedFormats.length > 0 && !!activeBrand;
+  const canGenerate = !!imageDataUrl && selectedFormats.length > 0 && !!activeBrand
+    && (generationMode === 'compositor' || hasGoogleKey);
 
   const handleGenerate = useCallback(async () => {
     if (!canGenerate || !activeBrand) return;
@@ -85,6 +97,7 @@ export function GeneratorFlow() {
             id: `${instruction.format}-v${instruction.variation_seed}-${Date.now()}`,
             format_id: instruction.format,
             variation: instruction.variation_seed,
+            generation_mode: 'compositor',
             composition: instruction,
             preview_data_url: previewDataUrl,
             edited: false,
@@ -95,6 +108,7 @@ export function GeneratorFlow() {
             id: `${instruction.format}-v${instruction.variation_seed}-${Date.now()}`,
             format_id: instruction.format,
             variation: instruction.variation_seed,
+            generation_mode: 'compositor',
             composition: instruction,
             edited: false,
           });
@@ -129,6 +143,120 @@ export function GeneratorFlow() {
     setGenerationProgress(0);
     setCompletedFormatNames([]);
   }, [setGenerating, setGenerationProgress]);
+
+  const handleSaveGoogleKey = useCallback((key: string) => {
+    localStorage.setItem('forge-google-ai-key', key);
+    setGoogleApiKey(key);
+    resetNanoBananaClient();
+  }, []);
+
+  const handleGenerateGenerative = useCallback(async () => {
+    if (!canGenerate || !activeBrand) return;
+    setErrorMessage(null);
+    cancelRef.current = false;
+    setGenerating(true);
+    setGenerationProgress(0);
+    setCompletedFormatNames([]);
+
+    try {
+      const imageBase64 = imageDataUrl!.split(',')[1] || imageDataUrl!;
+
+      // Build reference images once for all formats
+      const refs = buildReferenceImages({
+        userPhotoBase64: imageBase64,
+        brandStyleReferences: activeBrand.reference_assets || [],
+        logoDataUrl: activeBrand.logo_url || undefined,
+        intention,
+      });
+
+      setGenerationProgress(5);
+
+      const selectedSpecs = selectedFormats
+        .map((id) => getFormatById(id))
+        .filter(Boolean) as import('../../types/format.types').FormatSpec[];
+
+      const variationModes: VariationMode[] = ['clean', 'rich', 'bold'];
+      const totalJobs = selectedSpecs.length * variationModes.length;
+      const pieces: GeneratedPiece[] = [];
+      let completed = 0;
+
+      for (const format of selectedSpecs) {
+        if (cancelRef.current) break;
+
+        for (let vi = 0; vi < variationModes.length; vi++) {
+          if (cancelRef.current) break;
+
+          const variationMode = variationModes[vi];
+          const variationSeed = (vi + 1) as 1 | 2 | 3;
+
+          const prompt = buildGenerativePrompt({
+            intention,
+            copy,
+            brandDNA: activeBrand,
+            format,
+            variationMode,
+          });
+
+          try {
+            const base64Image = await generateWithNanoBanana({
+              prompt,
+              referenceImages: refs,
+              modelTier: 'fast',
+            });
+
+            const previewDataUrl = `data:image/png;base64,${base64Image}`;
+
+            pieces.push({
+              id: `${format.id}-v${variationSeed}-${Date.now()}`,
+              format_id: format.id,
+              variation: variationSeed,
+              generation_mode: 'generative',
+              preview_data_url: previewDataUrl,
+              edited: false,
+            });
+          } catch (err) {
+            console.error(`Generative failed for ${format.id} v${variationSeed}:`, err);
+            pieces.push({
+              id: `${format.id}-v${variationSeed}-${Date.now()}`,
+              format_id: format.id,
+              variation: variationSeed,
+              generation_mode: 'generative',
+              edited: false,
+            });
+          }
+
+          completed++;
+          const pct = 5 + Math.round((completed / totalJobs) * 95);
+          setGenerationProgress(pct);
+
+          if (completed % 3 === 0) {
+            setCompletedFormatNames((prev) => [...prev, format.name]);
+          }
+        }
+      }
+
+      if (!cancelRef.current) {
+        setPieces(pieces);
+        navigate('/results');
+      }
+    } catch (error) {
+      console.error('Generative generation failed:', error);
+      const msg = error instanceof Error ? error.message : 'Error desconocido';
+      setErrorMessage(`Error al generar: ${msg}`);
+    } finally {
+      setGenerating(false);
+      setGenerationProgress(0);
+      setCompletedFormatNames([]);
+    }
+  }, [canGenerate, activeBrand, imageDataUrl, intention, copy, selectedFormats, setGenerating, setGenerationProgress, setPieces, navigate]);
+
+  const handleGenerateClick = useCallback(() => {
+    if (generationMode === 'generative') {
+      handleGenerateGenerative();
+    } else {
+      handleGenerate();
+    }
+  }, [generationMode, handleGenerate, handleGenerateGenerative]);
 
   return (
     <div className="flex gap-16 max-w-[var(--max-content-width)] mx-auto px-6 py-20 md:px-12 min-h-[calc(100vh-var(--header-height))]">
@@ -223,6 +351,100 @@ export function GeneratorFlow() {
         <IntentionSelector />
         <FormatSelector />
 
+        {/* Mode selector */}
+        <div>
+          <SectionLabel>Modo de generacion</SectionLabel>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setGenerationMode('compositor')}
+              className={`
+                flex flex-col gap-2 p-5 rounded-2xl border-2 text-left transition-all duration-300
+                ${generationMode === 'compositor'
+                  ? 'border-foreground bg-accent/10 shadow-subtle'
+                  : 'border-border/50 bg-card hover:border-muted-foreground'}
+              `}
+            >
+              <div className="flex items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <line x1="3" y1="9" x2="21" y2="9" />
+                  <line x1="9" y1="21" x2="9" y2="9" />
+                </svg>
+                <span className="font-sans text-sm font-medium text-foreground">Rapido</span>
+              </div>
+              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
+                Composicion con overlay de texto sobre tu imagen. Sin API key.
+              </p>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setGenerationMode('generative')}
+              className={`
+                flex flex-col gap-2 p-5 rounded-2xl border-2 text-left transition-all duration-300
+                ${generationMode === 'generative'
+                  ? 'border-foreground bg-accent/10 shadow-subtle'
+                  : 'border-border/50 bg-card hover:border-muted-foreground'}
+              `}
+            >
+              <div className="flex items-center gap-2">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
+                <span className="font-sans text-sm font-medium text-foreground">Agencia</span>
+              </div>
+              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed">
+                IA generativa transforma tu imagen con estilo de marca. Requiere Google AI key.
+              </p>
+            </button>
+          </div>
+        </div>
+
+        {/* Google AI API key (only for generative mode) */}
+        {generationMode === 'generative' && (
+          <div>
+            <SectionLabel>Google AI API Key</SectionLabel>
+            {hasGoogleKey ? (
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-card border border-border/50">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <span className="font-sans text-sm font-light text-foreground">
+                    API Key configurada
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => { handleSaveGoogleKey(''); }}
+                  className="font-sans text-xs font-light text-muted-foreground hover:text-foreground transition-colors duration-300"
+                >
+                  Cambiar
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <input
+                  type="password"
+                  value={googleApiKey}
+                  onChange={(e) => setGoogleApiKey(e.target.value)}
+                  placeholder="AIza..."
+                  className="flex-1 rounded-xl border border-border/50 bg-card px-4 py-2.5 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring transition-all duration-300"
+                />
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  disabled={!googleApiKey.trim()}
+                  onClick={() => handleSaveGoogleKey(googleApiKey.trim())}
+                >
+                  Guardar
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Generate button */}
         <div className="sticky bottom-0 py-6 bg-gradient-to-t from-background via-background/95 to-transparent">
           <Button
@@ -231,9 +453,11 @@ export function GeneratorFlow() {
             className="w-full btn-generate"
             disabled={!canGenerate}
             loading={isGenerating}
-            onClick={handleGenerate}
+            onClick={handleGenerateClick}
           >
-            Generar {selectedFormats.length} pieza{selectedFormats.length !== 1 ? 's' : ''}
+            {generationMode === 'generative'
+              ? `Generar ${selectedFormats.length * 3} pieza${selectedFormats.length * 3 !== 1 ? 's' : ''}`
+              : `Generar ${selectedFormats.length} pieza${selectedFormats.length !== 1 ? 's' : ''}`}
           </Button>
 
           {!canGenerate && (
@@ -242,7 +466,9 @@ export function GeneratorFlow() {
                 ? 'Configura una marca primero'
                 : !imageDataUrl
                   ? 'Sube una imagen para continuar'
-                  : 'Selecciona al menos un formato'}
+                  : generationMode === 'generative' && !hasGoogleKey
+                    ? 'Configura tu Google AI API Key'
+                    : 'Selecciona al menos un formato'}
             </p>
           )}
 
@@ -323,6 +549,7 @@ export function GeneratorFlow() {
             <SectionLabel>Resumen</SectionLabel>
             <div className="rounded-2xl bg-card p-6 space-y-4 shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
               <SummaryRow label="Marca" value={activeBrand?.brand_name ?? 'No definida'} />
+              <SummaryRow label="Modo" value={generationMode === 'generative' ? 'Agencia (IA)' : 'Rapido'} />
               <SummaryRow label="Intencion" value={activeIntention ? activeIntention.name : 'No seleccionada'} />
               <SummaryRow label="Formatos" value={`${selectedFormats.length} seleccionado${selectedFormats.length !== 1 ? 's' : ''}`} />
 
@@ -345,7 +572,13 @@ export function GeneratorFlow() {
               )}
 
               {selectedFormats.length > 0 && (
-                <SummaryRow label="Tiempo est." value={`~${selectedFormats.length * 3}s`} mono />
+                <SummaryRow
+                  label="Tiempo est."
+                  value={generationMode === 'generative'
+                    ? `~${selectedFormats.length * 3 * 8}s`
+                    : `~${selectedFormats.length * 3}s`}
+                  mono
+                />
               )}
             </div>
           </div>

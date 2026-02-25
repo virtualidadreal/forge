@@ -347,7 +347,5 @@ ${IMAGE_ANALYSIS_SCHEMA}`,
 
   const raw = await callOpenAI(system, userContent, 2048);
   const parsed = extractJSON<ImageAnalysis>(raw);
-  console.log('[FORGE] analyzeImageForComposition raw response:', raw);
-  console.log('[FORGE] analyzeImageForComposition parsed:', JSON.stringify(parsed, null, 2));
   return parsed;
 }

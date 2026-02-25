@@ -78,8 +78,9 @@ function getDateString(): string {
 
 /**
  * Render a piece to a production-resolution data URL.
- * If the piece has a serialized canvas_state, restore it.
- * Otherwise, re-render from the composition instruction.
+ * - Generative pieces: use preview_data_url directly (already at target resolution)
+ * - Compositor pieces with canvas_state: restore from serialized state
+ * - Compositor pieces without state: re-render from composition instruction
  */
 async function renderPieceToProduction(
   piece: GeneratedPiece,
@@ -89,6 +90,11 @@ async function renderPieceToProduction(
   const format = getFormatById(piece.format_id);
   if (!format) {
     throw new Error(`Unknown format: ${piece.format_id}`);
+  }
+
+  // Generative pieces: the preview IS the production image
+  if (piece.generation_mode === 'generative' && piece.preview_data_url) {
+    return { dataUrl: piece.preview_data_url, format };
   }
 
   // Compression as a 0-1 quality value
@@ -107,9 +113,11 @@ async function renderPieceToProduction(
       height: format.height,
     });
     await deserializeCanvas(canvas, piece.canvas_state);
-  } else {
+  } else if (piece.composition) {
     // Re-render from instruction
     canvas = await renderPiece(piece.composition, imageDataUrl, logoDataUrl);
+  } else {
+    throw new Error(`Piece ${piece.format_id} has no composition or preview to export.`);
   }
 
   const dataUrl = renderToDataUrl(canvas, outputFormat, quality);

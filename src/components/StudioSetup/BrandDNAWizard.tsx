@@ -5,6 +5,7 @@ import { AnalysisProgress } from './AnalysisProgress';
 import { BrandDNAPreview } from './BrandDNAPreview';
 import { useBrandDNAStore } from '../../store/brandDNA.store';
 import { extractBrandDNAFromDataUrls } from '../../services/brandDNA.service';
+import { resizeImage } from '../../utils/imageUtils';
 import type { BrandDNA } from '../../types/brandDNA.types';
 
 interface BrandDNAWizardProps {
@@ -80,14 +81,20 @@ export function BrandDNAWizard({
     }
   }, [assets, brandName, tagline]);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
     if (!extractedDNA) return;
+
+    // Compress reference assets for generative mode (512px, JPEG)
+    const compressedAssets = await Promise.all(
+      assets.map((dataUrl) => resizeImage(dataUrl, 512))
+    );
 
     const finalDNA: BrandDNA = {
       ...extractedDNA,
       brand_name: brandName || extractedDNA.brand_name,
       tagline: tagline || extractedDNA.tagline,
       logo_url: logo ?? extractedDNA.logo_url,
+      reference_assets: compressedAssets,
     };
 
     if (editingBrand) {
@@ -101,7 +108,7 @@ export function BrandDNAWizard({
     }
 
     onComplete();
-  }, [extractedDNA, brandName, tagline, logo, editingBrand, addBrand, updateBrand, onComplete]);
+  }, [extractedDNA, brandName, tagline, logo, assets, editingBrand, addBrand, updateBrand, onComplete]);
 
   const stepLabels = ['Assets', 'Analisis', 'Confirmar'];
 

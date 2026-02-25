@@ -58,7 +58,8 @@ export interface GeneratedPiece {
   id: string;
   format_id: string;
   variation: 1 | 2 | 3;
-  composition: CompositionInstruction;
+  generation_mode: 'compositor' | 'generative';
+  composition?: CompositionInstruction;
   canvas_state?: string; // Fabric.js serialized JSON
   preview_data_url?: string;
   edited: boolean;

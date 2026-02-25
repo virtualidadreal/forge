@@ -15,6 +15,7 @@ interface SessionState {
   selectedFormats: string[];
   isGenerating: boolean;
   generationProgress: number;
+  generationMode: 'compositor' | 'generative';
 }
 
 interface SessionActions {
@@ -28,6 +29,7 @@ interface SessionActions {
   selectFormatPack: (packId: string) => void;
   setGenerating: (generating: boolean) => void;
   setGenerationProgress: (progress: number) => void;
+  setGenerationMode: (mode: 'compositor' | 'generative') => void;
   reset: () => void;
 }
 
@@ -63,6 +65,7 @@ export const useSessionStore = create<SessionStore>()(
       selectedFormats: DEFAULT_FORMATS,
       isGenerating: false,
       generationProgress: 0,
+      generationMode: 'generative',
 
       // -- Actions -------------------------------------------------------------
       setImage: (dataUrl, fileName) => {
@@ -114,6 +117,10 @@ export const useSessionStore = create<SessionStore>()(
 
       setGenerationProgress: (progress) => {
         set({ generationProgress: Math.min(100, Math.max(0, progress)) });
+      },
+
+      setGenerationMode: (mode) => {
+        set({ generationMode: mode });
       },
 
       reset: () => {
