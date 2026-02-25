@@ -1,12 +1,13 @@
 /**
  * nanoBanana.service.ts
- * Client for Nano Banana Pro (gemini-3-pro-image-preview).
+ * Client for Gemini image generation.
  * Runs client-side — calls Google GenAI API directly.
+ * Tries gemini-2.5-flash-image (stable) first.
  */
 
 import { GoogleGenAI } from '@google/genai';
 
-const MODEL = 'gemini-3-pro-image-preview';
+const MODELS = ['gemini-2.5-flash-image', 'gemini-2.5-pro-preview-image-generation'] as const;
 
 // Gemini supported aspect ratios
 const SUPPORTED_RATIOS = ['1:1', '9:16', '16:9', '3:4', '4:3', '4:5', '5:4', '2:3', '3:2', '21:9'] as const;
@@ -42,7 +43,7 @@ function getClient(): GoogleGenAI {
   if (aiClient) return aiClient;
   const apiKey = localStorage.getItem('forge-google-ai-key') || import.meta.env.VITE_GOOGLE_AI_KEY;
   if (!apiKey) {
-    throw new Error('Google AI API key not configured.');
+    throw new Error('Google AI API key not configured. Set VITE_GOOGLE_AI_KEY.');
   }
   aiClient = new GoogleGenAI({ apiKey });
   return aiClient;
@@ -60,9 +61,9 @@ export interface NanoBananaRequest {
 }
 
 /**
- * Generate or transform an image with Nano Banana Pro.
- * Uses gemini-3-pro-image-preview model.
- * Returns base64 PNG of the generated image.
+ * Generate an image with Gemini image generation.
+ * Tries models in order until one succeeds.
+ * Returns raw base64 of the generated image.
  */
 export async function generateWithNanoBanana(params: NanoBananaRequest): Promise<string> {
   const ai = getClient();
@@ -82,36 +83,49 @@ export async function generateWithNanoBanana(params: NanoBananaRequest): Promise
   // Add the prompt last
   parts.push({ text: params.prompt });
 
-  const response = await ai.models.generateContent({
-    model: MODEL,
-    contents: [{ role: 'user', parts }],
-    config: {
-      responseModalities: ['TEXT', 'IMAGE'],
+  const config = {
+    responseModalities: ['TEXT', 'IMAGE'] as string[],
+    ...(params.aspectRatio && {
       imageConfig: {
-        imageSize: '2K',
-        ...(params.aspectRatio && {
-          aspectRatio: normalizeAspectRatio(params.aspectRatio),
-        }),
+        aspectRatio: normalizeAspectRatio(params.aspectRatio),
       },
-    },
-  });
+    }),
+  };
 
-  // Extract image from response
-  const candidates = response.candidates;
-  if (!candidates || candidates.length === 0) {
-    throw new Error('Nano Banana Pro returned no candidates.');
-  }
+  let lastError: Error | null = null;
 
-  const content = candidates[0].content;
-  if (!content || !content.parts) {
-    throw new Error('Nano Banana Pro returned empty content.');
-  }
+  for (const model of MODELS) {
+    try {
+      const response = await ai.models.generateContent({
+        model,
+        contents: [{ role: 'user', parts }],
+        config,
+      });
 
-  for (const part of content.parts) {
-    if (part.inlineData && part.inlineData.data) {
-      return part.inlineData.data; // raw base64
+      // Extract image from response
+      const candidates = response.candidates;
+      if (!candidates || candidates.length === 0) {
+        throw new Error(`${model}: no candidates returned.`);
+      }
+
+      const content = candidates[0].content;
+      if (!content || !content.parts) {
+        throw new Error(`${model}: empty content.`);
+      }
+
+      for (const part of content.parts) {
+        if (part.inlineData && part.inlineData.data) {
+          return part.inlineData.data; // raw base64
+        }
+      }
+
+      throw new Error(`${model}: no image in response.`);
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      console.warn(`Model ${model} failed:`, lastError.message);
+      // Try next model
     }
   }
 
-  throw new Error('Nano Banana Pro did not return an image.');
+  throw new Error(`Image generation failed: ${lastError?.message || 'All models failed'}`);
 }

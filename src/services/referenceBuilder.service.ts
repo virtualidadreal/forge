@@ -1,7 +1,7 @@
 /**
  * referenceBuilder.service.ts
- * Builds the reference images array for Nano Banana Pro requests.
- * Compresses all images to reduce payload size.
+ * Builds the reference images array for image generation requests.
+ * Aggressively compresses all images to keep payload small.
  */
 
 export interface ReferenceImage {
@@ -36,16 +36,28 @@ function compressImage(dataUrl: string, maxDim: number, quality: number): Promis
 }
 
 /**
- * Compress a raw base64 image (without data: prefix).
+ * Detect mime type from raw base64 by reading magic bytes.
  */
-function compressRawBase64(rawBase64: string, maxDim: number, quality: number): Promise<{ base64: string; mimeType: string }> {
-  return compressImage(`data:image/jpeg;base64,${rawBase64}`, maxDim, quality);
+function detectMimeFromBase64(raw: string): string {
+  if (raw.startsWith('/9j/')) return 'image/jpeg';
+  if (raw.startsWith('iVBOR')) return 'image/png';
+  if (raw.startsWith('R0lGO')) return 'image/gif';
+  if (raw.startsWith('UklGR')) return 'image/webp';
+  return 'image/jpeg'; // default
 }
 
 /**
- * Build reference images array for Nano Banana Pro.
- * Order: user photo → brand style references → logo
- * All images compressed to keep payload under browser limits.
+ * Compress a raw base64 image (without data: prefix).
+ */
+function compressRawBase64(rawBase64: string, maxDim: number, quality: number): Promise<{ base64: string; mimeType: string }> {
+  const mime = detectMimeFromBase64(rawBase64);
+  return compressImage(`data:${mime};base64,${rawBase64}`, maxDim, quality);
+}
+
+/**
+ * Build reference images array.
+ * Only sends user photo + logo (skip style refs to reduce payload).
+ * All images compressed aggressively.
  */
 export async function buildReferenceImages(params: {
   userPhotoBase64: string;
@@ -55,32 +67,21 @@ export async function buildReferenceImages(params: {
 }): Promise<ReferenceImage[]> {
   const refs: ReferenceImage[] = [];
 
-  // 1. User photo — compress to 1024px JPEG
-  const userCompressed = await compressRawBase64(params.userPhotoBase64, 1024, 0.8);
+  // 1. User photo — compress to 768px JPEG at 0.6 quality
+  const userCompressed = await compressRawBase64(params.userPhotoBase64, 768, 0.6);
   refs.push({
     data: userCompressed.base64,
     mimeType: userCompressed.mimeType,
     role: 'Image 1: Main subject photo. DO NOT modify this photo. Only add graphic elements on top.',
   });
 
-  // 2. Brand style references — compress to 512px, max 3
-  const styleRefs = params.brandStyleReferences.slice(0, 3);
-  for (let i = 0; i < styleRefs.length; i++) {
-    const compressed = await compressImage(styleRefs[i], 512, 0.7);
-    refs.push({
-      data: compressed.base64,
-      mimeType: compressed.mimeType,
-      role: `Image ${i + 2}: Brand style reference. Use for color palette and visual style only.`,
-    });
-  }
-
-  // 3. Logo — compress to 256px
+  // 2. Logo — compress to 200px (skip style refs to keep payload small)
   if (params.logoDataUrl) {
-    const logoCompressed = await compressImage(params.logoDataUrl, 256, 0.9);
+    const logoCompressed = await compressImage(params.logoDataUrl, 200, 0.7);
     refs.push({
       data: logoCompressed.base64,
       mimeType: logoCompressed.mimeType,
-      role: `Image ${refs.length + 1}: Brand logo. Place this logo in the composition.`,
+      role: 'Image 2: Brand logo. Place this logo in the composition.',
     });
   }
 
