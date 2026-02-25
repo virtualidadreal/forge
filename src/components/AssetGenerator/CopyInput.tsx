@@ -197,7 +197,7 @@ export function CopyInput() {
       </div>
 
       {noCopy ? (
-        <div className="flex items-center justify-center h-28 rounded-3xl border border-dashed border-border bg-card">
+        <div className="flex items-center justify-center h-32 rounded-3xl border border-dashed border-border bg-card">
           <p className="font-sans text-sm font-light text-muted-foreground">
             La pieza se generara solo con imagen y marca
           </p>
@@ -211,7 +211,7 @@ export function CopyInput() {
             placeholder="Pega todo tu copy aqui. Cada linea se clasificara automaticamente como titular, subtitulo, CTA..."
             rows={5}
             className="
-              w-full resize-none rounded-2xl border border-border bg-card px-6 py-5
+              w-full resize-none rounded-2xl border border-border bg-card px-7 py-6
               font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
               focus:outline-none focus:ring-2 focus:ring-ring
               transition-all duration-300
@@ -254,7 +254,7 @@ export function CopyInput() {
                 placeholder={field.placeholder}
                 rows={field.rows}
                 className="
-                  w-full resize-none rounded-xl border border-border bg-card px-5 py-4
+                  w-full resize-none rounded-xl border border-border bg-card px-6 py-5
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
                   transition-all duration-300

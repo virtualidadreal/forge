@@ -44,10 +44,10 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
           </svg>
         </div>
         <div className="text-center">
-          <p className="font-serif text-xl font-medium text-foreground">
+          <p className="font-serif text-xl italic text-foreground">
             No tienes marcas configuradas
           </p>
-          <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3 max-w-sm">
+          <p className="text-base font-light leading-relaxed text-muted-foreground mt-3 max-w-sm">
             Sube assets de tu marca y extraeremos el ADN visual automaticamente.
           </p>
         </div>
@@ -102,7 +102,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
             <div
               key={brand.brand_id}
               className={`
-                group relative flex flex-col gap-5 rounded-3xl border p-8
+                group relative flex flex-col gap-6 rounded-3xl border p-8
                 transition-shadow duration-300 cursor-pointer
                 ${
                   isActive

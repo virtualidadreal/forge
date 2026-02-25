@@ -10,10 +10,10 @@ export function HistoryPage() {
   }, [isLoaded, loadCampaigns]);
 
   return (
-    <div className="px-10 lg:px-16 py-12 max-w-6xl mx-auto animate-in">
-      <div className="mb-12">
-        <h1 className="font-serif text-4xl font-medium tracking-tight">Historial</h1>
-        <p className="text-sm font-light text-muted-foreground mt-4">Campanas generadas anteriormente</p>
+    <div className="px-10 lg:px-16 py-16 max-w-6xl mx-auto animate-in">
+      <div className="mb-16">
+        <h1 className="font-serif text-4xl italic">Historial</h1>
+        <p className="mt-6 text-lg font-light leading-relaxed text-muted-foreground">Campanas generadas anteriormente</p>
       </div>
 
       {campaigns.length === 0 ? (
@@ -35,7 +35,7 @@ export function HistoryPage() {
                 <polyline points="12 6 12 12 16 14" />
               </svg>
             </div>
-            <p className="font-serif text-2xl font-medium text-foreground mb-4">No hay campanas en el historial</p>
+            <p className="font-serif text-2xl italic text-foreground mb-4">No hay campanas en el historial</p>
             <p className="text-sm font-light leading-relaxed text-muted-foreground">Las campanas que generes apareceran aqui</p>
           </div>
         </div>
@@ -46,7 +46,7 @@ export function HistoryPage() {
               key={campaign.campaign_id}
               className="bg-card rounded-3xl border border-border p-8 shadow-subtle hover:shadow-elevated transition-shadow duration-300"
             >
-              <h3 className="font-serif text-lg font-medium mb-2">{campaign.campaign_name}</h3>
+              <h3 className="text-lg font-medium mb-2">{campaign.campaign_name}</h3>
               <p className="text-sm font-light text-muted-foreground mb-3">{campaign.brand_name}</p>
               <div className="flex items-center gap-3 mb-6">
                 <span className="font-mono text-[11px] font-light text-muted-foreground">

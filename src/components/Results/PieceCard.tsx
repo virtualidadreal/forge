@@ -142,7 +142,7 @@ export function PieceCard({
       </div>
 
       {/* Card info */}
-      <div className="flex flex-col gap-4 p-6">
+      <div className="flex flex-col gap-5 p-7">
         {/* Format name + platform badge */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-col gap-1.5">

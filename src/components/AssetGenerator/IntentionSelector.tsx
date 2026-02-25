@@ -78,7 +78,7 @@ export function IntentionSelector() {
               key={intent.id}
               onClick={() => handleSelect(intent.id)}
               className={`
-                relative flex flex-col items-start gap-3 p-6 rounded-2xl
+                relative flex flex-col items-start gap-3 p-7 rounded-2xl
                 border text-left cursor-pointer overflow-hidden
                 transition-all duration-300
                 ${
@@ -93,7 +93,7 @@ export function IntentionSelector() {
                 <IntentionIcon id={intent.id} className={isSelected ? colors.text : 'text-muted-foreground'} />
                 <span
                   className={`
-                    font-sans text-sm font-semibold
+                    font-sans text-sm font-medium
                     ${isSelected ? colors.text : 'text-foreground'}
                   `}
                 >
@@ -102,7 +102,7 @@ export function IntentionSelector() {
               </div>
 
               {/* Description */}
-              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed line-clamp-2 mt-1">
+              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed line-clamp-2 mt-2">
                 {intent.description}
               </p>
 

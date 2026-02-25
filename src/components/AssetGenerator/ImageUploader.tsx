@@ -77,7 +77,7 @@ export function ImageUploader() {
             alt={imageFileName ?? 'Imagen subida'}
             className="w-full max-h-[280px] object-cover"
           />
-          <div className="flex items-center justify-between px-8 py-5 border-t border-border bg-card/80 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-8 py-6 border-t border-border bg-card/80 backdrop-blur-sm">
             <div className="flex items-center gap-3 min-w-0">
               <span className="font-sans text-sm font-medium text-foreground truncate max-w-[200px]">
                 {imageFileName}
@@ -107,8 +107,8 @@ export function ImageUploader() {
         onDragLeave={handleDragLeave}
         onClick={() => inputRef.current?.click()}
         className={`
-          flex flex-col items-center justify-center gap-6
-          min-h-[240px] rounded-3xl border-2 border-dashed cursor-pointer
+          flex flex-col items-center justify-center gap-8
+          min-h-[260px] rounded-3xl border-2 border-dashed cursor-pointer
           transition-all duration-300
           ${
             dragging
@@ -118,7 +118,7 @@ export function ImageUploader() {
         `}
       >
         {/* Upload icon */}
-        <div className="flex items-center justify-center w-[72px] h-[72px] rounded-2xl bg-secondary">
+        <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-secondary">
           <svg
             width="28"
             height="28"
@@ -136,7 +136,7 @@ export function ImageUploader() {
           </svg>
         </div>
 
-        <div className="text-center px-8">
+        <div className="text-center px-10">
           <p className="font-sans text-sm font-medium text-foreground">
             Arrastra tu imagen aqui
           </p>

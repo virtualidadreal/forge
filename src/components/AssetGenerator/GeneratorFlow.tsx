@@ -147,11 +147,11 @@ export function GeneratorFlow() {
   }, [setGenerating, setGenerationProgress]);
 
   return (
-    <div className="flex gap-16 max-w-[var(--max-content-width)] mx-auto px-10 lg:px-16 py-12 min-h-[calc(100vh-var(--header-height))]">
+    <div className="flex gap-16 max-w-[var(--max-content-width)] mx-auto px-10 lg:px-16 py-16 min-h-[calc(100vh-var(--header-height))]">
       {/* ================================================================= */}
       {/* LEFT COLUMN — Steps (60%) */}
       {/* ================================================================= */}
-      <div className="flex-[3] min-w-0 space-y-10">
+      <div className="flex-[3] min-w-0 space-y-12">
         {/* ---- Step 0: Brand DNA indicator ---- */}
         <div className="relative">
           {activeBrand ? (
@@ -226,7 +226,7 @@ export function GeneratorFlow() {
                     setShowBrandPicker(false);
                   }}
                   className={`
-                    w-full flex items-center gap-3 px-5 py-3.5 text-left
+                    w-full flex items-center gap-3 px-6 py-4 text-left
                     hover:bg-accent/10 transition-colors
                     ${brand.brand_id === activeBrand?.brand_id ? 'bg-accent/15' : ''}
                   `}
@@ -313,7 +313,7 @@ export function GeneratorFlow() {
           {/* Summary */}
           <div>
             <SectionLabel>Resumen</SectionLabel>
-            <div className="rounded-3xl border border-border bg-card p-8 space-y-5 shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
+            <div className="rounded-3xl border border-border bg-card p-8 space-y-6 shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
               {/* Brand */}
               <SummaryRow
                 label="Marca"

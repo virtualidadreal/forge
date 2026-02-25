@@ -24,7 +24,7 @@ export function EditorPage() {
               <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
             </svg>
           </div>
-          <p className="font-serif text-2xl font-medium text-foreground mb-4">No hay piezas para editar</p>
+          <p className="font-serif text-2xl italic text-foreground mb-4">No hay piezas para editar</p>
           <p className="text-sm font-light leading-relaxed text-muted-foreground">Genera assets primero desde el panel de creacion</p>
         </div>
       </div>

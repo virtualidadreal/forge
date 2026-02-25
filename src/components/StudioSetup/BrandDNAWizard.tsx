@@ -148,7 +148,7 @@ export function BrandDNAWizard({
   // -- Render ---------------------------------------------------------------
 
   return (
-    <div className="flex flex-col gap-10 max-w-lg mx-auto py-8">
+    <div className="flex flex-col gap-12 max-w-lg mx-auto py-8">
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2">
         {stepLabels.map((label, i) => {
@@ -210,12 +210,12 @@ export function BrandDNAWizard({
 
       {/* Step 1: Upload references */}
       {step === 1 && (
-        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
+        <div className="flex flex-col gap-12 rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
           <div className="text-center">
-            <h2 className="font-serif text-3xl font-medium text-foreground">
+            <h2 className="font-serif text-3xl italic text-foreground">
               Sube tus assets de marca
             </h2>
-            <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3 max-w-sm mx-auto">
+            <p className="text-base font-light leading-relaxed text-muted-foreground mt-3 max-w-sm mx-auto">
               Posts de Instagram, stories, banners, packaging... cualquier pieza
               que represente tu identidad visual.
             </p>
@@ -368,9 +368,9 @@ export function BrandDNAWizard({
 
       {/* Step 3: Confirm & Save */}
       {step === 3 && extractedDNA && (
-        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
+        <div className="flex flex-col gap-12 rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
           <div className="text-center">
-            <h2 className="font-serif text-3xl font-medium text-foreground">
+            <h2 className="font-serif text-3xl italic text-foreground">
               Tu Brand DNA
             </h2>
             <p className="text-sm font-light leading-relaxed text-muted-foreground mt-2">

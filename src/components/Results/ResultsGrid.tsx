@@ -129,7 +129,7 @@ export function ResultsGrid({
   }
 
   return (
-    <div className="flex flex-col gap-10 overflow-hidden animate-in">
+    <div className="flex flex-col gap-12 overflow-hidden animate-in">
       {/* Header */}
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between flex-wrap gap-4">

@@ -50,15 +50,15 @@ export function OnboardingPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center overflow-y-auto animate-in">
       {/* Hero section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pt-20 pb-16 text-center">
+      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pt-24 pb-20 text-center">
         {/* Decorative line */}
         <div className="mb-10 h-px w-16 bg-border" />
 
-        <h1 className="font-serif text-5xl md:text-6xl italic leading-tight text-foreground">
+        <h1 className="font-serif text-5xl italic leading-tight md:text-6xl lg:text-7xl text-foreground">
           FORGE
         </h1>
 
-        <p className="mt-6 max-w-lg text-lg font-light leading-relaxed text-muted-foreground text-center">
+        <p className="mt-6 max-w-lg text-lg font-light leading-relaxed text-muted-foreground md:text-xl text-center">
           Genera piezas graficas para todas tus plataformas, alineadas con la
           identidad visual de tu marca, en segundos.
         </p>
@@ -68,7 +68,7 @@ export function OnboardingPage() {
       </section>
 
       {/* Steps section */}
-      <section className="w-full max-w-5xl px-10 lg:px-16 pb-10">
+      <section className="w-full max-w-5xl px-10 lg:px-16 pb-16">
         <p className="mb-10 text-center text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
           Como funciona
         </p>
@@ -102,7 +102,7 @@ export function OnboardingPage() {
               </div>
 
               {/* Content */}
-              <h3 className="font-serif text-xl font-medium mt-4">
+              <h3 className="mt-6 text-lg font-medium">
                 {step.title}
               </h3>
               <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3">
@@ -117,7 +117,7 @@ export function OnboardingPage() {
       <div className="my-6 h-12 w-px bg-border" />
 
       {/* CTA section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pb-20">
+      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pb-24">
         <p className="mb-8 text-center text-sm font-light leading-relaxed text-muted-foreground max-w-md">
           Empieza configurando el ADN visual de tu marca.
           <br />

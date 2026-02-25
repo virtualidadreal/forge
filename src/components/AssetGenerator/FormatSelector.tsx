@@ -111,7 +111,7 @@ export function FormatSelector() {
               key={pack.id}
               onClick={() => handlePackClick(pack.id)}
               className={`
-                px-4 py-2.5 rounded-full font-sans text-xs font-medium
+                px-5 py-2.5 rounded-full font-sans text-xs font-medium
                 border transition-all duration-300
                 ${
                   allSelected
@@ -136,14 +136,14 @@ export function FormatSelector() {
       </div>
 
       {/* Platform groups */}
-      <div className="space-y-8">
+      <div className="space-y-10">
         {platforms.map((platformId) => {
           const formats = grouped.get(platformId)!;
           const platformLabel = formats[0].platform_label;
 
           return (
             <div key={platformId}>
-              <p className="font-sans text-xs font-semibold text-muted-foreground tracking-wide uppercase mb-4">
+              <p className="font-sans text-xs font-medium text-muted-foreground tracking-wide uppercase mb-4">
                 {platformLabel}
               </p>
 
@@ -156,7 +156,7 @@ export function FormatSelector() {
                       key={fmt.id}
                       onClick={() => toggleFormat(fmt.id)}
                       className={`
-                        flex items-center gap-3.5 p-4 rounded-xl border text-left overflow-hidden
+                        flex items-center gap-3.5 p-5 rounded-xl border text-left overflow-hidden
                         transition-all duration-300 cursor-pointer
                         ${
                           isSelected

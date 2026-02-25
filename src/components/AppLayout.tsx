@@ -45,8 +45,8 @@ export function AppLayout() {
       {/* Sidebar */}
       <aside className="flex w-[260px] shrink-0 flex-col border-r border-border/50 bg-sidebar">
         {/* Logo */}
-        <div className="px-7 pt-8 pb-7">
-          <h1 className="font-serif text-2xl font-semibold tracking-tight">
+        <div className="px-8 pt-10 pb-8">
+          <h1 className="font-serif text-2xl italic">
             FORGE
           </h1>
         </div>
@@ -55,7 +55,7 @@ export function AppLayout() {
         <div className="section-divider mx-6 mb-6" />
 
         {/* Navigation */}
-        <nav className="flex flex-1 flex-col gap-1 px-5">
+        <nav className="flex flex-1 flex-col gap-1.5 px-5">
           {navItems.map(({ to, label, iconPath }) => (
             <NavLink
               key={to}
@@ -87,7 +87,7 @@ export function AppLayout() {
         </nav>
 
         {/* Bottom section */}
-        <div className="mt-auto border-t border-border px-6 py-6">
+        <div className="mt-auto border-t border-border px-7 py-8">
           {/* Dark mode toggle */}
           <button
             onClick={toggleTheme}
@@ -103,7 +103,7 @@ export function AppLayout() {
 
           {/* Active brand indicator */}
           {activeBrand ? (
-            <div className="rounded-xl bg-secondary px-4 py-3.5">
+            <div className="rounded-xl bg-secondary px-5 py-4">
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 Marca activa
               </p>
@@ -112,7 +112,7 @@ export function AppLayout() {
               </p>
             </div>
           ) : (
-            <div className="rounded-xl border border-dashed border-border px-4 py-3.5">
+            <div className="rounded-xl border border-dashed border-border px-5 py-4">
               <p className="text-xs font-light text-muted-foreground">
                 Sin marca activa
               </p>
