@@ -28,7 +28,7 @@ function buildCopyBlock(copy: CopyInput): string {
   if (copy.tagline) lines.push(`TAGLINE: "${copy.tagline}"`);
   if (copy.disclaimer) lines.push(`DISCLAIMER: "${copy.disclaimer}"`);
 
-  if (lines.length === 0) return 'No text provided — image only.';
+  if (lines.length === 0) return 'No text provided — only add the logo if available.';
   return lines.join('\n');
 }
 
@@ -38,90 +38,98 @@ export function buildGenerativePrompt(params: GenerativePromptParams): string {
   const copyBlock = buildCopyBlock(copy);
   const hasCopy = !!(copy.heading || copy.subheading || copy.cta || copy.tagline);
 
-  const baseContext = `You are creating a professional brand campaign asset.
+  // Core instruction: NEVER modify the photo
+  const baseContext = `You are a professional graphic designer creating a brand asset.
+
+ABSOLUTE RULE — DO NOT MODIFY THE ORIGINAL PHOTO:
+- The subject photo (Image 1) must remain EXACTLY as it is — same person, same pose, same clothing, same colors, same lighting, same background.
+- DO NOT alter, retouch, recolor, crop, blur, or transform the photo in any way.
+- Your ONLY job is to ADD graphic elements ON TOP of the photo: text, logo, buttons, pills, overlays, badges.
+- Think of it like placing stickers and text layers on top of a printed photo.
+
 Format: ${format.name}, ${format.width}x${format.height}px, aspect ratio ${format.aspect_ratio}.
 Brand: "${brandDNA.brand_name}".
-Brand palette: background ${brandDNA.palette.background}, text ${brandDNA.palette.text_primary}, accent ${brandDNA.palette.accent || 'none'}.
-Tone: ${brandDNA.copy_tone.formality}, ${brandDNA.copy_tone.emotional_weight}.
-
-Image 1 is the main subject photo — PRESERVE THE SUBJECT EXACTLY as they appear.
-The following images (if any) are brand style references — use them for aesthetic, color palette, and mood.
-The last image (if PNG with transparency) is the brand logo.`;
+Brand colors: background ${brandDNA.palette.background}, primary text ${brandDNA.palette.text_primary}, secondary text ${brandDNA.palette.text_secondary}, accent ${brandDNA.palette.accent || 'white'}, pill background ${brandDNA.palette.pill_background}, pill text ${brandDNA.palette.pill_text}.
+Typography: ${brandDNA.typography.preferred_font_style}, headings ${brandDNA.typography.heading_weight} ${brandDNA.typography.heading_case}.`;
 
   const copyInstructions = hasCopy ? `
-TEXT TO RENDER IN THE IMAGE (ALL of the following must appear):
+
+TEXT ELEMENTS TO ADD ON TOP OF THE PHOTO (ALL must appear):
 ${copyBlock}
 
-CRITICAL TEXT RULES:
-- Every text element listed above MUST be rendered in the final image
-- Text must be perfectly legible, correctly spelled, and properly sized
-- Use colors from the brand palette for text
-- The CTA (if provided) must be a visible button or pill shape with high contrast` : '';
+TEXT RENDERING RULES:
+- Render ALL text elements listed above — do not skip any
+- Use the brand colors specified above
+- HEADLINE: large, ${brandDNA.palette.text_primary}, ${brandDNA.typography.heading_weight} weight${brandDNA.typography.uses_uppercase_headlines ? ', ALL CAPS' : ''}
+- SUBHEADLINE: smaller, ${brandDNA.palette.text_secondary}, lighter weight
+- CTA BUTTON: pill/button shape with background ${brandDNA.palette.accent || brandDNA.palette.pill_background}, text ${brandDNA.palette.pill_text}, bold, uppercase
+- TAGLINE: very small, uppercase, wide letter-spacing, near the logo
+- DISCLAIMER: tiny text at the bottom edge
+- All text must be perfectly legible, correctly spelled, and sharp` : '';
 
   const intentionStyles: Record<string, string> = {
-    editorial: `STYLE: Fashion editorial composition.
-- The subject is the hero — large, centered
-- Text integrates naturally with the image (overlapping slightly with subject is OK)
-- Headline: bold weight, positioned in a clean zone or overlapping the subject at the midpoint
-- Subheadline: lighter weight, below the headline
-- CTA: subtle pill shape at the bottom, brand accent color
-- Tagline: small, uppercase tracking, near the logo
-- Clean, magazine-quality feel. No heavy overlays.`,
-
-    convert: `STYLE: Conversion-focused ad asset.
-- Subject photo as full-bleed background
-- Headline: large and prominent in the biggest clean zone
-- Subheadline: floating pill with frosted glass / semi-transparent background
-- CTA: bold, high-contrast pill button — the most visually prominent element after the headline
-- Tagline: near the logo, small
-- Logo at the top with breathing room
-- Every element must drive toward the CTA action`,
-
-    campaign: `STYLE: Campaign hero asset.
-- Headline: very large, bold, at the top of the image — heavy weight, tight tracking
-- Subheadline: below the headline, lighter weight
-- CTA: prominent pill button in the lower third
-- Tagline: paired with the logo, centered
-- Apply dramatic lighting and brand color palette enhancement
-- The composition tells a story in three layers: headline → image → CTA`,
-
-    urgency: `STYLE: High-energy urgency asset.
-- Headline: RENDER IN ALL CAPS, very large (40-50% of canvas height for text block), heavy weight
-- Subheadline: italic, warm, personal — immediately below the headline
-- CTA: urgent, bold, high contrast pill — action words
-- High-contrast treatment, deep shadows
-- The text dominates — image supports the message, not the other way around`,
-
-    awareness: `STYLE: Brand awareness — image is 95% of the communication.
-- The image breathes — minimal text
-- Logo: prominent, top or center
-- Headline (if provided): small, elegant, one line
-- CTA (if provided): subtle, bottom corner
-- Apply subtle color grading to match brand aesthetic
-- Let the image do the talking`,
-
-    branding: `STYLE: Pure branding — the image IS the message.
-- Transform the image to match the brand reference aesthetic (lighting, color grading, mood)
-- Logo: visible but tasteful placement
-- Headline (if provided): minimal, integrated into the image
-- CTA (if provided): very subtle, small
-- If brand references show a signature visual element, incorporate it
-- Maximum visual cohesion with brand identity`,
-
-    social_proof: `STYLE: Social proof / testimonial asset.
-- Headline: render as a rating badge (star icon + text) at the top
-- Subheadline: center as an elegant quote in italics
-- CTA: bold, uppercase pill at the bottom
-- Tagline: near the logo
-- Subtle dark gradient overlay for text legibility
+    editorial: `LAYOUT STYLE — Editorial:
+- Photo fills the entire canvas
+- Add a subtle gradient overlay at the bottom (transparent to semi-dark) for text legibility
+- Place headline in the lower third, overlapping slightly with the subject
+- Subheadline below the headline
+- CTA as a subtle pill at the bottom
 - Logo small in a corner
-- Credibility and trust are the main emotions`,
+- Tagline near the logo`,
+
+    convert: `LAYOUT STYLE — Conversion:
+- Photo fills the entire canvas
+- Add a gradient overlay where text will be placed
+- Headline: large, in the biggest clean area (usually top or bottom)
+- Subheadline: as a floating pill with semi-transparent background
+- CTA: THE most prominent element — large pill button, high contrast, impossible to miss
+- Logo at the top with breathing room
+- Tagline paired with logo`,
+
+    campaign: `LAYOUT STYLE — Campaign:
+- Photo fills the entire canvas
+- Add a gradient overlay at top and/or bottom for text zones
+- Headline: very large, top of the image, heavy weight
+- Subheadline: below headline, lighter
+- CTA: prominent pill in the lower third
+- Logo + tagline centered together
+- Three visual layers: headline zone → photo → CTA zone`,
+
+    urgency: `LAYOUT STYLE — Urgency:
+- Photo fills the entire canvas
+- Add a stronger dark overlay to make text dominate
+- Headline: VERY LARGE, ALL CAPS, heavy weight — takes 40% of canvas
+- Subheadline: italic, warm tone, right below
+- CTA: bold, urgent, high contrast pill
+- The text dominates the composition — the photo is secondary`,
+
+    awareness: `LAYOUT STYLE — Awareness:
+- Photo fills the entire canvas, minimal overlay
+- Logo: prominent placement (top center or center)
+- Headline (if provided): small, elegant, one line
+- CTA (if provided): very subtle, small pill at bottom
+- Maximum breathing room — let the photo speak`,
+
+    branding: `LAYOUT STYLE — Branding:
+- Photo fills the entire canvas, no overlay
+- Logo: tasteful, visible placement
+- Headline (if provided): minimal, small
+- CTA (if provided): subtle, tiny
+- Almost no graphic additions — just logo and maybe one line of text`,
+
+    social_proof: `LAYOUT STYLE — Social Proof:
+- Photo fills the entire canvas
+- Add dark gradient overlay for legibility
+- Rating badge at the top (star icon + headline text)
+- Quote/subheadline centered, italic, in quotation marks
+- CTA: bold pill at the bottom
+- Logo small in corner`,
   };
 
   const variationModifiers: Record<VariationMode, string> = {
-    clean: 'VARIATION: Minimal. One clear message. Maximum breathing room. Editorial restraint. Only the most essential elements.',
-    rich: 'VARIATION: Full brand expression. All text elements visible. Conversion optimized. Multiple visual layers.',
-    bold: 'VARIATION: Maximum visual impact. Dramatic sizing. Large type. The composition is a statement. Bold colors.',
+    clean: 'VARIATION: Minimal elements. Maximum breathing room. Only the essentials.',
+    rich: 'VARIATION: Full expression. All text elements prominent. Multiple graphic layers.',
+    bold: 'VARIATION: Maximum impact. Oversized text. Dramatic contrast. Bold statement.',
   };
 
   return `${baseContext}
@@ -131,9 +139,5 @@ ${intentionStyles[intention] || intentionStyles.editorial}
 
 ${variationModifiers[variationMode]}
 
-OUTPUT REQUIREMENTS:
-- Photographic quality, not illustrated or cartoon
-- All provided text MUST appear in the image, legible and correctly spelled
-- No watermarks, no UI elements, no design software artifacts
-- Use brand colors for text and UI elements (pills, buttons)`;
+REMEMBER: The original photo must NOT be modified. Only add graphic elements on top.`;
 }

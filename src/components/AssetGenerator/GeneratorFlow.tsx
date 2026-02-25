@@ -188,7 +188,6 @@ export function GeneratorFlow() {
           const base64Image = await generateWithNanoBanana({
             prompt,
             referenceImages: refs,
-            modelTier: 'fast',
             aspectRatio: format.aspect_ratio,
           });
 
