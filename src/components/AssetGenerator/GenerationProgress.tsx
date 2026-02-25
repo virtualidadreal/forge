@@ -37,7 +37,7 @@ export function GenerationProgress({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm" style={{ zIndex: 'var(--z-modal)' }}>
       <div
-        className="w-full max-w-[520px] mx-4 bg-card rounded-3xl border border-border p-12"
+        className="w-full max-w-[520px] mx-4 bg-card rounded-3xl border border-border p-12 animate-in"
         style={{ boxShadow: 'var(--shadow-xl)' }}
       >
         {/* Header */}

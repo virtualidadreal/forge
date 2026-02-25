@@ -6,7 +6,7 @@ export function StudioPage() {
   const [showWizard, setShowWizard] = useState(false);
 
   return (
-    <div className="px-10 lg:px-16 py-12 max-w-6xl mx-auto">
+    <div className="px-10 lg:px-16 py-12 max-w-6xl mx-auto animate-in">
       <div className="mb-12">
         <h1 className="font-serif text-4xl font-medium tracking-tight">Brand Studio</h1>
         <p className="text-sm font-light text-muted-foreground mt-4">Configura el ADN visual de tus marcas</p>

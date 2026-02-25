@@ -112,7 +112,7 @@ export function FormatSelector() {
               onClick={() => handlePackClick(pack.id)}
               className={`
                 px-4 py-2.5 rounded-full font-sans text-xs font-medium
-                border transition-all duration-150
+                border transition-all duration-300
                 ${
                   allSelected
                     ? 'border-foreground bg-foreground text-background'
@@ -157,7 +157,7 @@ export function FormatSelector() {
                       onClick={() => toggleFormat(fmt.id)}
                       className={`
                         flex items-center gap-3.5 p-4 rounded-xl border text-left overflow-hidden
-                        transition-all duration-150 cursor-pointer
+                        transition-all duration-300 cursor-pointer
                         ${
                           isSelected
                             ? 'border-foreground/40 bg-accent/20'
@@ -169,7 +169,7 @@ export function FormatSelector() {
                       <div
                         className={`
                           flex items-center justify-center shrink-0
-                          w-4 h-4 rounded border transition-all duration-150
+                          w-4 h-4 rounded border transition-all duration-300
                           ${
                             isSelected
                               ? 'bg-foreground border-foreground'

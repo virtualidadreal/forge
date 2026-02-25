@@ -71,7 +71,7 @@ export function ImageUploader() {
     return (
       <div>
         <SectionLabel>Imagen</SectionLabel>
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-subtle)]">
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
           <img
             src={imageDataUrl}
             alt={imageFileName ?? 'Imagen subida'}
@@ -109,7 +109,7 @@ export function ImageUploader() {
         className={`
           flex flex-col items-center justify-center gap-6
           min-h-[240px] rounded-3xl border-2 border-dashed cursor-pointer
-          transition-all duration-150
+          transition-all duration-300
           ${
             dragging
               ? 'border-foreground bg-accent/30 scale-[1.01]'

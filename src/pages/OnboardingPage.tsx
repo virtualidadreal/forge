@@ -48,7 +48,7 @@ export function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center overflow-y-auto">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center overflow-y-auto animate-in">
       {/* Hero section */}
       <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pt-20 pb-16 text-center">
         {/* Decorative line */}
@@ -77,7 +77,7 @@ export function OnboardingPage() {
           {steps.map((step) => (
             <div
               key={step.number}
-              className="group flex flex-col bg-card rounded-3xl p-8 shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] transition-shadow"
+              className="group flex flex-col bg-card rounded-3xl p-8 shadow-subtle hover:shadow-elevated transition-shadow duration-300"
             >
               {/* Step number */}
               <span className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -85,7 +85,7 @@ export function OnboardingPage() {
               </span>
 
               {/* Icon */}
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary">
                 <svg
                   width="22"
                   height="22"

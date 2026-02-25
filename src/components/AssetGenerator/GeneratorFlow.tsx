@@ -156,7 +156,7 @@ export function GeneratorFlow() {
         <div className="relative">
           {activeBrand ? (
             <div
-              className="flex items-center justify-between p-8 rounded-3xl border border-border bg-card shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] cursor-pointer hover:border-muted-foreground transition-all duration-150 overflow-hidden"
+              className="flex items-center justify-between p-8 rounded-3xl border border-border bg-card shadow-subtle hover:shadow-elevated cursor-pointer transition-shadow duration-300 overflow-hidden"
               onClick={() => setShowBrandPicker((v) => !v)}
             >
               <div className="flex items-center gap-3">
@@ -186,7 +186,7 @@ export function GeneratorFlow() {
             </div>
           ) : (
             <div
-              className="flex items-center justify-between p-8 rounded-3xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-150 overflow-hidden"
+              className="flex items-center justify-between p-8 rounded-3xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-300 overflow-hidden"
               onClick={() => navigate('/studio')}
             >
               <div className="flex items-center gap-3">
@@ -215,7 +215,7 @@ export function GeneratorFlow() {
           {/* Brand picker dropdown */}
           {showBrandPicker && brands.length > 1 && (
             <div
-              className="absolute top-full left-0 right-0 mt-2 rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)] overflow-hidden"
+              className="absolute top-full left-0 right-0 mt-2 rounded-3xl border border-border bg-card shadow-elevated overflow-hidden"
               style={{ zIndex: 'var(--z-dropdown)' }}
             >
               {brands.map((brand) => (
@@ -296,7 +296,7 @@ export function GeneratorFlow() {
           <div>
             <SectionLabel>Vista previa</SectionLabel>
             {imageDataUrl ? (
-              <div className="rounded-3xl overflow-hidden border border-border bg-card shadow-[var(--shadow-subtle)]">
+              <div className="rounded-3xl overflow-hidden border border-border bg-card shadow-subtle transition-shadow duration-300">
                 <img
                   src={imageDataUrl}
                   alt={imageFileName ?? 'Preview'}
@@ -313,7 +313,7 @@ export function GeneratorFlow() {
           {/* Summary */}
           <div>
             <SectionLabel>Resumen</SectionLabel>
-            <div className="rounded-3xl border border-border bg-card p-8 space-y-5 shadow-[var(--shadow-subtle)]">
+            <div className="rounded-3xl border border-border bg-card p-8 space-y-5 shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
               {/* Brand */}
               <SummaryRow
                 label="Marca"

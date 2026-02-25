@@ -10,7 +10,7 @@ export function HistoryPage() {
   }, [isLoaded, loadCampaigns]);
 
   return (
-    <div className="px-10 lg:px-16 py-12 max-w-6xl mx-auto">
+    <div className="px-10 lg:px-16 py-12 max-w-6xl mx-auto animate-in">
       <div className="mb-12">
         <h1 className="font-serif text-4xl font-medium tracking-tight">Historial</h1>
         <p className="text-sm font-light text-muted-foreground mt-4">Campanas generadas anteriormente</p>
@@ -18,7 +18,7 @@ export function HistoryPage() {
 
       {campaigns.length === 0 ? (
         <div className="flex items-center justify-center py-24">
-          <div className="bg-card rounded-3xl p-8 shadow-[var(--shadow-subtle)] max-w-md w-full flex flex-col items-center text-center">
+          <div className="bg-card rounded-3xl p-8 shadow-subtle max-w-md w-full flex flex-col items-center text-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary mb-8">
               <svg
                 width="28"
@@ -44,7 +44,7 @@ export function HistoryPage() {
           {campaigns.map(campaign => (
             <div
               key={campaign.campaign_id}
-              className="bg-card rounded-3xl border border-border p-8 shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] transition-shadow"
+              className="bg-card rounded-3xl border border-border p-8 shadow-subtle hover:shadow-elevated transition-shadow duration-300"
             >
               <h3 className="font-serif text-lg font-medium mb-2">{campaign.campaign_name}</h3>
               <p className="text-sm font-light text-muted-foreground mb-3">{campaign.brand_name}</p>

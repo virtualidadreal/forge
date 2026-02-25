@@ -68,7 +68,7 @@ export function IntentionSelector() {
     <div>
       <SectionLabel>Intencion</SectionLabel>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {INTENTIONS.map((intent) => {
           const isSelected = intention === intent.id;
           const colors = INTENT_COLOR_MAP[intent.id];
@@ -80,7 +80,7 @@ export function IntentionSelector() {
               className={`
                 relative flex flex-col items-start gap-3 p-6 rounded-2xl
                 border text-left cursor-pointer overflow-hidden
-                transition-all duration-150
+                transition-all duration-300
                 ${
                   isSelected
                     ? `${colors.border} ${colors.bg} border-2`

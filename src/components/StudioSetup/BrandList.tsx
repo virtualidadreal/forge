@@ -103,11 +103,11 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
               key={brand.brand_id}
               className={`
                 group relative flex flex-col gap-5 rounded-3xl border p-8
-                transition-all duration-150 cursor-pointer
+                transition-shadow duration-300 cursor-pointer
                 ${
                   isActive
-                    ? 'border-primary bg-card shadow-[var(--shadow-subtle)]'
-                    : 'border-border bg-card/50 hover:bg-card hover:shadow-[var(--shadow-elevated)]'
+                    ? 'border-primary bg-card shadow-subtle'
+                    : 'border-border bg-card/50 hover:bg-card hover:shadow-elevated'
                 }
               `}
               onClick={() => setActiveBrand(brand.brand_id)}
@@ -144,13 +144,13 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
               </div>
 
               {/* Actions row -- visible on hover */}
-              <div className="flex gap-1.5 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+              <div className="flex gap-1.5 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit(brand);
                   }}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-all duration-300"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
@@ -163,7 +163,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     duplicateBrand(brand.brand_id);
                   }}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-muted-foreground hover:text-foreground px-2.5 py-1.5 rounded-lg hover:bg-secondary transition-all duration-300"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
@@ -176,7 +176,7 @@ export function BrandList({ onCreateNew, onEdit }: BrandListProps) {
                     e.stopPropagation();
                     setDeleteTarget(brand.brand_id);
                   }}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-destructive hover:text-destructive px-2.5 py-1.5 rounded-lg hover:bg-destructive/10 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-light text-destructive hover:text-destructive px-2.5 py-1.5 rounded-lg hover:bg-destructive/10 transition-all duration-300"
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="3 6 5 6 21 6" />

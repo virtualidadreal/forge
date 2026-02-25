@@ -63,7 +63,7 @@ export function Modal({
       style={{ zIndex: 'var(--z-modal)' }}
     >
       <div
-        className={`${maxWidths[size]} w-full mx-4 bg-card rounded-3xl border border-border`}
+        className={`${maxWidths[size]} w-full mx-4 bg-card rounded-3xl border border-border animate-in`}
         style={{ boxShadow: 'var(--shadow-xl)' }}
       >
         {title && (

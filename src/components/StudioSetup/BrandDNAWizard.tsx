@@ -162,7 +162,7 @@ export function BrandDNAWizard({
                 <div
                   className={`
                     flex h-6 w-6 items-center justify-center rounded-full
-                    font-mono text-xs transition-all duration-200
+                    font-mono text-xs transition-all duration-300
                     ${isComplete ? 'bg-primary text-primary-foreground' : ''}
                     ${isActive ? 'bg-primary text-primary-foreground' : ''}
                     ${!isActive && !isComplete ? 'bg-secondary text-muted-foreground' : ''}
@@ -187,7 +187,7 @@ export function BrandDNAWizard({
                 </div>
                 <span
                   className={`
-                    text-xs uppercase tracking-[0.2em] transition-colors duration-200
+                    text-xs uppercase tracking-[0.2em] transition-colors duration-300
                     ${isActive || isComplete ? 'text-foreground font-medium' : 'text-muted-foreground font-medium'}
                   `}
                 >
@@ -198,7 +198,7 @@ export function BrandDNAWizard({
               {i < stepLabels.length - 1 && (
                 <div
                   className={`
-                    w-8 h-px transition-colors duration-200
+                    w-8 h-px transition-colors duration-300
                     ${step > stepNum ? 'bg-primary' : 'bg-border'}
                   `}
                 />
@@ -210,7 +210,7 @@ export function BrandDNAWizard({
 
       {/* Step 1: Upload references */}
       {step === 1 && (
-        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-subtle)]">
+        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
           <div className="text-center">
             <h2 className="font-serif text-3xl font-medium text-foreground">
               Sube tus assets de marca
@@ -234,7 +234,7 @@ export function BrandDNAWizard({
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
-                  transition-colors duration-150
+                  transition-colors duration-300
                 "
               />
             </div>
@@ -249,7 +249,7 @@ export function BrandDNAWizard({
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
-                  transition-colors duration-150
+                  transition-colors duration-300
                 "
               />
             </div>
@@ -337,7 +337,7 @@ export function BrandDNAWizard({
 
       {/* Step 2: Analysis */}
       {step === 2 && (
-        <div className="rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-subtle)]">
+        <div className="rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
           {analysisError ? (
             <div className="flex flex-col items-center gap-4 py-8">
               <p className="font-sans text-sm text-destructive text-center">{analysisError}</p>
@@ -368,7 +368,7 @@ export function BrandDNAWizard({
 
       {/* Step 3: Confirm & Save */}
       {step === 3 && extractedDNA && (
-        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-[var(--shadow-subtle)]">
+        <div className="flex flex-col gap-10 rounded-3xl bg-card border border-border p-8 shadow-subtle transition-shadow duration-300">
           <div className="text-center">
             <h2 className="font-serif text-3xl font-medium text-foreground">
               Tu Brand DNA
@@ -390,7 +390,7 @@ export function BrandDNAWizard({
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
-                  transition-colors duration-150
+                  transition-colors duration-300
                 "
               />
             </div>
@@ -405,14 +405,14 @@ export function BrandDNAWizard({
                   w-full rounded-xl border border-input bg-background px-5 py-3.5
                   font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
-                  transition-colors duration-150
+                  transition-colors duration-300
                 "
               />
             </div>
           </div>
 
           {/* DNA Preview */}
-          <div className="rounded-xl bg-card border border-border p-6 shadow-[var(--shadow-subtle)]">
+          <div className="rounded-xl bg-card border border-border p-6 shadow-subtle transition-shadow duration-300">
             <BrandDNAPreview brandDNA={extractedDNA} />
           </div>
 

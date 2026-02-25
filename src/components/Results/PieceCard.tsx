@@ -54,7 +54,7 @@ export function PieceCard({
 
   return (
     <div
-      className={`group relative flex flex-col rounded-3xl border bg-card overflow-hidden shadow-[var(--shadow-subtle)] hover:shadow-[var(--shadow-elevated)] transition-all duration-150 ${
+      className={`group relative flex flex-col rounded-3xl border bg-card overflow-hidden shadow-subtle hover:shadow-elevated transition-shadow duration-300 ${
         selected ? 'border-primary ring-1 ring-primary' : 'border-border'
       }`}
     >

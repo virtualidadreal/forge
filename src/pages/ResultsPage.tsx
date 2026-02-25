@@ -54,7 +54,7 @@ export function ResultsPage() {
   if (pieces.length === 0) {
     return (
       <div className="flex items-center justify-center h-full px-10 lg:px-16 py-12">
-        <div className="bg-card rounded-3xl p-8 shadow-[var(--shadow-subtle)] max-w-md w-full flex flex-col items-center text-center">
+        <div className="bg-card rounded-3xl p-8 shadow-subtle transition-shadow duration-300 max-w-md w-full flex flex-col items-center text-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary mb-8">
             <svg
               width="28"
@@ -80,7 +80,7 @@ export function ResultsPage() {
   }
 
   return (
-    <div className="px-10 lg:px-16 py-12 max-w-7xl mx-auto">
+    <div className="px-10 lg:px-16 py-12 max-w-7xl mx-auto animate-in">
       <ResultsGrid
         onExportAll={handleExportAll}
         onExportPiece={handleExportPiece}

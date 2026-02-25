@@ -21,13 +21,13 @@ const variantClasses: Record<ButtonVariant, string> = {
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'px-5 py-2.5 text-[11px] gap-2',
-  md: 'px-8 py-3 text-xs gap-2.5',
+  sm: 'px-6 py-2 text-[10px] gap-1.5',
+  md: 'px-8 py-3 text-xs gap-2',
   lg: 'px-10 py-4 text-sm gap-3',
 };
 
 const baseClasses =
-  'inline-flex items-center justify-center rounded-full font-sans font-medium uppercase tracking-[0.2em] transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-ring select-none';
+  'inline-flex items-center justify-center font-medium tracking-[0.2em] uppercase transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 rounded-full';
 
 function Spinner() {
   return (

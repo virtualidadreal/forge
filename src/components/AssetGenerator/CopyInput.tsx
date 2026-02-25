@@ -214,7 +214,7 @@ export function CopyInput() {
               w-full resize-none rounded-2xl border border-border bg-card px-6 py-5
               font-sans text-sm font-light text-foreground placeholder:text-muted-foreground
               focus:outline-none focus:ring-2 focus:ring-ring
-              transition-all duration-150
+              transition-all duration-300
             "
           />
 
@@ -257,7 +257,7 @@ export function CopyInput() {
                   w-full resize-none rounded-xl border border-border bg-card px-5 py-4
                   font-sans text-sm text-foreground placeholder:text-muted-foreground
                   focus:outline-none focus:ring-2 focus:ring-ring
-                  transition-all duration-150
+                  transition-all duration-300
                 "
               />
             </div>
