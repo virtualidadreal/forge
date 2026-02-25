@@ -48,12 +48,12 @@ export function AnalysisProgress({ progress, currentStep }: AnalysisProgressProp
   }, [currentStep]);
 
   return (
-    <div className="flex flex-col items-center gap-8 py-4">
+    <div className="flex flex-col items-center gap-10 py-4">
       <div className="text-center">
-        <h3 className="font-serif text-2xl font-medium text-foreground">
+        <h3 className="font-serif text-3xl italic text-foreground">
           Analizando tu marca
         </h3>
-        <p className="font-sans text-sm text-muted-foreground mt-1">
+        <p className="font-light text-muted-foreground mt-2 leading-relaxed">
           Extrayendo el ADN visual de tus assets
         </p>
       </div>
@@ -72,7 +72,7 @@ export function AnalysisProgress({ progress, currentStep }: AnalysisProgressProp
           <span className="font-mono text-xs text-muted-foreground tabular-nums">
             {Math.round(progress)}%
           </span>
-          <span className="font-sans text-xs text-muted-foreground">
+          <span className="text-xs font-light text-muted-foreground">
             {progress >= 100 ? 'Completo' : 'Procesando...'}
           </span>
         </div>
@@ -85,8 +85,8 @@ export function AnalysisProgress({ progress, currentStep }: AnalysisProgressProp
             <div
               key={i}
               className={`
-                flex items-center gap-2.5 px-3 py-2 rounded-lg
-                transition-all duration-[150ms]
+                flex items-center gap-2.5 px-3 py-2 rounded-2xl
+                transition-all duration-300
                 ${status === 'active' ? 'bg-secondary/60' : ''}
                 ${status === 'pending' ? 'opacity-40' : ''}
               `}
@@ -94,7 +94,7 @@ export function AnalysisProgress({ progress, currentStep }: AnalysisProgressProp
               <div
                 className={`
                   flex h-5 w-5 items-center justify-center rounded-full shrink-0
-                  transition-all duration-[150ms]
+                  transition-all duration-300
                   ${status === 'complete' ? 'bg-primary text-primary-foreground' : ''}
                   ${status === 'active' ? 'text-primary' : ''}
                   ${status === 'pending' ? 'border border-border text-transparent' : ''}
@@ -107,8 +107,8 @@ export function AnalysisProgress({ progress, currentStep }: AnalysisProgressProp
 
               <span
                 className={`
-                  font-sans text-sm transition-colors duration-[150ms]
-                  ${status === 'complete' || status === 'active' ? 'text-foreground font-medium' : 'text-muted-foreground'}
+                  text-sm transition-colors duration-300
+                  ${status === 'complete' || status === 'active' ? 'text-foreground font-medium' : 'font-light text-muted-foreground'}
                 `}
               >
                 {label}

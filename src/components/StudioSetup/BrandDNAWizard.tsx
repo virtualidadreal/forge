@@ -14,7 +14,7 @@ interface BrandDNAWizardProps {
 }
 
 const inputClasses =
-  'w-full rounded-lg border border-input bg-card px-3 py-2.5 font-sans text-base text-foreground placeholder:text-muted-foreground transition-colors duration-[100ms] focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring hover:border-muted-foreground';
+  'w-full rounded-md border border-input bg-transparent px-3 py-2.5 font-sans text-base text-foreground placeholder:text-muted-foreground transition-[color,box-shadow] duration-300 focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring hover:border-muted-foreground';
 
 export function BrandDNAWizard({
   editingBrand,
@@ -118,7 +118,7 @@ export function BrandDNAWizard({
   );
 
   return (
-    <div className="flex flex-col gap-10 max-w-lg mx-auto py-6">
+    <div className="flex flex-col gap-12 max-w-lg mx-auto py-6">
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2">
         {stepLabels.map((label, i) => {
@@ -131,7 +131,7 @@ export function BrandDNAWizard({
                 <div
                   className={`
                     flex h-6 w-6 items-center justify-center rounded-full
-                    font-mono text-xs transition-all duration-[150ms]
+                    font-mono text-xs transition-all duration-300
                     ${isComplete ? 'bg-primary text-primary-foreground' : ''}
                     ${isActive ? 'bg-primary text-primary-foreground' : ''}
                     ${!isActive && !isComplete ? 'bg-secondary text-muted-foreground' : ''}
@@ -146,15 +146,15 @@ export function BrandDNAWizard({
                   )}
                 </div>
                 <span
-                  className={`font-sans text-xs uppercase tracking-widest transition-colors duration-[150ms] ${
-                    isActive || isComplete ? 'text-foreground font-semibold' : 'text-muted-foreground font-medium'
+                  className={`text-xs font-medium uppercase tracking-[0.15em] transition-colors duration-300 ${
+                    isActive || isComplete ? 'text-foreground' : 'text-muted-foreground'
                   }`}
                 >
                   {label}
                 </span>
               </div>
               {i < stepLabels.length - 1 && (
-                <div className={`w-8 h-px transition-colors duration-[150ms] ${step > stepNum ? 'bg-primary' : 'bg-border'}`} />
+                <div className={`w-8 h-px transition-colors duration-300 ${step > stepNum ? 'bg-primary' : 'bg-border/50'}`} />
               )}
             </div>
           );
@@ -163,12 +163,12 @@ export function BrandDNAWizard({
 
       {/* Step 1: Upload references */}
       {step === 1 && (
-        <div className="flex flex-col gap-8 rounded-2xl bg-card border border-border p-6 shadow-subtle">
+        <div className="flex flex-col gap-8 rounded-3xl bg-card p-8 shadow-subtle">
           <div className="text-center">
-            <h2 className="font-serif text-3xl font-medium tracking-tight text-foreground">
+            <h2 className="font-serif text-3xl italic tracking-tight text-foreground">
               Sube tus assets de marca
             </h2>
-            <p className="font-sans text-base text-muted-foreground mt-2 max-w-sm mx-auto">
+            <p className="font-light text-base text-muted-foreground mt-2 max-w-sm mx-auto leading-relaxed">
               Posts de Instagram, stories, banners, packaging... cualquier pieza
               que represente tu identidad visual.
             </p>
@@ -201,21 +201,21 @@ export function BrandDNAWizard({
             <SectionLabel>Logo (opcional)</SectionLabel>
             <div className="flex items-center gap-3 mt-1">
               {logo ? (
-                <div className="relative h-12 w-12 rounded-lg overflow-hidden border border-border">
+                <div className="relative h-12 w-12 rounded-2xl overflow-hidden border border-border/50">
                   <img src={logo} alt="Logo" className="h-full w-full object-contain" />
                   <button
                     onClick={() => setLogo(null)}
-                    className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity"
+                    className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300"
                     aria-label="Quitar logo"
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="18" y1="6" x2="6" y2="18" />
                       <line x1="6" y1="6" x2="18" y2="18" />
                     </svg>
                   </button>
                 </div>
               ) : (
-                <label className="flex h-12 w-12 items-center justify-center rounded-lg border border-dashed border-border cursor-pointer hover:border-muted-foreground hover:bg-secondary/30 transition-all duration-[100ms]">
+                <label className="flex h-12 w-12 items-center justify-center rounded-2xl border-2 border-dashed border-border/50 cursor-pointer hover:border-muted-foreground hover:bg-secondary/30 transition-all duration-300">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground">
                     <path d="M12 5v14" />
                     <path d="M5 12h14" />
@@ -223,7 +223,7 @@ export function BrandDNAWizard({
                   <input type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
                 </label>
               )}
-              <span className="font-sans text-xs text-muted-foreground">
+              <span className="text-xs font-light text-muted-foreground">
                 PNG o SVG transparente recomendado
               </span>
             </div>
@@ -231,7 +231,7 @@ export function BrandDNAWizard({
 
           <AssetUploader assets={assets} onAssetsChange={setAssets} />
 
-          <div className="flex justify-between pt-4">
+          <div className="flex justify-between pt-6">
             <Button variant="ghost" size="md" onClick={onCancel}>
               Cancelar
             </Button>
@@ -244,10 +244,10 @@ export function BrandDNAWizard({
 
       {/* Step 2: Analysis */}
       {step === 2 && (
-        <div className="rounded-2xl bg-card border border-border p-6 shadow-subtle">
+        <div className="rounded-3xl bg-card p-8 shadow-subtle">
           {analysisError ? (
             <div className="flex flex-col items-center gap-4 py-6">
-              <p className="font-sans text-sm text-destructive text-center">{analysisError}</p>
+              <p className="text-sm font-light text-destructive text-center">{analysisError}</p>
               <div className="flex gap-2">
                 <Button
                   variant="secondary"
@@ -269,17 +269,17 @@ export function BrandDNAWizard({
 
       {/* Step 3: Confirm & Save */}
       {step === 3 && extractedDNA && (
-        <div className="flex flex-col gap-8 rounded-2xl bg-card border border-border p-6 shadow-subtle">
+        <div className="flex flex-col gap-8 rounded-3xl bg-card p-8 shadow-subtle">
           <div className="text-center">
-            <h2 className="font-serif text-3xl font-medium tracking-tight text-foreground">
+            <h2 className="font-serif text-3xl italic tracking-tight text-foreground">
               Tu Brand DNA
             </h2>
-            <p className="font-sans text-sm text-muted-foreground mt-2">
+            <p className="text-sm font-light text-muted-foreground mt-2 leading-relaxed">
               Revisa el ADN extraido y ajusta lo que necesites.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 rounded-xl bg-secondary/30 p-5 border border-border">
+          <div className="flex flex-col gap-3 rounded-2xl bg-secondary/30 p-6 border border-border/50">
             <div>
               <SectionLabel>Nombre</SectionLabel>
               <input type="text" value={brandName} onChange={(e) => setBrandName(e.target.value)} className={inputClasses} />
@@ -290,11 +290,11 @@ export function BrandDNAWizard({
             </div>
           </div>
 
-          <div className="rounded-xl bg-card border border-border p-5 shadow-subtle">
+          <div className="rounded-2xl bg-card border border-border/50 p-6 shadow-subtle">
             <BrandDNAPreview brandDNA={extractedDNA} />
           </div>
 
-          <div className="flex justify-between pt-4">
+          <div className="flex justify-between pt-6">
             <Button
               variant="ghost"
               size="md"

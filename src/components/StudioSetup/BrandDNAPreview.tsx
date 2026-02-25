@@ -40,7 +40,7 @@ function ConfidenceBadge({ score }: { score: number }) {
         : 'text-muted-foreground';
 
   return (
-    <span className={`font-mono text-xs tabular-nums ${color}`}>
+    <span className={`font-mono text-xs font-light tabular-nums ${color}`}>
       {percent}% confianza
     </span>
   );
@@ -48,8 +48,8 @@ function ConfidenceBadge({ score }: { score: number }) {
 
 function InfoCell({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg bg-secondary/50 px-3 py-2">
-      <p className="font-sans text-[10px] text-muted-foreground uppercase tracking-wider mb-0.5">
+    <div className="rounded-2xl bg-secondary/50 px-4 py-3">
+      <p className="text-[10px] text-muted-foreground uppercase tracking-[0.15em] mb-0.5">
         {label}
       </p>
       <p className="font-mono text-xs text-foreground">{value}</p>
@@ -71,7 +71,7 @@ export function BrandDNAPreview({ brandDNA }: BrandDNAPreviewProps) {
   ].filter((c) => c.value !== null);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <SectionLabel>Brand DNA</SectionLabel>
         <ConfidenceBadge score={confidence_score} />
@@ -83,7 +83,7 @@ export function BrandDNAPreview({ brandDNA }: BrandDNAPreviewProps) {
           {paletteColors.map((c, i) => (
             <div key={i} className="flex flex-col items-center gap-1">
               <div
-                className="h-9 w-9 rounded-full border border-border shadow-sm"
+                className="h-9 w-9 rounded-full border border-border/50 shadow-subtle"
                 style={{ backgroundColor: c.value! }}
               />
               <span className="font-mono text-[10px] text-muted-foreground">{c.value}</span>
@@ -129,7 +129,7 @@ export function BrandDNAPreview({ brandDNA }: BrandDNAPreviewProps) {
             {signature_elements.map((el, i) => (
               <span
                 key={i}
-                className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 font-sans text-xs text-secondary-foreground border border-border"
+                className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-light text-secondary-foreground border border-border/50"
               >
                 {el}
               </span>

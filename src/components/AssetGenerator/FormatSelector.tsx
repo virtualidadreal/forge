@@ -34,7 +34,7 @@ function AspectRatioPreview({ width, height }: { width: number; height: number }
   return (
     <div className="flex items-center justify-center w-9 h-9">
       <div
-        className="rounded-[3px] border border-border bg-secondary"
+        className="rounded-[3px] border border-border/50 bg-secondary"
         style={{ width: `${w}px`, height: `${h}px` }}
       />
     </div>
@@ -73,7 +73,7 @@ export function FormatSelector() {
     <div>
       <div className="flex items-center justify-between mb-3">
         <SectionLabel>Formatos</SectionLabel>
-        <span className="font-sans text-xs text-muted-foreground">
+        <span className="font-sans text-xs font-light text-muted-foreground">
           {selectedCount} seleccionado{selectedCount !== 1 ? 's' : ''}
           {selectedCount > 0 && (
             <span className="ml-1 font-mono">
@@ -92,12 +92,13 @@ export function FormatSelector() {
               key={pack.id}
               onClick={() => handlePackClick(pack.id)}
               className={`
-                px-3 py-1.5 rounded-lg font-sans text-xs font-medium
-                border transition-all duration-[150ms]
+                px-3 py-1.5 rounded-full font-sans text-xs font-medium
+                tracking-[0.15em] uppercase
+                border transition-shadow duration-300
                 ${
                   allSelected
                     ? 'border-foreground bg-foreground text-background'
-                    : 'border-border bg-card text-muted-foreground hover:border-muted-foreground hover:text-foreground'
+                    : 'border-border/50 bg-card text-muted-foreground hover:border-muted-foreground hover:text-foreground'
                 }
               `}
             >
@@ -117,18 +118,18 @@ export function FormatSelector() {
       </div>
 
       {/* Platform groups */}
-      <div className="space-y-8">
+      <div className="space-y-10">
         {platforms.map((platformId) => {
           const formats = grouped.get(platformId)!;
           const platformLabel = formats[0].platform_label;
 
           return (
             <div key={platformId}>
-              <p className="font-sans text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-3">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground mb-3">
                 {platformLabel}
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {formats.map((fmt) => {
                   const isSelected = selectedFormats.includes(fmt.id);
 
@@ -137,23 +138,23 @@ export function FormatSelector() {
                       key={fmt.id}
                       onClick={() => toggleFormat(fmt.id)}
                       className={`
-                        flex items-center gap-3 p-3.5 rounded-xl border text-left overflow-hidden
-                        transition-all duration-[150ms] cursor-pointer
+                        flex items-center gap-3 p-4 rounded-2xl text-left overflow-hidden
+                        transition-shadow duration-300 cursor-pointer
                         ${
                           isSelected
-                            ? 'border-foreground/40 bg-accent/20'
-                            : 'border-border bg-card hover:border-muted-foreground'
+                            ? 'border border-foreground/40 bg-accent/20 shadow-subtle'
+                            : 'border border-border/50 bg-card hover:shadow-subtle'
                         }
                       `}
                     >
                       <div
                         className={`
                           flex items-center justify-center shrink-0
-                          w-4 h-4 rounded border transition-all duration-[150ms]
+                          w-4 h-4 rounded border transition-colors duration-300
                           ${
                             isSelected
                               ? 'bg-foreground border-foreground'
-                              : 'border-border bg-transparent'
+                              : 'border-border/50 bg-transparent'
                           }
                         `}
                       >
@@ -179,7 +180,7 @@ export function FormatSelector() {
                         <p className="font-sans text-xs font-medium text-foreground truncate">
                           {fmt.name}
                         </p>
-                        <p className="font-mono text-[10px] text-muted-foreground">
+                        <p className="font-mono text-[10px] font-light text-muted-foreground">
                           {fmt.width}x{fmt.height} &middot; {fmt.aspect_ratio}
                         </p>
                       </div>

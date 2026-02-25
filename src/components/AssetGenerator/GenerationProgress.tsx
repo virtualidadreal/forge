@@ -35,13 +35,13 @@ export function GenerationProgress({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm" style={{ zIndex: 'var(--z-modal)' }}>
-      <div className="w-full max-w-[480px] mx-4 rounded-2xl bg-card border border-border p-10 shadow-xl animate-in">
+      <div className="w-full max-w-[480px] mx-4 rounded-3xl bg-card p-10 shadow-elevated animate-in">
         {/* Header */}
         <div className="text-center mb-8">
-          <h2 className="font-serif text-xl font-medium text-card-foreground mb-1">
+          <h2 className="font-serif italic text-xl font-medium text-card-foreground mb-1">
             Generando piezas
           </h2>
-          <p className="font-sans text-sm text-muted-foreground">
+          <p className="font-sans text-sm font-light text-muted-foreground">
             {completedFormats.length} de {formats.length} formatos &middot; {formatTime(elapsed)}
           </p>
         </div>
@@ -49,7 +49,7 @@ export function GenerationProgress({
         {/* Progress bar */}
         <div className="relative h-1.5 rounded-full bg-secondary overflow-hidden mb-8">
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-foreground transition-all duration-[250ms] ease-out"
+            className="absolute inset-y-0 left-0 rounded-full bg-foreground transition-all duration-300 ease-out"
             style={{ width: `${Math.max(progress, 2)}%` }}
           />
           <div
@@ -59,7 +59,7 @@ export function GenerationProgress({
         </div>
 
         {/* Percentage */}
-        <p className="text-center font-mono text-xs text-muted-foreground mb-8">
+        <p className="text-center font-mono text-xs font-light text-muted-foreground mb-8">
           {Math.round(progress)}%
         </p>
 
@@ -71,7 +71,7 @@ export function GenerationProgress({
             return (
               <div
                 key={name}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg ${isDone ? 'bg-secondary/50' : ''}`}
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg transition-colors duration-300 ${isDone ? 'bg-secondary/50' : ''}`}
               >
                 {isDone ? (
                   <svg
@@ -80,7 +80,7 @@ export function GenerationProgress({
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2.5"
+                    strokeWidth={1.5}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     className="text-intent-awareness shrink-0"
@@ -88,11 +88,11 @@ export function GenerationProgress({
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 ) : (
-                  <div className="w-3.5 h-3.5 rounded-full border-2 border-border shrink-0" />
+                  <div className="w-3.5 h-3.5 rounded-full border-2 border-border/50 shrink-0" />
                 )}
 
                 <span
-                  className={`font-sans text-xs ${isDone ? 'text-muted-foreground line-through' : 'text-foreground'}`}
+                  className={`font-sans text-xs font-light ${isDone ? 'text-muted-foreground line-through' : 'text-foreground'}`}
                 >
                   {name}
                 </span>

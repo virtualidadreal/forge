@@ -36,7 +36,7 @@ export function AppLayout() {
       <aside className="flex w-[220px] shrink-0 flex-col border-r border-border/50 bg-sidebar">
         {/* Logo */}
         <div className="px-6 pt-8 pb-6">
-          <h1 className="font-serif text-3xl font-semibold tracking-tight">
+          <h1 className="font-serif text-2xl font-medium tracking-tight">
             FORGE
           </h1>
         </div>
@@ -51,10 +51,10 @@ export function AppLayout() {
               key={to}
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-[150ms] ${
+                `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors duration-300 ${
                   isActive
                     ? 'bg-secondary text-foreground font-medium'
-                    : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
                 }`
               }
             >
@@ -77,11 +77,11 @@ export function AppLayout() {
         </nav>
 
         {/* Bottom section */}
-        <div className="mt-auto border-t border-border px-5 py-6">
+        <div className="mt-auto border-t border-border/50 px-5 py-6">
           {/* Dark mode toggle */}
           <button
             onClick={toggleTheme}
-            className="mb-4 flex w-full items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-muted-foreground transition-all duration-[100ms] hover:bg-secondary hover:text-foreground"
+            className="mb-4 flex w-full items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-muted-foreground transition-colors duration-300 hover:bg-secondary hover:text-foreground"
           >
             {isDark ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -93,8 +93,8 @@ export function AppLayout() {
 
           {/* Active brand indicator */}
           {activeBrand ? (
-            <div className="rounded-xl bg-secondary px-4 py-3">
-              <p className="font-sans text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <div className="rounded-2xl bg-secondary px-4 py-3 shadow-subtle">
+              <p className="font-sans text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
                 Marca activa
               </p>
               <p className="mt-1 truncate text-sm font-medium text-foreground">
@@ -102,8 +102,8 @@ export function AppLayout() {
               </p>
             </div>
           ) : (
-            <div className="rounded-xl border border-dashed border-border px-4 py-3">
-              <p className="text-xs text-muted-foreground">
+            <div className="rounded-2xl border border-dashed border-border/50 px-4 py-3">
+              <p className="text-xs font-light text-muted-foreground">
                 Sin marca activa
               </p>
             </div>

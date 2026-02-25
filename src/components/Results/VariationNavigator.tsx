@@ -15,7 +15,7 @@ function ArrowIcon({ direction }: { direction: 'left' | 'right' }): ReactNode {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -44,7 +44,7 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
       <button
         type="button"
         onClick={prev}
-        className="flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-[100ms]"
+        className="flex items-center justify-center w-6 h-6 rounded-full text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-300"
         aria-label="Variacion anterior"
       >
         <ArrowIcon direction="left" />
@@ -56,7 +56,7 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
             key={v}
             type="button"
             onClick={() => onChange(v)}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-[150ms] ${
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
               v === current
                 ? 'bg-foreground scale-125'
                 : 'bg-border hover:bg-muted-foreground'
@@ -66,14 +66,14 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
         ))}
       </div>
 
-      <span className="font-mono text-xs text-muted-foreground tabular-nums min-w-[24px] text-center">
+      <span className="font-mono text-xs font-light text-muted-foreground tabular-nums min-w-[24px] text-center">
         {current}/3
       </span>
 
       <button
         type="button"
         onClick={next}
-        className="flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-[100ms]"
+        className="flex items-center justify-center w-6 h-6 rounded-full text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-300"
         aria-label="Siguiente variacion"
       >
         <ArrowIcon direction="right" />

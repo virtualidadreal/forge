@@ -99,23 +99,23 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
         }}
         className={`
           relative flex flex-col items-center justify-center gap-3
-          rounded-xl border-2 border-dashed p-6
-          cursor-pointer transition-all duration-[150ms]
+          rounded-2xl border-2 border-dashed p-8
+          cursor-pointer transition-all duration-300
           ${
             isDragOver
-              ? 'border-primary bg-secondary/50 scale-[1.01]'
-              : 'border-border hover:border-muted-foreground hover:bg-secondary/30'
+              ? 'border-foreground bg-secondary/50 scale-[1.01]'
+              : 'border-border/50 hover:border-muted-foreground hover:bg-secondary/30'
           }
         `}
       >
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary">
           <svg
             width="20"
             height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth={1.5}
             strokeLinecap="round"
             strokeLinejoin="round"
             className="text-muted-foreground"
@@ -127,10 +127,10 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
         </div>
 
         <div className="text-center">
-          <p className="font-sans text-sm font-medium text-foreground">
+          <p className="text-sm font-medium text-foreground">
             Arrastra tus assets de marca aqui
           </p>
-          <p className="font-sans text-xs text-muted-foreground mt-1">
+          <p className="text-xs font-light text-muted-foreground mt-1">
             JPG, PNG, WebP o HEIC — hasta 20 MB por archivo
           </p>
         </div>
@@ -152,7 +152,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
             <div
               key={i}
               className={`
-                h-1.5 w-5 rounded-full transition-colors duration-[150ms]
+                h-1.5 w-5 rounded-full transition-colors duration-300
                 ${
                   i < assetCount
                     ? meetsRecommended
@@ -166,7 +166,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
             />
           ))}
         </div>
-        <span className="font-sans text-xs text-muted-foreground">
+        <span className="text-xs font-light text-muted-foreground">
           {assetCount} / {MIN_ASSETS} min
           {!meetsRecommended && assetCount >= MIN_ASSETS && (
             <span className="ml-1 opacity-60">
@@ -180,7 +180,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
       </div>
 
       {error && (
-        <p className="font-sans text-xs text-destructive">{error}</p>
+        <p className="text-xs font-light text-destructive">{error}</p>
       )}
 
       {assets.length > 0 && (
@@ -188,7 +188,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
           {assets.map((asset, index) => (
             <div
               key={index}
-              className="group relative aspect-square overflow-hidden rounded-xl border border-border shadow-sm"
+              className="group relative aspect-square overflow-hidden rounded-2xl shadow-subtle"
             >
               <img
                 src={asset}
@@ -205,7 +205,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
                   flex h-6 w-6 items-center justify-center
                   rounded-full bg-black/60 text-white
                   opacity-0 group-hover:opacity-100
-                  transition-opacity duration-[150ms]
+                  transition-opacity duration-300
                   hover:bg-black/80
                 "
                 aria-label={`Eliminar asset ${index + 1}`}
@@ -215,7 +215,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
-              <span className="absolute bottom-1.5 left-1.5 font-mono text-[10px] text-white bg-black/40 rounded px-1">
+              <span className="absolute bottom-1.5 left-1.5 font-mono text-[10px] text-white bg-black/40 rounded-full px-1.5">
                 {index + 1}
               </span>
             </div>

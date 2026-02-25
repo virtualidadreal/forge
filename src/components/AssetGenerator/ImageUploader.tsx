@@ -69,19 +69,19 @@ export function ImageUploader() {
     return (
       <div>
         <SectionLabel>Imagen</SectionLabel>
-        <div className="relative overflow-hidden rounded-xl border border-border bg-card shadow-subtle transition-all duration-[150ms] hover:shadow-elevated hover:border-muted-foreground/30">
+        <div className="relative overflow-hidden rounded-2xl bg-card shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
           <img
             src={imageDataUrl}
             alt={imageFileName ?? 'Imagen subida'}
             className="w-full max-h-[260px] object-cover"
           />
-          <div className="flex items-center justify-between px-5 py-4 border-t border-border bg-card/80 backdrop-blur-sm">
+          <div className="flex items-center justify-between px-5 py-4 border-t border-border/50 bg-card/80 backdrop-blur-sm">
             <div className="flex items-center gap-2 min-w-0">
               <span className="font-sans text-sm font-medium text-foreground truncate max-w-[200px]">
                 {imageFileName}
               </span>
               {dimensions && (
-                <span className="font-mono text-xs text-muted-foreground shrink-0">
+                <span className="font-mono text-xs font-light text-muted-foreground shrink-0">
                   {dimensions.width} x {dimensions.height}
                 </span>
               )}
@@ -105,23 +105,23 @@ export function ImageUploader() {
         onClick={() => inputRef.current?.click()}
         className={`
           flex flex-col items-center justify-center gap-5
-          min-h-[220px] rounded-xl border-2 border-dashed cursor-pointer
-          transition-all duration-[150ms]
+          min-h-[260px] p-8 rounded-2xl border-2 border-dashed cursor-pointer
+          transition-shadow duration-300
           ${
             dragging
               ? 'border-foreground bg-accent/30 scale-[1.01]'
-              : 'border-border bg-card hover:border-muted-foreground hover:bg-accent/10'
+              : 'border-border/50 bg-card hover:border-muted-foreground hover:bg-accent/5'
           }
         `}
       >
-        <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-secondary">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary">
           <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth={1.5}
             strokeLinecap="round"
             strokeLinejoin="round"
             className="text-muted-foreground"
@@ -136,7 +136,7 @@ export function ImageUploader() {
           <p className="font-sans text-sm font-medium text-foreground">
             Arrastra tu imagen aqui
           </p>
-          <p className="font-sans text-xs text-muted-foreground mt-1">
+          <p className="font-sans text-xs font-light text-muted-foreground mt-1">
             JPG, PNG, WebP o HEIC &middot; Max 20 MB
           </p>
         </div>

@@ -24,7 +24,7 @@ function IntentionIcon({ id, className = '' }: { id: string; className?: string 
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -60,7 +60,7 @@ export function IntentionSelector() {
     <div>
       <SectionLabel>Intencion</SectionLabel>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {INTENTIONS.map((intent) => {
           const isSelected = intention === intent.id;
           const colors = INTENT_COLOR_MAP[intent.id];
@@ -70,13 +70,13 @@ export function IntentionSelector() {
               key={intent.id}
               onClick={() => handleSelect(intent.id)}
               className={`
-                relative flex flex-col items-start gap-2 p-5 rounded-xl
-                border text-left cursor-pointer overflow-hidden
-                transition-all duration-[150ms]
+                relative flex flex-col items-start gap-2 p-6 rounded-2xl
+                text-left cursor-pointer overflow-hidden
+                transition-shadow duration-300
                 ${
                   isSelected
-                    ? `${colors.border} ${colors.bg} border-2`
-                    : 'border-border bg-card hover:border-muted-foreground hover:bg-accent/5'
+                    ? `border-2 ${colors.border} ${colors.bg}`
+                    : 'border border-border/50 bg-card hover:shadow-subtle'
                 }
               `}
             >
@@ -89,7 +89,7 @@ export function IntentionSelector() {
                 </span>
               </div>
 
-              <p className="font-sans text-xs text-muted-foreground leading-relaxed line-clamp-2">
+              <p className="font-sans text-sm font-light leading-relaxed text-muted-foreground line-clamp-2">
                 {intent.description}
               </p>
 

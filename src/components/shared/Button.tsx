@@ -13,33 +13,25 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring',
+    'rounded-full border border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground',
   secondary:
-    'bg-secondary text-secondary-foreground border border-border hover:bg-muted active:scale-[0.98]',
+    'rounded-full border border-foreground/30 bg-transparent text-foreground hover:bg-foreground hover:text-background',
   ghost:
-    'text-muted-foreground hover:bg-secondary hover:text-foreground',
+    'rounded-none border-b border-foreground/30 px-0 hover:border-foreground',
   destructive:
-    'bg-destructive text-destructive-foreground hover:opacity-90 active:scale-[0.98]',
+    'rounded-full border border-destructive bg-destructive text-white hover:bg-transparent hover:text-destructive',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'px-3 py-1.5 text-sm gap-1.5',
-  md: 'px-4 py-2 text-sm gap-2',
-  lg: 'px-5 py-2.5 text-sm gap-2',
+  sm: 'px-6 py-2 text-[10px] gap-2',
+  md: 'px-8 py-3 text-xs gap-2',
+  lg: 'px-10 py-4 text-sm gap-2.5',
 };
 
-const radiusClasses: Record<ButtonVariant, string> = {
-  primary: 'rounded-lg',
-  secondary: 'rounded-lg',
-  ghost: 'rounded-md',
-  destructive: 'rounded-lg',
-};
-
-const durationClasses: Record<ButtonVariant, string> = {
-  primary: 'duration-[150ms]',
-  secondary: 'duration-[150ms]',
-  ghost: 'duration-[100ms]',
-  destructive: 'duration-[150ms]',
+const ghostSizeOverrides: Record<ButtonSize, string> = {
+  sm: 'px-0 py-2 text-[10px] gap-2',
+  md: 'px-0 py-3 text-xs gap-2',
+  lg: 'px-0 py-4 text-sm gap-2.5',
 };
 
 function Spinner() {
@@ -81,10 +73,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
+    const isGhost = variant === 'ghost';
+    const baseClasses =
+      'inline-flex items-center justify-center font-medium tracking-[0.2em] uppercase transition-all duration-300 disabled:pointer-events-none disabled:opacity-50';
+    const sizes = isGhost ? ghostSizeOverrides[size] : sizeClasses[size];
+
     return (
       <button
         ref={ref}
-        className={`inline-flex items-center justify-center font-sans font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed ${radiusClasses[variant]} ${durationClasses[variant]} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        className={`${baseClasses} ${variantClasses[variant]} ${sizes} ${className}`}
         disabled={disabled || loading}
         {...rest}
       >

@@ -135,7 +135,7 @@ export function CopyInput() {
   }, [noCopy, setCopy]);
 
   const inputClasses =
-    'w-full resize-none rounded-lg border border-input bg-card px-3 py-2.5 font-sans text-base text-foreground placeholder:text-muted-foreground transition-colors duration-[100ms] focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring hover:border-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed';
+    'w-full resize-none rounded-md border border-input bg-transparent px-3 py-2.5 font-sans text-base text-foreground placeholder:text-muted-foreground transition-[color,box-shadow] duration-300 focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring hover:border-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed';
 
   return (
     <div>
@@ -149,7 +149,7 @@ export function CopyInput() {
               onChange={handleNoCopyToggle}
               className="w-3.5 h-3.5 accent-foreground rounded"
             />
-            <span className="font-sans text-xs text-muted-foreground">
+            <span className="font-sans text-xs font-light text-muted-foreground">
               Sin copy{isBranding ? ' (Branding)' : ''}
             </span>
           </label>
@@ -157,7 +157,7 @@ export function CopyInput() {
           {!noCopy && (
             <button
               onClick={toggleMode}
-              className="font-sans text-xs text-muted-foreground hover:text-foreground transition-colors duration-[100ms] underline underline-offset-2"
+              className="font-sans text-xs font-light text-muted-foreground hover:text-foreground transition-colors duration-300 underline underline-offset-2"
             >
               {mode === 'free' ? 'Modo estructurado' : 'Modo libre'}
             </button>
@@ -166,13 +166,13 @@ export function CopyInput() {
       </div>
 
       {noCopy ? (
-        <div className="flex items-center justify-center h-28 rounded-xl border border-dashed border-border bg-card">
-          <p className="font-sans text-sm text-muted-foreground">
+        <div className="flex items-center justify-center h-28 rounded-2xl border border-dashed border-border/50 bg-card">
+          <p className="font-sans text-sm font-light text-muted-foreground">
             La pieza se generara solo con imagen y marca
           </p>
         </div>
       ) : mode === 'free' ? (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <textarea
             value={freeText}
             onChange={handleFreeChange}
@@ -199,10 +199,10 @@ export function CopyInput() {
           )}
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {STRUCTURED_FIELDS.map((field) => (
             <div key={field.key}>
-              <label className="block font-sans text-xs font-medium text-muted-foreground mb-1.5">
+              <label className="block font-sans text-xs font-medium tracking-[0.15em] text-muted-foreground mb-1.5">
                 {field.label}
               </label>
               <textarea

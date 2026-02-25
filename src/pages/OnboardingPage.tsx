@@ -40,40 +40,39 @@ export function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center overflow-y-auto animate-in">
+    <div className="min-h-screen bg-background flex flex-col items-center overflow-y-auto animate-in">
       {/* Hero section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-8 pt-20 pb-16 text-center">
-        <div className="mb-8 h-px w-16 bg-border" />
-
-        <h1 className="font-serif text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl text-foreground">
+      <section className="flex min-h-screen w-full max-w-7xl flex-col items-center justify-center px-6 pt-24 md:px-12">
+        <h1 className="font-serif text-5xl italic leading-tight md:text-6xl lg:text-7xl text-foreground text-center">
           FORGE
         </h1>
 
-        <p className="mt-5 max-w-lg font-sans text-lg leading-relaxed text-muted-foreground md:text-xl text-center">
+        <p className="mt-6 max-w-lg text-lg font-light leading-relaxed text-muted-foreground md:text-xl text-center">
           Genera piezas graficas para todas tus plataformas, alineadas con la
           identidad visual de tu marca, en segundos.
         </p>
 
-        <div className="mt-8 h-px w-16 bg-border" />
+        {/* Decorative connector */}
+        <div className="mt-12 h-8 w-px bg-border" />
       </section>
 
       {/* Steps section */}
-      <section className="w-full max-w-5xl px-8 pb-12">
-        <p className="mb-8 text-center font-sans text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+      <section className="w-full max-w-7xl px-6 py-20 md:px-12 md:py-32">
+        <p className="text-center text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
           Como funciona
         </p>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
             <div
               key={step.number}
-              className="group flex flex-col rounded-xl bg-card border border-border p-6 shadow-subtle transition-all duration-[150ms] hover:shadow-elevated hover:border-muted-foreground/30"
+              className="group flex flex-col bg-card p-8 shadow-subtle rounded-2xl transition-shadow duration-300 hover:shadow-elevated"
             >
-              <span className="mb-4 font-sans text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <span className="font-serif text-6xl text-muted-foreground/20">
                 {step.number}
               </span>
 
-              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-secondary">
+              <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary">
                 <svg
                   width="20"
                   height="20"
@@ -89,10 +88,10 @@ export function OnboardingPage() {
                 </svg>
               </div>
 
-              <h3 className="font-sans text-lg font-medium text-foreground">
+              <h3 className="mt-6 font-sans text-lg font-medium text-foreground">
                 {step.title}
               </h3>
-              <p className="font-sans text-sm leading-relaxed text-muted-foreground mt-2">
+              <p className="mt-3 text-sm font-light leading-relaxed text-muted-foreground">
                 {step.description}
               </p>
             </div>
@@ -100,12 +99,12 @@ export function OnboardingPage() {
         </div>
       </section>
 
-      {/* Connector */}
-      <div className="my-4 h-10 w-px bg-border" />
+      {/* Decorative connector */}
+      <div className="h-8 w-px bg-border" />
 
       {/* CTA section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-8 pb-20">
-        <p className="mb-6 text-center font-sans text-sm leading-relaxed text-muted-foreground max-w-md">
+      <section className="flex w-full max-w-7xl flex-col items-center px-6 py-20 md:px-12">
+        <p className="mb-8 text-center text-sm font-light leading-relaxed text-muted-foreground max-w-md">
           Empieza configurando el ADN visual de tu marca.
           <br />
           Solo necesitas subir algunos assets y FORGE hara el resto.
@@ -122,7 +121,7 @@ export function OnboardingPage() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             >

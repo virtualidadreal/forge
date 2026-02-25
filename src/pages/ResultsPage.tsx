@@ -53,9 +53,9 @@ export function ResultsPage() {
 
   if (pieces.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full px-8 py-12">
-        <div className="rounded-xl bg-card border border-border p-8 shadow-subtle max-w-md w-full flex flex-col items-center text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-secondary mb-6">
+      <div className="flex items-center justify-center h-full px-6 py-20 md:px-12">
+        <div className="bg-card p-8 shadow-subtle rounded-2xl max-w-md w-full flex flex-col items-center text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary mb-6">
             <svg
               width="24"
               height="24"
@@ -72,15 +72,15 @@ export function ResultsPage() {
               <line x1="9" y1="21" x2="9" y2="9" />
             </svg>
           </div>
-          <p className="font-serif text-2xl font-medium text-foreground mb-3">No hay piezas generadas</p>
-          <p className="font-sans text-sm text-muted-foreground">Genera assets desde el panel de creacion para ver tus piezas aqui</p>
+          <p className="font-serif text-2xl italic leading-tight text-foreground mb-3">No hay piezas generadas</p>
+          <p className="text-sm font-light leading-relaxed text-muted-foreground">Genera assets desde el panel de creacion para ver tus piezas aqui</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="px-8 py-12 max-w-7xl mx-auto animate-in">
+    <div className="px-6 py-20 md:px-12 md:py-32 max-w-7xl mx-auto animate-in">
       <ResultsGrid
         onExportAll={handleExportAll}
         onExportPiece={handleExportPiece}
