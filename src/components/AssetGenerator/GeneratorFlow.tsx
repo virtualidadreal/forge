@@ -15,10 +15,6 @@ import { GenerationProgress } from './GenerationProgress';
 import { generateCompositions } from '../../services/composer.service';
 import { renderPiece, renderToDataUrl } from '../../services/renderer.service';
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
 export function GeneratorFlow() {
   const {
     imageDataUrl,
@@ -36,7 +32,6 @@ export function GeneratorFlow() {
   const { setPieces } = useResultsStore();
 
   const activeBrand = getActiveBrand();
-
   const navigate = useNavigate();
 
   const [showBrandPicker, setShowBrandPicker] = useState(false);
@@ -44,17 +39,11 @@ export function GeneratorFlow() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const cancelRef = useRef(false);
 
-  // Resolve selected format specs
   const selectedFormatSpecs = V1_FORMATS.filter((f) => selectedFormats.includes(f.id));
   const selectedFormatNames = selectedFormatSpecs.map((f) => f.name);
-
-  // Active intention details
   const activeIntention = INTENTIONS.find((i) => i.id === intention);
-
-  // Can generate? Requires image + formats + active brand
   const canGenerate = !!imageDataUrl && selectedFormats.length > 0 && !!activeBrand;
 
-  // ---------- Generate with real services ----------
   const handleGenerate = useCallback(async () => {
     if (!canGenerate || !activeBrand) return;
     setErrorMessage(null);
@@ -64,10 +53,8 @@ export function GeneratorFlow() {
     setCompletedFormatNames([]);
 
     try {
-      // Strip data URI prefix for the API call
       const imageBase64 = imageDataUrl!.split(',')[1] || imageDataUrl!;
 
-      // Step 1: Generate compositions via AI (single API call)
       setGenerationProgress(10);
       const instructions = await generateCompositions(
         imageBase64,
@@ -80,7 +67,6 @@ export function GeneratorFlow() {
       if (cancelRef.current) { setGenerating(false); return; }
       setGenerationProgress(30);
 
-      // Step 2: Render each instruction to get preview thumbnails
       const pieces: GeneratedPiece[] = [];
       const totalInstructions = instructions.length;
 
@@ -105,7 +91,6 @@ export function GeneratorFlow() {
           });
         } catch (err) {
           console.error(`Failed to render ${instruction.format} v${instruction.variation_seed}:`, err);
-          // Still add piece without preview
           pieces.push({
             id: `${instruction.format}-v${instruction.variation_seed}-${Date.now()}`,
             format_id: instruction.format,
@@ -118,7 +103,6 @@ export function GeneratorFlow() {
         const progressPct = 30 + Math.round(((i + 1) / totalInstructions) * 70);
         setGenerationProgress(progressPct);
 
-        // Update completed format names (once per format, every 3 variations)
         if (format && (i + 1) % 3 === 0) {
           setCompletedFormatNames(prev => [...prev, format.name]);
         }
@@ -147,16 +131,14 @@ export function GeneratorFlow() {
   }, [setGenerating, setGenerationProgress]);
 
   return (
-    <div className="flex gap-16 max-w-[var(--max-content-width)] mx-auto px-10 lg:px-16 py-16 min-h-[calc(100vh-var(--header-height))]">
-      {/* ================================================================= */}
-      {/* LEFT COLUMN — Steps (60%) */}
-      {/* ================================================================= */}
-      <div className="flex-[3] min-w-0 space-y-12">
-        {/* ---- Step 0: Brand DNA indicator ---- */}
+    <div className="flex gap-12 max-w-[var(--max-content-width)] mx-auto px-8 py-12 min-h-[calc(100vh-var(--header-height))]">
+      {/* LEFT COLUMN — Steps */}
+      <div className="flex-[3] min-w-0 space-y-10">
+        {/* Brand DNA indicator */}
         <div className="relative">
           {activeBrand ? (
             <div
-              className="flex items-center justify-between p-8 rounded-3xl border border-border bg-card shadow-subtle hover:shadow-elevated cursor-pointer transition-shadow duration-300 overflow-hidden"
+              className="flex items-center justify-between p-5 rounded-xl border border-border bg-card shadow-subtle cursor-pointer transition-all duration-[150ms] hover:shadow-elevated hover:border-muted-foreground/30 overflow-hidden"
               onClick={() => setShowBrandPicker((v) => !v)}
             >
               <div className="flex items-center gap-3">
@@ -178,15 +160,15 @@ export function GeneratorFlow() {
                     {activeBrand.brand_name}
                   </p>
                   {activeBrand.tagline && (
-                    <p className="font-sans text-xs font-light text-muted-foreground truncate">{activeBrand.tagline}</p>
+                    <p className="font-sans text-xs text-muted-foreground truncate">{activeBrand.tagline}</p>
                   )}
                 </div>
               </div>
-              <span className="font-sans text-xs font-light text-muted-foreground shrink-0">Cambiar</span>
+              <span className="font-sans text-xs text-muted-foreground shrink-0">Cambiar</span>
             </div>
           ) : (
             <div
-              className="flex items-center justify-between p-8 rounded-3xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-300 overflow-hidden"
+              className="flex items-center justify-between p-5 rounded-xl border-2 border-dashed border-destructive/30 bg-destructive/5 cursor-pointer hover:border-destructive/50 transition-all duration-[150ms] overflow-hidden"
               onClick={() => navigate('/studio')}
             >
               <div className="flex items-center gap-3">
@@ -198,24 +180,17 @@ export function GeneratorFlow() {
                   </svg>
                 </div>
                 <div className="min-w-0">
-                  <p className="font-sans text-sm font-medium text-foreground truncate">
-                    Sin marca configurada
-                  </p>
-                  <p className="font-sans text-xs font-light text-muted-foreground truncate">
-                    Configura tu Brand DNA para poder generar
-                  </p>
+                  <p className="font-sans text-sm font-medium text-foreground truncate">Sin marca configurada</p>
+                  <p className="font-sans text-xs text-muted-foreground truncate">Configura tu Brand DNA para poder generar</p>
                 </div>
               </div>
-              <span className="font-sans text-xs font-medium text-destructive">
-                Configurar
-              </span>
+              <span className="font-sans text-xs font-medium text-destructive">Configurar</span>
             </div>
           )}
 
-          {/* Brand picker dropdown */}
           {showBrandPicker && brands.length > 1 && (
             <div
-              className="absolute top-full left-0 right-0 mt-2 rounded-3xl border border-border bg-card shadow-elevated overflow-hidden"
+              className="absolute top-full left-0 right-0 mt-2 rounded-xl border border-border bg-card shadow-elevated overflow-hidden"
               style={{ zIndex: 'var(--z-dropdown)' }}
             >
               {brands.map((brand) => (
@@ -226,8 +201,8 @@ export function GeneratorFlow() {
                     setShowBrandPicker(false);
                   }}
                   className={`
-                    w-full flex items-center gap-3 px-6 py-4 text-left
-                    hover:bg-accent/10 transition-colors
+                    w-full flex items-center gap-3 px-5 py-3 text-left
+                    hover:bg-accent/10 transition-colors duration-[100ms]
                     ${brand.brand_id === activeBrand?.brand_id ? 'bg-accent/15' : ''}
                   `}
                 >
@@ -243,24 +218,17 @@ export function GeneratorFlow() {
           )}
         </div>
 
-        {/* ---- Step 1: Image upload ---- */}
         <ImageUploader />
-
-        {/* ---- Step 2: Copy input ---- */}
         <CopyInput />
-
-        {/* ---- Step 3: Intention selector ---- */}
         <IntentionSelector />
-
-        {/* ---- Step 4: Format selector ---- */}
         <FormatSelector />
 
-        {/* ---- Step 5: Generate button ---- */}
-        <div className="sticky bottom-0 py-6 bg-gradient-to-t from-background via-background/95 to-transparent">
+        {/* Generate button */}
+        <div className="sticky bottom-0 py-5 bg-gradient-to-t from-background via-background/95 to-transparent">
           <Button
             variant="primary"
             size="lg"
-            className="w-full text-base"
+            className="w-full btn-generate"
             disabled={!canGenerate}
             loading={isGenerating}
             onClick={handleGenerate}
@@ -269,7 +237,7 @@ export function GeneratorFlow() {
           </Button>
 
           {!canGenerate && (
-            <p className="font-sans text-xs text-muted-foreground text-center mt-3">
+            <p className="font-sans text-xs text-muted-foreground text-center mt-2">
               {!activeBrand
                 ? 'Configura una marca primero'
                 : !imageDataUrl
@@ -278,65 +246,41 @@ export function GeneratorFlow() {
             </p>
           )}
 
-          {/* Error feedback */}
           {errorMessage && (
-            <div className="mt-4 p-6 rounded-3xl bg-destructive/5 border border-destructive/20">
-              <p className="font-sans text-sm font-light text-destructive text-center">{errorMessage}</p>
+            <div className="mt-3 p-4 rounded-xl bg-destructive/5 border border-destructive/20">
+              <p className="font-sans text-sm text-destructive text-center">{errorMessage}</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* ================================================================= */}
-      {/* RIGHT COLUMN — Preview panel (40%) */}
-      {/* ================================================================= */}
+      {/* RIGHT COLUMN — Preview panel */}
       <aside className="flex-[2] min-w-0 hidden lg:block">
-        <div className="sticky top-[calc(var(--header-height)+2rem)] space-y-10">
-          {/* Image preview */}
+        <div className="sticky top-8 space-y-8">
           <div>
             <SectionLabel>Vista previa</SectionLabel>
             {imageDataUrl ? (
-              <div className="rounded-3xl overflow-hidden border border-border bg-card shadow-subtle transition-shadow duration-300">
+              <div className="rounded-xl overflow-hidden border border-border bg-card shadow-subtle">
                 <img
                   src={imageDataUrl}
                   alt={imageFileName ?? 'Preview'}
-                  className="w-full max-h-[280px] object-cover"
+                  className="w-full max-h-[260px] object-cover"
                 />
               </div>
             ) : (
-              <div className="flex items-center justify-center h-44 rounded-3xl border border-dashed border-border bg-card">
-                <p className="font-sans text-sm font-light text-muted-foreground">Sin imagen</p>
+              <div className="flex items-center justify-center h-40 rounded-xl border border-dashed border-border bg-card">
+                <p className="font-sans text-sm text-muted-foreground">Sin imagen</p>
               </div>
             )}
           </div>
 
-          {/* Summary */}
           <div>
             <SectionLabel>Resumen</SectionLabel>
-            <div className="rounded-3xl border border-border bg-card p-8 space-y-6 shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
-              {/* Brand */}
-              <SummaryRow
-                label="Marca"
-                value={activeBrand?.brand_name ?? 'No definida'}
-              />
+            <div className="rounded-xl border border-border bg-card p-5 space-y-4 shadow-subtle transition-all duration-[150ms] hover:shadow-elevated hover:border-muted-foreground/30">
+              <SummaryRow label="Marca" value={activeBrand?.brand_name ?? 'No definida'} />
+              <SummaryRow label="Intencion" value={activeIntention ? activeIntention.name : 'No seleccionada'} />
+              <SummaryRow label="Formatos" value={`${selectedFormats.length} seleccionado${selectedFormats.length !== 1 ? 's' : ''}`} />
 
-              {/* Intention */}
-              <SummaryRow
-                label="Intencion"
-                value={
-                  activeIntention
-                    ? activeIntention.name
-                    : 'No seleccionada'
-                }
-              />
-
-              {/* Formats */}
-              <SummaryRow
-                label="Formatos"
-                value={`${selectedFormats.length} seleccionado${selectedFormats.length !== 1 ? 's' : ''}`}
-              />
-
-              {/* Format chips */}
               {selectedFormatSpecs.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {selectedFormatSpecs.slice(0, 6).map((fmt) => (
@@ -355,22 +299,15 @@ export function GeneratorFlow() {
                 </div>
               )}
 
-              {/* Estimated time */}
               {selectedFormats.length > 0 && (
-                <SummaryRow
-                  label="Tiempo est."
-                  value={`~${selectedFormats.length * 3}s`}
-                  mono
-                />
+                <SummaryRow label="Tiempo est." value={`~${selectedFormats.length * 3}s`} mono />
               )}
             </div>
           </div>
         </div>
       </aside>
 
-      {/* ================================================================= */}
       {/* Generation progress overlay */}
-      {/* ================================================================= */}
       {isGenerating && (
         <GenerationProgress
           progress={generationProgress}
@@ -383,25 +320,11 @@ export function GeneratorFlow() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Small helper component for the summary panel
-// ---------------------------------------------------------------------------
-
-function SummaryRow({
-  label,
-  value,
-  mono = false,
-}: {
-  label: string;
-  value: string;
-  mono?: boolean;
-}) {
+function SummaryRow({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="font-sans text-xs font-light text-muted-foreground">{label}</span>
-      <span
-        className={`text-xs font-medium text-foreground ${mono ? 'font-mono' : 'font-sans'}`}
-      >
+      <span className="font-sans text-xs text-muted-foreground">{label}</span>
+      <span className={`text-xs font-medium text-foreground ${mono ? 'font-mono' : 'font-sans'}`}>
         {value}
       </span>
     </div>

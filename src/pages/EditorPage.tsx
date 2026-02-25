@@ -6,12 +6,12 @@ export function EditorPage() {
 
   if (pieces.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full px-10 lg:px-16 py-12">
-        <div className="bg-card rounded-3xl p-8 shadow-subtle transition-shadow duration-300 max-w-md w-full flex flex-col items-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary mb-8">
+      <div className="flex items-center justify-center h-full px-8 py-12">
+        <div className="rounded-xl bg-card border border-border p-8 shadow-subtle max-w-md w-full flex flex-col items-center text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-secondary mb-6">
             <svg
-              width="28"
-              height="28"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -24,8 +24,8 @@ export function EditorPage() {
               <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
             </svg>
           </div>
-          <p className="font-serif text-2xl italic text-foreground mb-4">No hay piezas para editar</p>
-          <p className="text-sm font-light leading-relaxed text-muted-foreground">Genera assets primero desde el panel de creacion</p>
+          <p className="font-serif text-2xl font-medium text-foreground mb-3">No hay piezas para editar</p>
+          <p className="font-sans text-sm text-muted-foreground">Genera assets primero desde el panel de creacion</p>
         </div>
       </div>
     );

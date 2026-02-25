@@ -54,7 +54,6 @@ export function ImageUploader() {
     (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) processFile(file);
-      // Reset input value so the same file can be re-selected
       e.target.value = '';
     },
     [processFile],
@@ -66,19 +65,18 @@ export function ImageUploader() {
     setError(null);
   }, [clearImage]);
 
-  // ---------- Loaded state ----------
   if (imageDataUrl) {
     return (
       <div>
         <SectionLabel>Imagen</SectionLabel>
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-subtle transition-shadow duration-300 hover:shadow-elevated">
+        <div className="relative overflow-hidden rounded-xl border border-border bg-card shadow-subtle transition-all duration-[150ms] hover:shadow-elevated hover:border-muted-foreground/30">
           <img
             src={imageDataUrl}
             alt={imageFileName ?? 'Imagen subida'}
-            className="w-full max-h-[280px] object-cover"
+            className="w-full max-h-[260px] object-cover"
           />
-          <div className="flex items-center justify-between px-8 py-6 border-t border-border bg-card/80 backdrop-blur-sm">
-            <div className="flex items-center gap-3 min-w-0">
+          <div className="flex items-center justify-between px-5 py-4 border-t border-border bg-card/80 backdrop-blur-sm">
+            <div className="flex items-center gap-2 min-w-0">
               <span className="font-sans text-sm font-medium text-foreground truncate max-w-[200px]">
                 {imageFileName}
               </span>
@@ -97,7 +95,6 @@ export function ImageUploader() {
     );
   }
 
-  // ---------- Empty / drop state ----------
   return (
     <div>
       <SectionLabel>Imagen</SectionLabel>
@@ -107,9 +104,9 @@ export function ImageUploader() {
         onDragLeave={handleDragLeave}
         onClick={() => inputRef.current?.click()}
         className={`
-          flex flex-col items-center justify-center gap-8
-          min-h-[260px] rounded-3xl border-2 border-dashed cursor-pointer
-          transition-all duration-300
+          flex flex-col items-center justify-center gap-5
+          min-h-[220px] rounded-xl border-2 border-dashed cursor-pointer
+          transition-all duration-[150ms]
           ${
             dragging
               ? 'border-foreground bg-accent/30 scale-[1.01]'
@@ -117,11 +114,10 @@ export function ImageUploader() {
           }
         `}
       >
-        {/* Upload icon */}
-        <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-secondary">
+        <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-secondary">
           <svg
-            width="28"
-            height="28"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -136,11 +132,11 @@ export function ImageUploader() {
           </svg>
         </div>
 
-        <div className="text-center px-10">
+        <div className="text-center px-6">
           <p className="font-sans text-sm font-medium text-foreground">
             Arrastra tu imagen aqui
           </p>
-          <p className="font-sans text-xs font-light text-muted-foreground mt-2">
+          <p className="font-sans text-xs text-muted-foreground mt-1">
             JPG, PNG, WebP o HEIC &middot; Max 20 MB
           </p>
         </div>

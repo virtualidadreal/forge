@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from '../shared';
 
 interface GenerationProgressProps {
-  progress: number;           // 0-100
-  formats: string[];          // All format names being generated
-  completedFormats: string[]; // Format names already done
+  progress: number;
+  formats: string[];
+  completedFormats: string[];
   onCancel: () => void;
 }
 
@@ -17,7 +17,6 @@ export function GenerationProgress({
   const [elapsed, setElapsed] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Elapsed timer
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setElapsed((prev) => prev + 1);
@@ -36,27 +35,23 @@ export function GenerationProgress({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm" style={{ zIndex: 'var(--z-modal)' }}>
-      <div
-        className="w-full max-w-[520px] mx-4 bg-card rounded-3xl border border-border p-12 animate-in"
-        style={{ boxShadow: 'var(--shadow-xl)' }}
-      >
+      <div className="w-full max-w-[480px] mx-4 rounded-2xl bg-card border border-border p-10 shadow-xl animate-in">
         {/* Header */}
-        <div className="text-center mb-10">
-          <h2 className="font-serif text-xl font-semibold text-card-foreground mb-1">
+        <div className="text-center mb-8">
+          <h2 className="font-serif text-xl font-medium text-card-foreground mb-1">
             Generando piezas
           </h2>
-          <p className="font-sans text-sm font-light text-muted-foreground">
+          <p className="font-sans text-sm text-muted-foreground">
             {completedFormats.length} de {formats.length} formatos &middot; {formatTime(elapsed)}
           </p>
         </div>
 
         {/* Progress bar */}
-        <div className="relative h-2 rounded-full bg-secondary overflow-hidden mb-10">
+        <div className="relative h-1.5 rounded-full bg-secondary overflow-hidden mb-8">
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-foreground transition-all duration-300 ease-out"
+            className="absolute inset-y-0 left-0 rounded-full bg-foreground transition-all duration-[250ms] ease-out"
             style={{ width: `${Math.max(progress, 2)}%` }}
           />
-          {/* Shimmer overlay */}
           <div
             className="absolute inset-0 progress-shimmer opacity-40 rounded-full"
             style={{ width: `${Math.max(progress, 2)}%` }}
@@ -64,21 +59,20 @@ export function GenerationProgress({
         </div>
 
         {/* Percentage */}
-        <p className="text-center font-mono text-xs text-muted-foreground mb-10">
+        <p className="text-center font-mono text-xs text-muted-foreground mb-8">
           {Math.round(progress)}%
         </p>
 
         {/* Format list */}
-        <div className="max-h-[220px] overflow-y-auto space-y-1.5 mb-8">
+        <div className="max-h-[200px] overflow-y-auto space-y-1 mb-6">
           {formats.map((name) => {
             const isDone = completedFormats.includes(name);
 
             return (
               <div
                 key={name}
-                className={`flex items-center gap-3 px-5 py-2.5 rounded-lg ${isDone ? 'bg-secondary/50' : ''}`}
+                className={`flex items-center gap-2.5 px-3 py-2 rounded-lg ${isDone ? 'bg-secondary/50' : ''}`}
               >
-                {/* Status icon */}
                 {isDone ? (
                   <svg
                     width="14"
@@ -98,10 +92,7 @@ export function GenerationProgress({
                 )}
 
                 <span
-                  className={`
-                    font-sans text-xs
-                    ${isDone ? 'text-muted-foreground line-through' : 'text-foreground'}
-                  `}
+                  className={`font-sans text-xs ${isDone ? 'text-muted-foreground line-through' : 'text-foreground'}`}
                 >
                   {name}
                 </span>

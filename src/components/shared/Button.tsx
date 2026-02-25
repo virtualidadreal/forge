@@ -12,22 +12,35 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-foreground text-background border border-foreground hover:bg-transparent hover:text-foreground',
+  primary:
+    'bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring',
   secondary:
-    'bg-transparent text-foreground border border-foreground/30 hover:bg-foreground hover:text-background',
-  ghost: 'text-muted-foreground hover:bg-secondary hover:text-foreground border-transparent',
+    'bg-secondary text-secondary-foreground border border-border hover:bg-muted active:scale-[0.98]',
+  ghost:
+    'text-muted-foreground hover:bg-secondary hover:text-foreground',
   destructive:
-    'bg-destructive text-destructive-foreground border border-destructive hover:opacity-90',
+    'bg-destructive text-destructive-foreground hover:opacity-90 active:scale-[0.98]',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'px-6 py-2 text-[10px] gap-1.5',
-  md: 'px-8 py-3 text-xs gap-2',
-  lg: 'px-10 py-4 text-sm gap-3',
+  sm: 'px-3 py-1.5 text-sm gap-1.5',
+  md: 'px-4 py-2 text-sm gap-2',
+  lg: 'px-5 py-2.5 text-sm gap-2',
 };
 
-const baseClasses =
-  'inline-flex items-center justify-center font-medium tracking-[0.2em] uppercase transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 rounded-full';
+const radiusClasses: Record<ButtonVariant, string> = {
+  primary: 'rounded-lg',
+  secondary: 'rounded-lg',
+  ghost: 'rounded-md',
+  destructive: 'rounded-lg',
+};
+
+const durationClasses: Record<ButtonVariant, string> = {
+  primary: 'duration-[150ms]',
+  secondary: 'duration-[150ms]',
+  ghost: 'duration-[100ms]',
+  destructive: 'duration-[150ms]',
+};
 
 function Spinner() {
   return (
@@ -71,7 +84,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        className={`inline-flex items-center justify-center font-sans font-medium transition-all disabled:opacity-40 disabled:cursor-not-allowed ${radiusClasses[variant]} ${durationClasses[variant]} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
         disabled={disabled || loading}
         {...rest}
       >

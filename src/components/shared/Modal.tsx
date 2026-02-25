@@ -63,17 +63,16 @@ export function Modal({
       style={{ zIndex: 'var(--z-modal)' }}
     >
       <div
-        className={`${maxWidths[size]} w-full mx-4 bg-card rounded-3xl border border-border animate-in`}
-        style={{ boxShadow: 'var(--shadow-xl)' }}
+        className={`${maxWidths[size]} w-full mx-4 bg-card rounded-2xl border border-border shadow-xl animate-in`}
       >
         {title && (
-          <div className="flex items-center justify-between border-b border-border px-8 py-6">
+          <div className="flex items-center justify-between border-b border-border px-6 py-5">
             <h2 className="font-serif text-xl font-medium text-card-foreground">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-[100ms]"
               aria-label="Close"
             >
               <svg
@@ -92,7 +91,7 @@ export function Modal({
             </button>
           </div>
         )}
-        <div className="px-8 py-8">{children}</div>
+        <div className="px-6 py-6">{children}</div>
       </div>
     </div>,
     document.body,

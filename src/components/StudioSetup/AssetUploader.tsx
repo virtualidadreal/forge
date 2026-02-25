@@ -85,7 +85,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
   const meetsRecommended = assetCount >= RECOMMENDED_ASSETS;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-3">
       {/* Drop zone */}
       <div
         role="button"
@@ -99,8 +99,8 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
         }}
         className={`
           relative flex flex-col items-center justify-center gap-3
-          rounded-2xl border-2 border-dashed p-8
-          cursor-pointer transition-all duration-300
+          rounded-xl border-2 border-dashed p-6
+          cursor-pointer transition-all duration-[150ms]
           ${
             isDragOver
               ? 'border-primary bg-secondary/50 scale-[1.01]'
@@ -108,11 +108,10 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
           }
         `}
       >
-        {/* Upload icon */}
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary">
           <svg
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -153,7 +152,7 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
             <div
               key={i}
               className={`
-                h-1.5 w-6 rounded-full transition-colors duration-300
+                h-1.5 w-5 rounded-full transition-colors duration-[150ms]
                 ${
                   i < assetCount
                     ? meetsRecommended
@@ -180,26 +179,22 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
         </span>
       </div>
 
-      {/* Error message */}
       {error && (
         <p className="font-sans text-xs text-destructive">{error}</p>
       )}
 
-      {/* Thumbnail grid */}
       {assets.length > 0 && (
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2">
           {assets.map((asset, index) => (
             <div
               key={index}
-              className="group relative aspect-square overflow-hidden rounded-xl border border-border"
-              style={{ boxShadow: 'var(--shadow-subtle)' }}
+              className="group relative aspect-square overflow-hidden rounded-xl border border-border shadow-sm"
             >
               <img
                 src={asset}
                 alt={`Asset ${index + 1}`}
                 className="h-full w-full object-cover"
               />
-              {/* Delete overlay */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -210,26 +205,16 @@ export function AssetUploader({ assets, onAssetsChange }: AssetUploaderProps) {
                   flex h-6 w-6 items-center justify-center
                   rounded-full bg-black/60 text-white
                   opacity-0 group-hover:opacity-100
-                  transition-opacity duration-300
+                  transition-opacity duration-[150ms]
                   hover:bg-black/80
                 "
                 aria-label={`Eliminar asset ${index + 1}`}
               >
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
-              {/* Index badge */}
               <span className="absolute bottom-1.5 left-1.5 font-mono text-[10px] text-white bg-black/40 rounded px-1">
                 {index + 1}
               </span>

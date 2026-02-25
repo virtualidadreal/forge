@@ -4,10 +4,6 @@ import { V1_FORMATS, FORMAT_PACKS } from '../../constants/formats';
 import type { FormatSpec, PlatformId } from '../../types/format.types';
 import { Button, SectionLabel } from '../shared';
 
-// ---------------------------------------------------------------------------
-// Group formats by platform
-// ---------------------------------------------------------------------------
-
 function groupByPlatform(formats: FormatSpec[]): Map<PlatformId, FormatSpec[]> {
   const map = new Map<PlatformId, FormatSpec[]>();
   for (const fmt of formats) {
@@ -18,12 +14,8 @@ function groupByPlatform(formats: FormatSpec[]): Map<PlatformId, FormatSpec[]> {
   return map;
 }
 
-// ---------------------------------------------------------------------------
-// Aspect ratio preview — small rectangle that visually represents the ratio
-// ---------------------------------------------------------------------------
-
 function AspectRatioPreview({ width, height }: { width: number; height: number }) {
-  const maxDim = 36;
+  const maxDim = 32;
   const ratio = width / height;
   let w: number;
   let h: number;
@@ -36,12 +28,11 @@ function AspectRatioPreview({ width, height }: { width: number; height: number }
     w = Math.round(maxDim * ratio);
   }
 
-  // Ensure minimum visible size
   w = Math.max(w, 8);
   h = Math.max(h, 8);
 
   return (
-    <div className="flex items-center justify-center w-10 h-10">
+    <div className="flex items-center justify-center w-9 h-9">
       <div
         className="rounded-[3px] border border-border bg-secondary"
         style={{ width: `${w}px`, height: `${h}px` }}
@@ -50,15 +41,7 @@ function AspectRatioPreview({ width, height }: { width: number; height: number }
   );
 }
 
-// ---------------------------------------------------------------------------
-// Estimated time per format (mock: 3s per format)
-// ---------------------------------------------------------------------------
-
 const SECONDS_PER_FORMAT = 3;
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
 
 export function FormatSelector() {
   const { selectedFormats, toggleFormat, setSelectedFormats, selectFormatPack } =
@@ -88,22 +71,20 @@ export function FormatSelector() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-3">
         <SectionLabel>Formatos</SectionLabel>
-        <div className="flex items-center gap-2">
-          <span className="font-sans text-xs text-muted-foreground">
-            {selectedCount} seleccionado{selectedCount !== 1 ? 's' : ''}
-            {selectedCount > 0 && (
-              <span className="ml-1 font-mono">
-                &middot; ~{estimatedSeconds < 60 ? `${estimatedSeconds}s` : `${estimatedMinutes}min`}
-              </span>
-            )}
-          </span>
-        </div>
+        <span className="font-sans text-xs text-muted-foreground">
+          {selectedCount} seleccionado{selectedCount !== 1 ? 's' : ''}
+          {selectedCount > 0 && (
+            <span className="ml-1 font-mono">
+              &middot; ~{estimatedSeconds < 60 ? `${estimatedSeconds}s` : `${estimatedMinutes}min`}
+            </span>
+          )}
+        </span>
       </div>
 
       {/* Pack shortcuts */}
-      <div className="flex flex-wrap gap-2.5 mb-6">
+      <div className="flex flex-wrap gap-2 mb-5">
         {FORMAT_PACKS.filter((p) => p.id !== 'todo').map((pack) => {
           const allSelected = pack.format_ids.every((id) => selectedFormats.includes(id));
           return (
@@ -111,8 +92,8 @@ export function FormatSelector() {
               key={pack.id}
               onClick={() => handlePackClick(pack.id)}
               className={`
-                px-5 py-2.5 rounded-full font-sans text-xs font-medium
-                border transition-all duration-300
+                px-3 py-1.5 rounded-lg font-sans text-xs font-medium
+                border transition-all duration-[150ms]
                 ${
                   allSelected
                     ? 'border-foreground bg-foreground text-background'
@@ -136,18 +117,18 @@ export function FormatSelector() {
       </div>
 
       {/* Platform groups */}
-      <div className="space-y-10">
+      <div className="space-y-8">
         {platforms.map((platformId) => {
           const formats = grouped.get(platformId)!;
           const platformLabel = formats[0].platform_label;
 
           return (
             <div key={platformId}>
-              <p className="font-sans text-xs font-medium text-muted-foreground tracking-wide uppercase mb-4">
+              <p className="font-sans text-xs font-semibold text-muted-foreground tracking-widest uppercase mb-3">
                 {platformLabel}
               </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
                 {formats.map((fmt) => {
                   const isSelected = selectedFormats.includes(fmt.id);
 
@@ -156,8 +137,8 @@ export function FormatSelector() {
                       key={fmt.id}
                       onClick={() => toggleFormat(fmt.id)}
                       className={`
-                        flex items-center gap-3.5 p-5 rounded-xl border text-left overflow-hidden
-                        transition-all duration-300 cursor-pointer
+                        flex items-center gap-3 p-3.5 rounded-xl border text-left overflow-hidden
+                        transition-all duration-[150ms] cursor-pointer
                         ${
                           isSelected
                             ? 'border-foreground/40 bg-accent/20'
@@ -165,11 +146,10 @@ export function FormatSelector() {
                         }
                       `}
                     >
-                      {/* Checkbox */}
                       <div
                         className={`
                           flex items-center justify-center shrink-0
-                          w-4 h-4 rounded border transition-all duration-300
+                          w-4 h-4 rounded border transition-all duration-[150ms]
                           ${
                             isSelected
                               ? 'bg-foreground border-foreground'
@@ -193,10 +173,8 @@ export function FormatSelector() {
                         )}
                       </div>
 
-                      {/* Aspect ratio preview */}
                       <AspectRatioPreview width={fmt.width} height={fmt.height} />
 
-                      {/* Label + dims */}
                       <div className="min-w-0 flex-1">
                         <p className="font-sans text-xs font-medium text-foreground truncate">
                           {fmt.name}

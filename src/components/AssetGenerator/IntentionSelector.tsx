@@ -4,10 +4,6 @@ import { INTENTIONS } from '../../constants/intentions';
 import type { IntentionType } from '../../types/composition.types';
 import { SectionLabel } from '../shared';
 
-// ---------------------------------------------------------------------------
-// SVG icon component for intentions (replaces emoji)
-// ---------------------------------------------------------------------------
-
 function IntentionIcon({ id, className = '' }: { id: string; className?: string }) {
   const icons: Record<string, string> = {
     convert: 'M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M12 6v6l4 2',
@@ -23,8 +19,8 @@ function IntentionIcon({ id, className = '' }: { id: string; className?: string 
 
   return (
     <svg
-      width="20"
-      height="20"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -39,10 +35,6 @@ function IntentionIcon({ id, className = '' }: { id: string; className?: string 
     </svg>
   );
 }
-
-// ---------------------------------------------------------------------------
-// Map intention id to Tailwind color classes (using CSS custom properties)
-// ---------------------------------------------------------------------------
 
 const INTENT_COLOR_MAP: Record<IntentionType, { border: string; bg: string; text: string }> = {
   convert:      { border: 'border-intent-convert',      bg: 'bg-intent-convert/10',      text: 'text-intent-convert' },
@@ -68,7 +60,7 @@ export function IntentionSelector() {
     <div>
       <SectionLabel>Intencion</SectionLabel>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
         {INTENTIONS.map((intent) => {
           const isSelected = intention === intent.id;
           const colors = INTENT_COLOR_MAP[intent.id];
@@ -78,9 +70,9 @@ export function IntentionSelector() {
               key={intent.id}
               onClick={() => handleSelect(intent.id)}
               className={`
-                relative flex flex-col items-start gap-3 p-7 rounded-2xl
+                relative flex flex-col items-start gap-2 p-5 rounded-xl
                 border text-left cursor-pointer overflow-hidden
-                transition-all duration-300
+                transition-all duration-[150ms]
                 ${
                   isSelected
                     ? `${colors.border} ${colors.bg} border-2`
@@ -88,31 +80,22 @@ export function IntentionSelector() {
                 }
               `}
             >
-              {/* Icon + Name row */}
               <div className="flex items-center gap-2">
                 <IntentionIcon id={intent.id} className={isSelected ? colors.text : 'text-muted-foreground'} />
                 <span
-                  className={`
-                    font-sans text-sm font-medium
-                    ${isSelected ? colors.text : 'text-foreground'}
-                  `}
+                  className={`font-sans text-sm font-medium ${isSelected ? colors.text : 'text-foreground'}`}
                 >
                   {intent.name}
                 </span>
               </div>
 
-              {/* Description */}
-              <p className="font-sans text-xs font-light text-muted-foreground leading-relaxed line-clamp-2 mt-2">
+              <p className="font-sans text-xs text-muted-foreground leading-relaxed line-clamp-2">
                 {intent.description}
               </p>
 
-              {/* Active indicator dot */}
               {isSelected && (
                 <span
-                  className={`
-                    absolute top-2.5 right-2.5 w-2 h-2 rounded-full
-                    ${colors.border.replace('border-', 'bg-')}
-                  `}
+                  className={`absolute top-2 right-2 w-2 h-2 rounded-full ${colors.border.replace('border-', 'bg-')}`}
                 />
               )}
             </button>

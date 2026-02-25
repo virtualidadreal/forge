@@ -1,10 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/shared';
 
-// ---------------------------------------------------------------------------
-// Step data
-// ---------------------------------------------------------------------------
-
 const steps = [
   {
     number: '01',
@@ -40,55 +36,47 @@ const steps = [
   },
 ] as const;
 
-// ---------------------------------------------------------------------------
-// Component — Full-page standalone (no sidebar)
-// ---------------------------------------------------------------------------
-
 export function OnboardingPage() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center overflow-y-auto animate-in">
       {/* Hero section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pt-24 pb-20 text-center">
-        {/* Decorative line */}
-        <div className="mb-10 h-px w-16 bg-border" />
+      <section className="flex w-full max-w-4xl flex-col items-center px-8 pt-20 pb-16 text-center">
+        <div className="mb-8 h-px w-16 bg-border" />
 
-        <h1 className="font-serif text-5xl italic leading-tight md:text-6xl lg:text-7xl text-foreground">
+        <h1 className="font-serif text-5xl font-semibold tracking-tight md:text-6xl lg:text-7xl text-foreground">
           FORGE
         </h1>
 
-        <p className="mt-6 max-w-lg text-lg font-light leading-relaxed text-muted-foreground md:text-xl text-center">
+        <p className="mt-5 max-w-lg font-sans text-lg leading-relaxed text-muted-foreground md:text-xl text-center">
           Genera piezas graficas para todas tus plataformas, alineadas con la
           identidad visual de tu marca, en segundos.
         </p>
 
-        {/* Decorative line */}
-        <div className="mt-10 h-px w-16 bg-border" />
+        <div className="mt-8 h-px w-16 bg-border" />
       </section>
 
       {/* Steps section */}
-      <section className="w-full max-w-5xl px-10 lg:px-16 pb-16">
-        <p className="mb-10 text-center text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      <section className="w-full max-w-5xl px-8 pb-12">
+        <p className="mb-8 text-center font-sans text-xs font-semibold uppercase tracking-widest text-muted-foreground">
           Como funciona
         </p>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((step) => (
             <div
               key={step.number}
-              className="group flex flex-col bg-card rounded-3xl p-8 shadow-subtle hover:shadow-elevated transition-shadow duration-300"
+              className="group flex flex-col rounded-xl bg-card border border-border p-6 shadow-subtle transition-all duration-[150ms] hover:shadow-elevated hover:border-muted-foreground/30"
             >
-              {/* Step number */}
-              <span className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              <span className="mb-4 font-sans text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {step.number}
               </span>
 
-              {/* Icon */}
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-secondary">
                 <svg
-                  width="22"
-                  height="22"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -101,11 +89,10 @@ export function OnboardingPage() {
                 </svg>
               </div>
 
-              {/* Content */}
-              <h3 className="mt-6 text-lg font-medium">
+              <h3 className="font-sans text-lg font-medium text-foreground">
                 {step.title}
               </h3>
-              <p className="text-sm font-light leading-relaxed text-muted-foreground mt-3">
+              <p className="font-sans text-sm leading-relaxed text-muted-foreground mt-2">
                 {step.description}
               </p>
             </div>
@@ -113,12 +100,12 @@ export function OnboardingPage() {
         </div>
       </section>
 
-      {/* Connector line between steps and CTA */}
-      <div className="my-6 h-12 w-px bg-border" />
+      {/* Connector */}
+      <div className="my-4 h-10 w-px bg-border" />
 
       {/* CTA section */}
-      <section className="flex w-full max-w-4xl flex-col items-center px-10 lg:px-16 pb-24">
-        <p className="mb-8 text-center text-sm font-light leading-relaxed text-muted-foreground max-w-md">
+      <section className="flex w-full max-w-4xl flex-col items-center px-8 pb-20">
+        <p className="mb-6 text-center font-sans text-sm leading-relaxed text-muted-foreground max-w-md">
           Empieza configurando el ADN visual de tu marca.
           <br />
           Solo necesitas subir algunos assets y FORGE hara el resto.

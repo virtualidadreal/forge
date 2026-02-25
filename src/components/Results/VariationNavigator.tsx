@@ -44,7 +44,7 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
       <button
         type="button"
         onClick={prev}
-        className="flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+        className="flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-[100ms]"
         aria-label="Variacion anterior"
       >
         <ArrowIcon direction="left" />
@@ -56,7 +56,7 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
             key={v}
             type="button"
             onClick={() => onChange(v)}
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-[150ms] ${
               v === current
                 ? 'bg-foreground scale-125'
                 : 'bg-border hover:bg-muted-foreground'
@@ -73,7 +73,7 @@ export function VariationNavigator({ current, onChange }: VariationNavigatorProp
       <button
         type="button"
         onClick={next}
-        className="flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
+        className="flex items-center justify-center w-6 h-6 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-[100ms]"
         aria-label="Siguiente variacion"
       >
         <ArrowIcon direction="right" />
