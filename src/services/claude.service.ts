@@ -303,7 +303,9 @@ Rules:
 - recommended_treatment: only if the image needs it for legibility, respect the Brand DNA
 - Do NOT include explanatory text, ONLY the JSON`;
 
-  const brandDNAStr = JSON.stringify(brandDNA, null, 2);
+  // Strip binary fields (logo_url can be a huge base64 data URL) to avoid token explosion
+  const { logo_url: _logo, ...brandDNAForPrompt } = brandDNA;
+  const brandDNAStr = JSON.stringify(brandDNAForPrompt, null, 2);
 
   const copyLines = [
     copy.heading ? `- Heading: "${copy.heading}"` : null,
