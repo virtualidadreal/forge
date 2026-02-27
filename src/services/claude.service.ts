@@ -2,7 +2,8 @@
  * claude.service.ts
  * ─────────────────────────────────────────────────────────────────────────────
  * Low-level OpenAI API calls for Brand DNA extraction and image analysis.
- * Uses fetch directly (browser SPA — proxied through Vite dev server).
+ * Calls OpenAI directly from browser when VITE_OPENAI_API_KEY is set,
+ * falls back to /api/openai proxy for local dev.
  */
 
 import type { BrandDNA } from '../types/brandDNA.types';
@@ -12,7 +13,9 @@ import type { ImageAnalysis, IntentionType, CopyInput } from '../types/compositi
 // Constants
 // ---------------------------------------------------------------------------
 
-const API_URL = '/api/openai';
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+const OPENAI_DIRECT_URL = 'https://api.openai.com/v1/chat/completions';
+const PROXY_URL = '/api/openai';
 const MODEL = import.meta.env.VITE_OPENAI_MODEL || 'gpt-4o';
 const MAX_RETRIES = 3;
 const RETRY_DELAY_MS = 1000;
@@ -67,15 +70,22 @@ async function callOpenAI(
   userContent: Array<Record<string, unknown>>,
   maxTokens = 4096,
 ): Promise<string> {
+  // Call OpenAI directly from browser (avoids Vercel 10s serverless timeout)
+  // Falls back to proxy if no API key is available
+  const useDirect = !!OPENAI_API_KEY;
+  const url = useDirect ? OPENAI_DIRECT_URL : PROXY_URL;
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (useDirect) {
+    headers['Authorization'] = `Bearer ${OPENAI_API_KEY}`;
+  }
+
   let lastError: Error | null = null;
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           model: MODEL,
           max_tokens: maxTokens,
